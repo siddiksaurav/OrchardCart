@@ -1,9 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -25,4 +22,9 @@ public class Product {
     private double price;
     @Min(value = 0, message = "Quantity should be a positive value")
     private Integer quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+    private String vendorName;
 }
