@@ -16,10 +16,6 @@ public class ProductService {
 
     public List<Product> getProductList() {
         List<Product> lists = productRepository.findAll();
-        for(Product product:lists)
-        {
-            System.out.println("product:"+product);
-        }
         return lists;
     }
 
