@@ -1,5 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.service;
 
+import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.model.Product;
 import com.farmfresh.marketplace.OrchardCart.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,12 @@ public class ProductService {
         existingProduct.setDescription(product.getDescription());
         existingProduct.setQuantity(product.getQuantity());
         existingProduct.setPrice(product.getPrice());
+        existingProduct.setCategory(product.getCategory());
         productRepository.save(existingProduct);
         return existingProduct;
+    }
+
+    public Optional<Product> getProductByCategoryId(Long categoryId) {
+        return productRepository.findByCategoryId(categoryId);
     }
 }
