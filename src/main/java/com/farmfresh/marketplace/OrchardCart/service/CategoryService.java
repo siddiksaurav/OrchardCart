@@ -1,8 +1,10 @@
 package com.farmfresh.marketplace.OrchardCart.service;
 
+import com.farmfresh.marketplace.OrchardCart.dto.CategoryRequest;
 import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.model.Product;
 import com.farmfresh.marketplace.OrchardCart.repository.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +21,15 @@ public class CategoryService {
     }
 
 
-    public String addCategory(Category category) {
+    public String addCategory(CategoryRequest categoryRequest) {
+        Category category = new Category();
+        category.setCategoryName(categoryRequest.getCategoryName());
         categoryRepository.save(category);
         return "success";
     }
 
-    public Optional<Category> getCategoryById(Long id) {
-        return categoryRepository.findById(id);
+    public Category getCategory(String categoryName) {
+        return categoryRepository.findByCategoryName(categoryName);
     }
 
     public void deleteCategoryById(Long id) {
@@ -34,10 +38,14 @@ public class CategoryService {
         }
     }
 
-    public Category updateCategoryById(Long id, Category category) {
-        Category existingCategory = categoryRepository.findById(id).orElseThrow(()-> new NoSuchElementException("Category not found"));
-        existingCategory.setCategoryName(category.getCategoryName());
-        categoryRepository.save(existingCategory);
-        return existingCategory;
+    public String updateCategoryByCategoryName(CategoryRequest categoryRequest) {
+        Category existingCategory = categoryRepository.findByCategoryName(categoryRequest.getCategoryName());
+        if (existingCategory != null) {
+            existingCategory.setCategoryName(categoryRequest.getCategoryName());
+            categoryRepository.save(existingCategory);
+            return "Successfully updated";
+        } else {
+            throw new NoSuchElementException("Category not found");
+        }
     }
 }
