@@ -1,6 +1,8 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,8 +23,10 @@ public class UserInfo implements UserDetails {
     @Id
     @GeneratedValue
     private Integer id;
+    @NotBlank(message = "Name required")
     private String firstname;
     private String lastname;
+    @Email
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
