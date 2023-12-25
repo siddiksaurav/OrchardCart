@@ -1,5 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.controller;
 
+import com.farmfresh.marketplace.OrchardCart.dto.CategoryRequest;
 import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.model.Product;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
@@ -20,33 +21,29 @@ import java.util.Optional;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-    @Autowired
-    private ProductService productService;
 
     @GetMapping("/all")
     public List<Category> showAllCategories(){
         return categoryService.getCategoryList();
     }
-    @PreAuthorize("hasAnyRole('ROLE_SELLER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create")
-    public String addCategory(@RequestBody Category category){
-        return categoryService.addCategory(category);
+    public String addCategory(@RequestBody CategoryRequest categoryRequest){
+        return categoryService.addCategory(categoryRequest);
     }
-    @GetMapping("/{id}")
-    public Optional<Category> showCategoryById(@PathVariable Long id){
-        return categoryService.getCategoryById(id);
+    @GetMapping("/{categoryName}")
+    public Category showCategoryByCategoryName(@PathVariable String categoryName){
+        return categoryService.getCategory(categoryName);
     }
 
-    @GetMapping("/{categoryId}/products")
-    public Optional<Product> showProductByCategoryId(@PathVariable Long categoryId){
-        return productService.getProductByCategoryId(categoryId);
-    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteCategoryById(@PathVariable Long id){
         categoryService.deleteCategoryById(id);
     }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public Category updateCategoryById(@PathVariable Long id, @Valid @RequestBody Category category){
-        return categoryService.updateCategoryById(id,category);
+    public String updateCategoryByCategoryName(@Valid @RequestBody CategoryRequest categoryRequest){
+        return categoryService.updateCategoryByCategoryName(categoryRequest);
     }
 }
