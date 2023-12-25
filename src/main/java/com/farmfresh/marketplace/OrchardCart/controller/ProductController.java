@@ -1,5 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.controller;
 
+import com.farmfresh.marketplace.OrchardCart.dto.ProductRequest;
 import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.model.Product;
 import com.farmfresh.marketplace.OrchardCart.service.ProductService;
@@ -22,10 +23,17 @@ public class ProductController {
     public List<Product> showAllProducts(){
         return productService.getProductList();
     }
-    @Secured({"ROLE_ADMIN","ROLE_SELLER"})
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @PostMapping("/create")
-    public String createProduct(@Valid @RequestBody Product product){
-        return productService.addProduct(product);
+    public String createProduct(@Valid @RequestBody ProductRequest productRequest){
+        try{
+            return productService.addProduct(productRequest);
+        }
+        catch (Exception e){
+            return "Failed to create product!";
+        }
+
     }
     @GetMapping("/{id}")
     public Optional<Product> showProductById(@PathVariable Long id){
@@ -33,12 +41,29 @@ public class ProductController {
     }
 
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @DeleteMapping("/{id}")
-    public void deleteProductById(@PathVariable Long id){
-        productService.deleteProductById(id);
+    public String deleteProductById(@PathVariable Long id){
+        try {
+            productService.deleteProductById(id);
+            return "Product deleted successfully";
+        } catch (Exception e) {
+            return "Failed to delete product";
+        }
     }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @PutMapping("/{id}")
-    public Product updateProductById(@PathVariable Long id, @Valid @RequestBody Product product){
-        return productService.updateProductById(id,product);
+    public String updateProductById(@PathVariable Long id, @Valid @RequestBody ProductRequest productRequest) {
+        try {
+            Product updatedProduct = productService.updateProductById(id, productRequest);
+            if (updatedProduct != null) {
+                return "Product updated successfully";
+            } else {
+                return "Failed to update product";
+            }
+        } catch (Exception e) {
+            return "Failed to update product";
+        }
     }
+
 }
