@@ -5,20 +5,20 @@ Welcome to OrchardCart, the platform dedicated to agricultural trade!
 OrchardCart is an online marketplace that brings farmers and buyers together in the agricultural industry. This platform simplifies buying and selling fresh products while ensuring fair trade.
 
 **Key Features**
-User Management: Authentication, roles, registration.
-Product Management: Listings, categories
-Inventory Management: Stock tracking, alerts on low stock.
-Order and Transaction Management: Cart, checkout, order history.
-Communication and Interaction: Messaging, notifications.
-Search and Filtering: Enhanced search options,filtering.
-Review and Ratings: User feedback.
-Admin Dashboard: Management tools.
-API Documentation and Testing: Comprehensive documentation, testing suites.
+1.User Management: Authentication, roles, registration.
+2.Product Management: Listings, categories
+3.Inventory Management: Stock tracking, alerts on low stock.
+4.Order and Transaction Management: Cart, checkout, order history.
+5.Communication and Interaction: Messaging, notifications.
+6.Search and Filtering: Enhanced search options,filtering.
+7.Review and Ratings: User feedback.
+8.Admin Dashboard: Management tools.
+9.API Documentation and Testing: Comprehensive documentation, testing suites.
 
 **Development Phases**
-Phase 1: 
+1.Phase 1: 
 User authentication, product management, messaging, search, and filtering.
-Phase 2: 
+2.Phase 2: 
 Inventory tracking, cart functionality, checkout, and order history.
-Phase 3: 
+3.Phase 3: 
 payment integration, Review/ratings, admin dashboard
