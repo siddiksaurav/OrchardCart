@@ -1,6 +1,9 @@
 package com.farmfresh.marketplace.OrchardCart.service;
 
-import com.farmfresh.marketplace.OrchardCart.dto.ProductRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.request.ProductRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
+import com.farmfresh.marketplace.OrchardCart.dto.mapper.ProductMapper;
+import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.model.Product;
 import com.farmfresh.marketplace.OrchardCart.model.Seller;
@@ -15,7 +18,7 @@ import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -26,15 +29,22 @@ public class ProductService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public List<Product> getProductList() {
-        List<Product> lists = productRepository.findAll();
-        return lists;
+    @Autowired
+    ProductMapper productMapper;
+
+    public List<ProductResponse> getProductList() {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .map(productMapper::mapToResponse) // Using ProductMapper to convert Product to ProductResponse
+                .collect(Collectors.toList());
     }
 
     @Transactional
-    public String addProduct(ProductRequest productRequest) {
-        Seller seller = sellerRepository.findByBusinessName(productRequest.getBusinessName());
-        Category category = categoryRepository.findByCategoryName(productRequest.getCategoryName());
+    public String addProduct(ProductRequest productRequest) throws ElementNotFoundException {
+        Seller seller = sellerRepository.findByBusinessName(productRequest.getBusinessName())
+                .orElseThrow(() -> new ElementNotFoundException("Seller not found with business name: " + productRequest.getBusinessName()));
+        Category category = categoryRepository.findByCategoryName(productRequest.getCategoryName())
+                .orElseThrow(() -> new ElementNotFoundException("Category not found with category name: " + productRequest.getCategoryName()));
         Product product = new Product();
         product.setName(productRequest.getName());
         product.setDescription(productRequest.getDescription());
@@ -48,28 +58,26 @@ public class ProductService {
         return "success";
     }
 
-    public Optional<Product> getProductById(Long id) {
-        return  productRepository.findById(id);
+    public ProductResponse getProductById(Long id) throws ElementNotFoundException {
+        Product product =productRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product not found with id:"+id));
+        return productMapper.mapToResponse(product);
     }
 
-    public void deleteProductById(Long id) {
-        if(productRepository.existsById(id)) {
-            productRepository.deleteById(id);
-        }
+    public void deleteProductById(Long id){
+        productRepository.deleteById(id);
     }
+
 
     @Transactional
-    public Product updateProductById(Long id, ProductRequest product) {
-        Seller seller = sellerRepository.findByBusinessName(product.getBusinessName());
-        Category category = categoryRepository.findByCategoryName(product.getCategoryName());
-        Product existingProduct = productRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Product not found"));
+    public String updateProductById(Long id, ProductRequest productRequest) throws ElementNotFoundException, AccessDeniedException {
+        Product existingProduct = productRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Product not found with id:"+id));
+        Seller seller = sellerRepository.findByBusinessName(productRequest.getBusinessName())
+                .orElseThrow(() -> new ElementNotFoundException("Seller not found with business name: " + productRequest.getBusinessName()));
+        Category category = categoryRepository.findByCategoryName(productRequest.getCategoryName())
+                .orElseThrow(() -> new ElementNotFoundException("Category not found with category name: " + productRequest.getCategoryName()));
 
         if (!Objects.equals(existingProduct.getSeller(), seller)) {
-            try {
-                throw new AccessDeniedException("You are not authorized to update this product");
-            } catch (AccessDeniedException e) {
-                throw new RuntimeException(e);
-            }
+            throw new AccessDeniedException("You are not authorized to update this product");
         }
 
         if (!Objects.equals(existingProduct.getCategory(), category)) {
@@ -80,19 +88,14 @@ public class ProductService {
             categoryRepository.save(category);
             categoryRepository.save(previousCategory);
         }
-        existingProduct.setName(product.getName());
-        existingProduct.setDescription(product.getDescription());
-        existingProduct.setQuantity(product.getQuantity());
-        existingProduct.setPrice(product.getPrice());
+        existingProduct.setName(productRequest.getName());
+        existingProduct.setDescription(productRequest.getDescription());
+        existingProduct.setQuantity(productRequest.getQuantity());
+        existingProduct.setPrice(productRequest.getPrice());
         existingProduct.setSeller(seller);
 
         productRepository.save(existingProduct);
 
-        return existingProduct;
+        return "Updated product Successfully";
     }
-
-    /*
-    public Optional<Product> getProductByCategoryId(Long categoryId) {
-        return productRepository.findByCategoryId(categoryId);
-    }*/
 }
