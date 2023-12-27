@@ -1,4 +1,4 @@
-package com.farmfresh.marketplace.OrchardCart.dto;
+package com.farmfresh.marketplace.OrchardCart.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
