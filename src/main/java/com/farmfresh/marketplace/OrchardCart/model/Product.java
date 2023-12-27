@@ -1,5 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -23,7 +24,7 @@ public class Product {
     @Min(value = 0, message = "Quantity should be a positive value")
     private Integer quantity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 

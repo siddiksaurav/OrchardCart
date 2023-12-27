@@ -1,6 +1,5 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,21 +7,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.nio.MappedByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Data
+@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Category {
+public class Seller {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
-    @NotBlank(message = "Category name is mandatory")
-    private String categoryName;
-    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "seller_id")
+    private UserInfo userInfo;
+    @NotBlank(message = "address is mandatory")
+    private String address;
+    @Column(unique = true)
+    private String businessName;
+    private String description;
+
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
 }
