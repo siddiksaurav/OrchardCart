@@ -1,6 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.dto.request;
 
-import com.farmfresh.marketplace.OrchardCart.model.Role;
+import com.farmfresh.marketplace.OrchardCart.model.enumaration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

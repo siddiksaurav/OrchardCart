@@ -1,5 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
+import com.farmfresh.marketplace.OrchardCart.model.enumaration.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

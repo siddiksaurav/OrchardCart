@@ -1,4 +1,4 @@
-package com.farmfresh.marketplace.OrchardCart.model;
+package com.farmfresh.marketplace.OrchardCart.model.enumaration;
 
 public enum Role {
     SELLER,
