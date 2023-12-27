@@ -1,9 +1,10 @@
 package com.farmfresh.marketplace.OrchardCart.controller;
 
-import com.farmfresh.marketplace.OrchardCart.dto.AuthenticationResponse;
-import com.farmfresh.marketplace.OrchardCart.dto.RegisterRequest;
-import com.farmfresh.marketplace.OrchardCart.dto.AuthenticationRequest;
-import com.farmfresh.marketplace.OrchardCart.dto.SellerRegisterRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.response.AuthenticationResponse;
+import com.farmfresh.marketplace.OrchardCart.dto.request.RegisterRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.request.AuthenticationRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.request.SellerRegisterRequest;
+import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
 import com.farmfresh.marketplace.OrchardCart.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +22,13 @@ public class AuthenticationController {
     @PostMapping("/user/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
-    ) {
+    ) throws ElementAlreadyExistException {
         return ResponseEntity.ok(service.customerRegister(request));
     }
     @PostMapping("/seller/register")
     public ResponseEntity<AuthenticationResponse> registerAsSeller(
             @RequestBody SellerRegisterRequest request
-    ) {
+    ) throws ElementAlreadyExistException {
         return ResponseEntity.ok(service.sellerRegister(request));
     }
     @PostMapping("/login")

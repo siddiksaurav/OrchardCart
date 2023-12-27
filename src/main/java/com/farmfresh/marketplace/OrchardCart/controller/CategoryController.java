@@ -1,19 +1,15 @@
 package com.farmfresh.marketplace.OrchardCart.controller;
 
-import com.farmfresh.marketplace.OrchardCart.dto.CategoryRequest;
-import com.farmfresh.marketplace.OrchardCart.model.Category;
-import com.farmfresh.marketplace.OrchardCart.model.Product;
+import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
+import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
+import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
-import com.farmfresh.marketplace.OrchardCart.service.ProductService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @EnableMethodSecurity
@@ -23,27 +19,28 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/all")
-    public List<Category> showAllCategories(){
+    public List<CategoryResponse> showAllCategories(){
         return categoryService.getCategoryList();
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create")
-    public String addCategory(@RequestBody CategoryRequest categoryRequest){
-        return categoryService.addCategory(categoryRequest);
+    public String addCategory(@RequestParam String categoryName) throws ElementAlreadyExistException {
+        return categoryService.addCategory(categoryName);
     }
-    @GetMapping("/{categoryName}")
-    public Category showCategoryByCategoryName(@PathVariable String categoryName){
+    @GetMapping("/")
+    public CategoryResponse getCategoryByCategoryName(@RequestParam String categoryName) throws ElementNotFoundException {
         return categoryService.getCategory(categoryName);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    public void deleteCategoryById(@PathVariable Long id){
+    public String deleteCategoryById(@PathVariable Integer id){
         categoryService.deleteCategoryById(id);
+        return "Deleted category successfully";
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public String updateCategoryByCategoryName(@Valid @RequestBody CategoryRequest categoryRequest){
-        return categoryService.updateCategoryByCategoryName(categoryRequest);
+    public String updateCategoryByCategoryName(@PathVariable Integer id, @RequestParam String categoryName) throws ElementNotFoundException {
+        return categoryService.updateCategoryByCategoryName(id,categoryName);
     }
 }
