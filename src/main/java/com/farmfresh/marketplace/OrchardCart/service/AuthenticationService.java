@@ -31,7 +31,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse customerRegister(RegisterRequest request) throws ElementAlreadyExistException {
         Optional<UserInfo> user = userInfoRepository.findByEmail(request.getEmail());
-        if (user !=null) throw new ElementAlreadyExistException("User already exist with email:" + request.getEmail());
+        if (user.isPresent()) throw new ElementAlreadyExistException("User already exist with email:" + request.getEmail());
         UserInfo newUser = UserInfo.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
@@ -48,7 +48,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse sellerRegister(SellerRegisterRequest request) throws ElementAlreadyExistException {
         Optional<UserInfo> user = userInfoRepository.findByEmail(request.getEmail());
-        if (user !=null) throw new ElementAlreadyExistException("User already exist with email:" + request.getEmail());
+        if (user.isPresent()) throw new ElementAlreadyExistException("User already exist with email:" + request.getEmail());
         UserInfo newUser = UserInfo.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
