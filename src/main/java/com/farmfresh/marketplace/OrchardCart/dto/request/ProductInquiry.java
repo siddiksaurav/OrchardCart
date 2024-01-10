@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class ProductQuery {
+public class ProductInquiry {
    @Email(message = "Invalid email address")
    private String userEmail;
    @NotBlank(message = "product name required")
