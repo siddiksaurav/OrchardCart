@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product,Long> {
+public interface ProductRepository extends JpaRepository<Product,Integer> {
     Optional<Product> findByCategoryId(Long category_id);
     @Query("SELECT p.seller.userInfo.email FROM Product p WHERE p.id = :productId")
-    String findSellerEmailByProductId(@Param("productId") Long productId);
+    String findSellerEmailByProductId(@Param("productId") Integer productId);
 }
