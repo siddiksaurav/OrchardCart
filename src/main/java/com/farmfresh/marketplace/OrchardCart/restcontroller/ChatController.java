@@ -1,4 +1,4 @@
-package com.farmfresh.marketplace.OrchardCart.controller;
+package com.farmfresh.marketplace.OrchardCart.restcontroller;
 
 import com.farmfresh.marketplace.OrchardCart.service.ChatMessageService;
 import com.farmfresh.marketplace.OrchardCart.model.ChatMessage;

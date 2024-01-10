@@ -1,4 +1,4 @@
-package com.farmfresh.marketplace.OrchardCart.controller;
+package com.farmfresh.marketplace.OrchardCart.restcontroller;
 
 import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @EnableMethodSecurity
-@RequestMapping("/category")
+@RequestMapping("/api/vi/category")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;

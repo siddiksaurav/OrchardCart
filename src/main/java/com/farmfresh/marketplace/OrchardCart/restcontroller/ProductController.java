@@ -1,4 +1,4 @@
-package com.farmfresh.marketplace.OrchardCart.controller;
+package com.farmfresh.marketplace.OrchardCart.restcontroller;
 
 import com.farmfresh.marketplace.OrchardCart.dto.request.ProductRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
@@ -13,7 +13,7 @@ import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
-@RequestMapping("products")
+@RequestMapping("/api/v1/products")
 public class ProductController {
     @Autowired
     ProductService productService;
@@ -28,21 +28,21 @@ public class ProductController {
         return productService.addProduct(productRequest);
     }
     @GetMapping("/{id}")
-    public ProductResponse getProductById(@PathVariable Long id) throws ElementNotFoundException {
+    public ProductResponse getProductById(@PathVariable Integer id) throws ElementNotFoundException {
         return productService.getProductById(id);
     }
 
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @DeleteMapping("/{id}")
-    public String deleteProductById(@PathVariable Long id){
+    public String deleteProductById(@PathVariable Integer id){
         productService.deleteProductById(id);
         return "deleted";
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
-    @PutMapping("/{id}")
-    public String updateProductById(@PathVariable Long id, @Valid @RequestBody ProductRequest productRequest) throws ElementNotFoundException, AccessDeniedException {
-        return productService.updateProductById(id, productRequest);
+    @PutMapping("{id}/save")
+    public String updateProductById(@PathVariable Long id, @Valid @RequestBody ProductResponse productResponse) throws ElementNotFoundException, AccessDeniedException {
+        return productService.updateProductById(productResponse);
         }
 }
 
