@@ -9,12 +9,14 @@ import jakarta.validation.constraints.Size;
 import jdk.jfr.DataAmount;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @NotBlank(message = "Name is required")
     @Size(min = 2, max = 100, message = "Name should be between 2 and 100 characters")
     private String name;
@@ -31,4 +33,11 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private Seller seller;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Rating> ratings;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Review> reviews;
+    private String imageURL;
 }
