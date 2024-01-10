@@ -58,23 +58,23 @@ public class ProductService {
         return "success";
     }
 
-    public ProductResponse getProductById(Long id) throws ElementNotFoundException {
+    public ProductResponse getProductById(Integer id) throws ElementNotFoundException {
         Product product =productRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product not found with id:"+id));
         return productMapper.mapToResponse(product);
     }
 
-    public void deleteProductById(Long id){
+    public void deleteProductById(Integer id){
         productRepository.deleteById(id);
     }
 
 
     @Transactional
-    public String updateProductById(Long id, ProductRequest productRequest) throws ElementNotFoundException, AccessDeniedException {
-        Product existingProduct = productRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Product not found with id:"+id));
-        Seller seller = sellerRepository.findByBusinessName(productRequest.getBusinessName())
-                .orElseThrow(() -> new ElementNotFoundException("Seller not found with business name: " + productRequest.getBusinessName()));
-        Category category = categoryRepository.findByCategoryName(productRequest.getCategoryName())
-                .orElseThrow(() -> new ElementNotFoundException("Category not found with category name: " + productRequest.getCategoryName()));
+    public String updateProductById(ProductResponse product) throws ElementNotFoundException, AccessDeniedException {
+        Product existingProduct = productRepository.findById(product.getId()).orElseThrow(() -> new NoSuchElementException("Product not found with id:"+product.getId()));
+        Seller seller = sellerRepository.findByBusinessName(product.getBusinessName())
+                .orElseThrow(() -> new ElementNotFoundException("Seller not found with business name: " + product.getBusinessName()));
+        Category category = categoryRepository.findByCategoryName(product.getCategoryName())
+                .orElseThrow(() -> new ElementNotFoundException("Category not found with category name: " + product.getCategoryName()));
 
         if (!Objects.equals(existingProduct.getSeller(), seller)) {
             throw new AccessDeniedException("You are not authorized to update this product");
@@ -88,14 +88,19 @@ public class ProductService {
             categoryRepository.save(category);
             categoryRepository.save(previousCategory);
         }
-        existingProduct.setName(productRequest.getName());
-        existingProduct.setDescription(productRequest.getDescription());
-        existingProduct.setQuantity(productRequest.getQuantity());
-        existingProduct.setPrice(productRequest.getPrice());
+        existingProduct.setName(product.getName());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setQuantity(product.getQuantity());
+        existingProduct.setPrice(product.getPrice());
         existingProduct.setSeller(seller);
 
         productRepository.save(existingProduct);
 
         return "Updated product Successfully";
+    }
+
+    public ProductRequest getProductRequestById(Integer id) throws ElementNotFoundException {
+        Product product =productRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product not found with id:"+id));
+        return productMapper.mapToRequest(product);
     }
 }

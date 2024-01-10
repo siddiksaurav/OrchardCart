@@ -29,7 +29,7 @@ public class CategoryService {
 
     public String addCategory(String categoryName) throws ElementAlreadyExistException {
         Optional<Category> category = categoryRepository.findByCategoryName(categoryName);
-        if(category !=null){
+        if(category.isPresent()){
             throw new ElementAlreadyExistException("Category already exist with "+categoryName);
         }
         Category newCategory = new Category();
@@ -40,6 +40,11 @@ public class CategoryService {
 
     public CategoryResponse getCategory(String categoryName) throws ElementNotFoundException {
         Category category = categoryRepository.findByCategoryName(categoryName).orElseThrow(()->new ElementNotFoundException("Category not found with name:"+categoryName));
+        return categoryMapper.mapToResponse(category);
+    }
+
+    public CategoryResponse getCategoryById(Integer id) throws ElementNotFoundException {
+        Category category = categoryRepository.findById(id).orElseThrow(()->new ElementNotFoundException("Category not found with id:"+id));
         return categoryMapper.mapToResponse(category);
     }
 
