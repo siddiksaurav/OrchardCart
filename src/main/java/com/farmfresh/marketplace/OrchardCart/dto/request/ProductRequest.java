@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class ProductRequest {
@@ -20,4 +21,5 @@ public class ProductRequest {
     private String categoryName;
     @NotBlank(message = "businessName is required")
     private String businessName;
+    private MultipartFile imageFile;
 }

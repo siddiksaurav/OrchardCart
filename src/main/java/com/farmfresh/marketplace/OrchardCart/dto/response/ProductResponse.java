@@ -11,4 +11,5 @@ public class ProductResponse {
     private Integer quantity;
     private String categoryName;
     private String businessName;
+    private String imageURL;
 }

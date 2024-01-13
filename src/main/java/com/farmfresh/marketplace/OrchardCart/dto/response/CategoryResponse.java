@@ -6,4 +6,5 @@ import lombok.Data;
 public class CategoryResponse {
     private Integer id;
     private String categoryName;
+    private String imageUrl;
 }
