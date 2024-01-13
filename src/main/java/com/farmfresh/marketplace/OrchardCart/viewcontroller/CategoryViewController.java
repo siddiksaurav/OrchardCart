@@ -1,8 +1,11 @@
 package com.farmfresh.marketplace.OrchardCart.viewcontroller;
+import com.farmfresh.marketplace.OrchardCart.dto.request.CategoryRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.request.ProductRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -10,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -28,14 +32,15 @@ public class CategoryViewController {
 
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/create")
-    public String createCategoryForm() {
+    public String createCategoryForm(Model model) {
+        model.addAttribute("categoryRequest",new CategoryRequest());
         return "category/category-create";
     }
 
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create")
-    public String addCategory(@RequestParam String categoryName) throws ElementAlreadyExistException {
-        categoryService.addCategory(categoryName);
+    public String addCategory(@Valid @ModelAttribute("categoryRequest") CategoryRequest categoryRequest) throws ElementAlreadyExistException, IOException {
+        categoryService.addCategory(categoryRequest);
         return "redirect:/category/all";
     }
 

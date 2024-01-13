@@ -1,27 +1,30 @@
 package com.farmfresh.marketplace.OrchardCart.viewcontroller;
 import com.farmfresh.marketplace.OrchardCart.dto.request.ProductRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
 import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
+import com.farmfresh.marketplace.OrchardCart.model.Category;
+import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import com.farmfresh.marketplace.OrchardCart.service.ProductService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @Controller
 @RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductViewController {
 
     private final ProductService productService;
+    private final CategoryService categoryService;
 
-    @Autowired
-    public ProductViewController(ProductService productService) {
-        this.productService = productService;
-    }
 
     @GetMapping("/all")
     public String getAllProducts(Model model) {
@@ -33,13 +36,15 @@ public class ProductViewController {
     //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @GetMapping("/create")
     public String showProductForm(Model model) {
+        List<CategoryResponse> categories = categoryService.getCategoryList();
         model.addAttribute("productRequest", new ProductRequest());
+        model.addAttribute("categories", categories);
         return "products/product-create"; // Assuming "create-product.html" is the Thymeleaf template for creating products
     }
 
     //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @PostMapping("/create")
-    public String createProduct(@Valid @ModelAttribute("productRequest") ProductRequest productRequest) throws ElementNotFoundException {
+    public String createProduct(@Valid @ModelAttribute("productRequest") ProductRequest productRequest) throws ElementNotFoundException, IOException {
         productService.addProduct(productRequest);
         return "redirect:/products/all"; // Redirect to the product list after creating a product
     }

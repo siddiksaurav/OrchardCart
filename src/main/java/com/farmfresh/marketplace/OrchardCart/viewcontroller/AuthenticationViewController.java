@@ -47,19 +47,21 @@ public class AuthenticationViewController {
         return "auth/register-successful";
     }
     @GetMapping("/login")
-    public String showLoginForm() {
+    public String showLoginForm(Model model) {
         logger.info("In login get map");
+        model.addAttribute("authenticationRequest",new AuthenticationRequest());
         return "auth/login";
     }
 
     @PostMapping("/login")
-    public String authenticateUser(@ModelAttribute AuthenticationRequest request, Model model) {
+    public String authenticateUser(@ModelAttribute("authenticationRequest") AuthenticationRequest authenticationRequest, Model model) {
         logger.info("In login post map");
-        AuthenticationResponse response = authenticationService.authenticate(request);
+        logger.info(authenticationRequest.getEmail());
+        AuthenticationResponse response = authenticationService.authenticate(authenticationRequest);
         logger.info(response.getToken());
         System.out.println("Token:"+response.getToken());
         if (response != null && response.getToken() != null) {
-            return "redirect:/homepage";
+            return "redirect:/home";
         } else {
             model.addAttribute("error", "Invalid credentials. Please try again.");
             return "auth/login";
