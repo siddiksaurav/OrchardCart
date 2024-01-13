@@ -25,4 +25,5 @@ public class Category {
     private String categoryName;
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
+    private String imageUrl;
 }
