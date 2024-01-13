@@ -10,10 +10,19 @@ import com.farmfresh.marketplace.OrchardCart.model.Seller;
 import com.farmfresh.marketplace.OrchardCart.repository.CategoryRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.ProductRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.SellerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -28,24 +37,43 @@ public class ProductService {
     SellerRepository sellerRepository;
     @Autowired
     CategoryRepository categoryRepository;
-
     @Autowired
     ProductMapper productMapper;
-
+    private static final String uploadPath = "/home/saurav/Downloads/Java-Spring/OrchardCart/src/main/resources/static/img/";
+    private Logger logger = LoggerFactory.getLogger(ProductService.class);
     public List<ProductResponse> getProductList() {
         List<Product> products = productRepository.findAll();
+        for(Product product: products) {
+            logger.info(product.getImageURL());
+        }
         return products.stream()
                 .map(productMapper::mapToResponse) // Using ProductMapper to convert Product to ProductResponse
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public String addProduct(ProductRequest productRequest) throws ElementNotFoundException {
+    public String addProduct(ProductRequest productRequest) throws ElementNotFoundException, IOException {
         Seller seller = sellerRepository.findByBusinessName(productRequest.getBusinessName())
                 .orElseThrow(() -> new ElementNotFoundException("Seller not found with business name: " + productRequest.getBusinessName()));
         Category category = categoryRepository.findByCategoryName(productRequest.getCategoryName())
                 .orElseThrow(() -> new ElementNotFoundException("Category not found with category name: " + productRequest.getCategoryName()));
         Product product = new Product();
+        product.setImageURL("/img/default.png");
+        if(productRequest.getImageFile()!=null && !productRequest.getImageFile().isEmpty()){
+            MultipartFile imageFile = productRequest.getImageFile();
+            File directory= new File(uploadPath);
+
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            String originalFileName = imageFile.getOriginalFilename();
+            String imageUrl = uploadPath + originalFileName;
+
+            File destinationFile = new File(imageUrl);
+            imageFile.transferTo(destinationFile);
+
+            product.setImageURL("/img/"+originalFileName);
+        }
         product.setName(productRequest.getName());
         product.setDescription(productRequest.getDescription());
         product.setPrice(productRequest.getPrice());

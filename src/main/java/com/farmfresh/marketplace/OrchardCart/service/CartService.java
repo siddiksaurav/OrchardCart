@@ -23,7 +23,7 @@ public class CartService {
     private ProductRepository productRepository;
     @Autowired
     private  CartItemService cartItemService;
-    public Cart creatCart(UserInfo user) {
+    public Cart createCart(UserInfo user) {
         Cart cart = new Cart();
         cart.setUserInfo(user);
         return  cartRepository.save(cart);

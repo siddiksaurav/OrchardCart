@@ -1,6 +1,7 @@
 package com.farmfresh.marketplace.OrchardCart.service;
 
 import com.farmfresh.marketplace.OrchardCart.dto.mapper.CategoryMapper;
+import com.farmfresh.marketplace.OrchardCart.dto.request.CategoryRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
@@ -8,7 +9,10 @@ import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,6 +23,7 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
     @Autowired
     private CategoryMapper categoryMapper;
+    private static final String uploadPath = "/home/saurav/Downloads/Java-Spring/OrchardCart/src/main/resources/static/img/";
     public List<CategoryResponse> getCategoryList(){
         List<Category> categories = categoryRepository.findAll();
         return categories.stream()
@@ -27,13 +32,28 @@ public class CategoryService {
     }
 
 
-    public String addCategory(String categoryName) throws ElementAlreadyExistException {
-        Optional<Category> category = categoryRepository.findByCategoryName(categoryName);
+    public String addCategory(CategoryRequest categoryRequest) throws ElementAlreadyExistException, IOException {
+        Optional<Category> category = categoryRepository.findByCategoryName(categoryRequest.getCategoryName());
         if(category.isPresent()){
-            throw new ElementAlreadyExistException("Category already exist with "+categoryName);
+            throw new ElementAlreadyExistException("Category already exist with "+categoryRequest.getCategoryName());
         }
         Category newCategory = new Category();
-        newCategory.setCategoryName(categoryName);
+        newCategory.setCategoryName(categoryRequest.getCategoryName());
+        if(categoryRequest.getImageFile()!=null && !categoryRequest.getImageFile().isEmpty()){
+            MultipartFile imageFile = categoryRequest.getImageFile();
+            File directory= new File(uploadPath);
+
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            String originalFileName = imageFile.getOriginalFilename();
+            String imageUrl = uploadPath + originalFileName;
+
+            File destinationFile = new File(imageUrl);
+            imageFile.transferTo(destinationFile);
+
+            newCategory.setImageUrl("/img/"+originalFileName);
+        }
         categoryRepository.save(newCategory);
         return "success";
     }
