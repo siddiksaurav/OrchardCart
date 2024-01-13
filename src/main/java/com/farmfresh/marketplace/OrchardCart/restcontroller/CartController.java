@@ -23,7 +23,7 @@ public class CartController {
     @GetMapping("/")
     public Cart createCart(@RequestHeader("Authorization")String jwt ) throws ElementNotFoundException {
         UserInfo user = jwtService.getUserByToken(jwt);
-        return cartService.creatCart(user);
+        return cartService.createCart(user);
     }
 
     @PostMapping("/addItem")

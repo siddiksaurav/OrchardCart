@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ProductController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @PostMapping("/create")
-    public String createProduct(@Valid @RequestBody ProductRequest productRequest) throws ElementNotFoundException {
+    public String createProduct(@Valid @RequestBody ProductRequest productRequest) throws ElementNotFoundException, IOException {
         return productService.addProduct(productRequest);
     }
     @GetMapping("/{id}")
