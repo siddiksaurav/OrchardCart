@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration Type</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<th:block th:insert="fragments/navbar"></th:block>
+<div class="container">
+    <div class="registration-type-selection">
+        <h2>Select Registration Type </h2>
+        <a th:href="@{user/register}" class="btn btn-primary registration-type-btn">Buyer</a>
+        <a th:href="@{seller/register}" class="btn btn-primary registration-type-btn">Seller</a>
+
+    </div>
+</div>
+<th:block th:insert="fragments/footer"></th:block>
+</body>
+</html>
+
+
+
+
+

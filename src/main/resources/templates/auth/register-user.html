@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Registration</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<th:block th:insert="fragments/navbar"></th:block>
+<div class="form-style">
+    <h2>User Registration</h2>
+    <form action="/auth/user/register" method="post" th:object="${user}">
+        <div class="form-group">
+            <label for="firstname">First Name</label>
+            <input type="text" id="firstname" name="firstname" class="form-control" th:field="*{firstname}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="lastname">Last Name</label>
+            <input type="text" id="lastname" name="lastname" class="form-control" th:field="*{lastname}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" th:field="*{email}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" th:field="*{password}" required/>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Register</button>
+        </div>
+        <div class="form-group text-center">
+            <p>Already have an account? <a href="/auth/login">Login</a></p>
+        </div>
+    </form>
+</div>
+<th:block th:insert="fragments/footer"></th:block>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shopping Cart</title>
+    <!-- Add your CSS links and other head content here -->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 50px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .total-price {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Add more custom styling as needed */
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<!-- Include your navbar or header section here -->
+
+<div class="container">
+    <h2 class="mb-4">Your Shopping Cart</h2>
+
+    <!-- Display Cart Items -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <!-- Add more headers as needed -->
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Use Thymeleaf loop to iterate over cart items -->
+        <tr th:each="cartItem : ${cart.items}">
+            <td th:text="${cartItem.productName}"></td>
+            <td th:text="${cartItem.quantity}"></td>
+            <td th:text="${cartItem.price}"></td>
+            <!-- Add more cells as needed -->
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Display Total Price -->
+    <div class="total-price">
+        <p>Total Price: $<span th:text="${cart.totalPrice}"></span></p>
+    </div>
+
+    <!-- Add Checkout Button or other actions as needed -->
+    <div class="mt-4">
+        <button class="btn btn-primary">Proceed to Checkout</button>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<!-- Include your footer section here -->
+
+<!-- Bootstrap JS and other dependencies -->
+<!-- Include your JS script links and other dependencies here -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

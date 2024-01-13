@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>OrchardCart - Your Online Marketplace</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <style>
+        .carousel-item img {
+            height: 200px; /* Adjust the height as needed */
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<th:block th:insert="fragments/navbar"></th:block>
+<div class="jumbotron">
+    <h1>Welcome to OrchardCart!</h1>
+    <p>OrchardCart is your one-stop destination for the freshest fruits and vegetables. We connect local farmers and sellers directly to you, ensuring quality and freshness.
+        Join us in supporting local farmers and enjoy farm-fresh produce delivered to your doorstep</p>
+</div>
+<div class="flex-grow-1">
+    <div class="container mt-5">
+        <h2>Featured Products</h2>
+        <div class="row">
+            <!-- Replace the dummy data with Thymeleaf loop for products -->
+            <div th:each="product : ${products}" class="col-md-4 mb-4">
+                <div class="card">
+                    <a th:href="@{'/products/' + ${product.id}}">
+                        <img th:src="${product.imageURL}" class="card-img-top" alt="Product Image">
+                    </a>
+                    <div class="card-body">
+                        <h5 th:text="${product.name}" class="card-title"></h5>
+                        <!-- Remove the Details button -->
+                        <a th:href="@{'/inquiry/products/' + ${product.id}}" class="btn btn-secondary">Contact Seller</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="categoryCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div th:each="category, iterStat : ${categories}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Left side (text) -->
+                        <div class="carousel-caption text-left">
+                            <h5 th:text="${category.categoryName}"></h5>
+                            <p>Your description goes here.</p>
+                            <!-- Add any additional information you want to display -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Right side (image) -->
+                        <img th:src="${category.imageUrl}" class="d-block mx-auto" alt="Category Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#categoryCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#categoryCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+</div>
+
+<!-- Footer -->
+<th:block th:insert="fragments/footer"></th:block>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+
