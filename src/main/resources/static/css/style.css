@@ -1,0 +1,189 @@
+/* Body and Navbar */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #ffffff; /* White background */
+    color: #333333; /* Dark text color */
+    /*margin-top: 20px;*/ /* Add space between navbar and content */
+}
+.form-control {
+            width: 250px; /* Adjust the width as needed */
+}
+
+/* Hero Section */
+.jumbotron {
+    /*background-color: #F0EEF0
+    color: #ffffff; /* White text color */
+    text-align: center;
+    /*padding: 20px;*/ /* Add padding to the jumbotron */
+}
+
+/* About Us Section */
+.container {
+    margin-top: 50px;
+    color: #217B7E; /* Dark text color */
+}
+
+.flex-grow-1 {
+            flex-grow: 1;
+ }
+/* Footer */
+.footer {
+    width:100%;
+    /*position:fixed;
+    bottom:0;*/
+    background-color: #ffffff; /* Blue-green footer background */
+    color: #ffffff; /* White text color */
+    text-align: center;
+    padding: 20px 0; /* Add padding top/bottom */
+}
+
+.image-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+.image-section img {
+    width: 100%; /* Adjust image width */
+    height: auto; /* Maintain aspect ratio */
+}
+.success-message {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.return-home-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #337ab7;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.return-home-btn:hover {
+    background-color: #286090;
+}
+.card-img-top {
+    height: 200px; /* Adjust the height as needed */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+/* Optional: If you want to control the width as well */
+.card-img-top {
+    width: 100%; /* Adjust the width as needed */
+    height: 200px; /* Adjust the height as needed */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+.card {
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%; /* Set a fixed height for all cards */
+}
+
+.card-title {
+    color: #333;
+    font-size: 16px; /* Adjust font size as needed */
+    margin-bottom: 10px; /* Add spacing between title and other content */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Ensure the card body takes full height */
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background-color: #6a0dad;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #5a0c9a;
+}
+.registration-type-selection {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+
+.registration-type-selection {
+            text-align: center;
+            margin-top: 50px;
+}
+.registration-type-btn {
+    display: block;
+    width: 200px;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.registration-type-btn:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.form-style {
+            margin-top: 50px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            background-color: #ffffff; /* White background */
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow */
+        }
+
+        .registration-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da; /* Gray border */
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #007bff; /* Blue button */
+            color: #ffffff; /* White text */
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
