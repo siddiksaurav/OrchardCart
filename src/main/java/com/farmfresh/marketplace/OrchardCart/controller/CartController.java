@@ -1,4 +1,4 @@
-package com.farmfresh.marketplace.OrchardCart.viewcontroller;
+package com.farmfresh.marketplace.OrchardCart.controller;
 
 import com.farmfresh.marketplace.OrchardCart.dto.request.CartItemRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/cart")
-public class CartViewController {
+public class CartController {
 
     @Autowired
     private CartService cartService;
 
     @Autowired
     private JwtService jwtService;
-    Logger logger = LoggerFactory.getLogger(CartViewController.class);
+    Logger logger = LoggerFactory.getLogger(CartController.class);
 
     @GetMapping("/new")
     public String createCart(Model model) throws ElementNotFoundException {

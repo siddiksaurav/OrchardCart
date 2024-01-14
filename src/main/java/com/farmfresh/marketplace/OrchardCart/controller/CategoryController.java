@@ -1,13 +1,11 @@
-package com.farmfresh.marketplace.OrchardCart.viewcontroller;
+package com.farmfresh.marketplace.OrchardCart.controller;
 import com.farmfresh.marketplace.OrchardCart.dto.request.CategoryRequest;
-import com.farmfresh.marketplace.OrchardCart.dto.request.ProductRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/category")
-public class CategoryViewController {
+public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
@@ -52,8 +50,8 @@ public class CategoryViewController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateCategory(@PathVariable Integer id, @RequestParam String categoryName) throws ElementNotFoundException {
-        categoryService.updateCategoryByCategoryName(id, categoryName);
+    public String updateCategory(@PathVariable Integer id, @RequestBody CategoryRequest categoryRequest) throws ElementNotFoundException {
+        categoryService.updateCategory(id,categoryRequest);
         return "redirect:/category/all";
     }
 

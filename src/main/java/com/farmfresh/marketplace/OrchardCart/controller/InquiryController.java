@@ -1,4 +1,4 @@
-package com.farmfresh.marketplace.OrchardCart.viewcontroller;
+package com.farmfresh.marketplace.OrchardCart.controller;
 
 import com.farmfresh.marketplace.OrchardCart.dto.request.ProductInquiry;
 import com.farmfresh.marketplace.OrchardCart.service.QueryService;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/inquiry")
-public class InquiryViewController {
+public class InquiryController {
     @Autowired
     private QueryService queryService;
 

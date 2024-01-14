@@ -1,4 +1,4 @@
-package com.farmfresh.marketplace.OrchardCart.viewcontroller;
+package com.farmfresh.marketplace.OrchardCart.controller;
 
 import com.farmfresh.marketplace.OrchardCart.dto.request.AuthenticationRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.request.RegisterRequest;
