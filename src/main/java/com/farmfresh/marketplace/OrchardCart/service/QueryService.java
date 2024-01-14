@@ -6,10 +6,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class QueryService {
     private final EmailSendingService emailSendingService;
     private final ProductRepository productRepository;
+
+    public QueryService(EmailSendingService emailSendingService, ProductRepository productRepository) {
+        this.emailSendingService = emailSendingService;
+        this.productRepository = productRepository;
+    }
 
     public String sendQuery(Integer id, ProductInquiry productQuery) {
         String toEmail = productRepository.findSellerEmailByProductId(id);

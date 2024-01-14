@@ -10,6 +10,9 @@ import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.repository.CartRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -17,19 +20,25 @@ import java.util.Optional;
 
 @Service
 public class CartService {
-    @Autowired
-    private CartRepository cartRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private  CartItemService cartItemService;
+
+    private final CartRepository cartRepository;
+
+    private final ProductRepository productRepository;
+
+    private  final CartItemService cartItemService;
+
+    public CartService(CartRepository cartRepository, ProductRepository productRepository, CartItemService cartItemService) {
+        this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
+        this.cartItemService = cartItemService;
+    }
+
     public Cart createCart(UserInfo user) {
         Cart cart = new Cart();
         cart.setUserInfo(user);
         return  cartRepository.save(cart);
     }
 
-    @PostMapping("/add")
     public String addCartItem(Integer userId, CartItemRequest cartItemRequest) throws ElementNotFoundException {
         Cart cart = cartRepository.findCartByUserInfoId(userId);
         Product product = productRepository.findById(cartItemRequest.getProductId()).orElseThrow(()->new ElementNotFoundException("Product not found with Id:"+cartItemRequest.getProductId()));

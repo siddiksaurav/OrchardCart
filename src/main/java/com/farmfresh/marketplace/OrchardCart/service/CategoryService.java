@@ -7,7 +7,6 @@ import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistExcept
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.repository.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,10 +18,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private CategoryMapper categoryMapper;
+
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
+
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
+        this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
+    }
+
+    //need to put relative path
     private static final String uploadPath = "/home/saurav/Downloads/Java-Spring/OrchardCart/src/main/resources/static/img/";
     public List<CategoryResponse> getCategoryList(){
         List<Category> categories = categoryRepository.findAll();
@@ -74,10 +79,10 @@ public class CategoryService {
         }
     }
 
-    public String updateCategoryByCategoryName(Integer id,String categoryName) throws ElementNotFoundException {
+    public String updateCategory(Integer id, CategoryRequest categoryRequest) throws ElementNotFoundException {
         Category existingCategory = categoryRepository.findById(id).orElseThrow(()->new ElementNotFoundException("Category not exist with id:"+id));
-        existingCategory.setCategoryName(categoryName);
+        existingCategory.setCategoryName(categoryRequest.getCategoryName());
         categoryRepository.save(existingCategory);
-        return "Successfully updated";
+        return "Successfully Updated";
     }
 }

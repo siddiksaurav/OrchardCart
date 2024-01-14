@@ -17,11 +17,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ProductRepository productRepository;
     private final JwtService jwtService;
+
+    public ReviewService(ReviewRepository reviewRepository, ProductRepository productRepository, JwtService jwtService) {
+        this.reviewRepository = reviewRepository;
+        this.productRepository = productRepository;
+        this.jwtService = jwtService;
+    }
+
     public Review createReview(ReviewRequest reviewRequest, String userToken) throws ElementNotFoundException {
         Product product = productRepository.findById(reviewRequest.getProductId()).orElseThrow(()->new ElementNotFoundException("product not found with id:"+reviewRequest.getProductId()));
         UserInfo user = jwtService.getUserByToken(userToken);

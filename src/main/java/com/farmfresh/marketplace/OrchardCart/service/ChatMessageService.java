@@ -8,10 +8,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ChatMessageService {
     private final ChatMessageRepository repository;
     private final ChatRoomService chatRoomService;
+
+    public ChatMessageService(ChatMessageRepository repository, ChatRoomService chatRoomService) {
+        this.repository = repository;
+        this.chatRoomService = chatRoomService;
+    }
 
     public ChatMessage save(ChatMessage chatMessage) {
         var chatId = chatRoomService.getChatRoomId(chatMessage.getSenderId(), chatMessage.getRecipientId(), true);// You can create your own dedicated exception

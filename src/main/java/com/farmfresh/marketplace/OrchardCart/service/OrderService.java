@@ -3,7 +3,7 @@ package com.farmfresh.marketplace.OrchardCart.service;
 import com.farmfresh.marketplace.OrchardCart.dto.request.ShippingAddressRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.*;
-import com.farmfresh.marketplace.OrchardCart.model.enumaration.OrderStatus;
+import com.farmfresh.marketplace.OrchardCart.model.OrderStatus;
 import com.farmfresh.marketplace.OrchardCart.repository.OrderItemRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +16,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final CartService cartService;
     private final JwtService jwtService;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
+    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService, JwtService jwtService) {
+        this.orderRepository = orderRepository;
+        this.orderItemRepository = orderItemRepository;
+        this.cartService = cartService;
+        this.jwtService = jwtService;
+    }
+
+    private final Logger log = LoggerFactory.getLogger(OrderService.class);
     public Order createOrder(String token, ShippingAddressRequest shippingAddress) throws ElementNotFoundException {
         Order order = new Order();
         UserInfo user = jwtService.getUserByToken(token);
@@ -62,7 +68,7 @@ public class OrderService {
             OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
             order.setOrderStatus(orderStatus);
         } catch (IllegalArgumentException e) {
-            LOGGER.error("Invalid status string: " + status);
+            log.error("Invalid status string: " + status);
         }
         return orderRepository.save(order);
     }

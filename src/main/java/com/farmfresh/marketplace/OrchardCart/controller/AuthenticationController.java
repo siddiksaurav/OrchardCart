@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthenticationViewController {
+public class AuthenticationController {
     private final AuthenticationService authenticationService;
-    Logger logger = LoggerFactory.getLogger(AuthenticationViewController.class);
+    Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
     @GetMapping("/registration-type")
     public String selectRegistrationTypePage() {
         return "auth/registration-option"; // Return the selection page

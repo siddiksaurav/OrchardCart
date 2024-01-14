@@ -31,20 +31,28 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
-    @Autowired
-    ProductRepository productRepository;
-    @Autowired
-    SellerRepository sellerRepository;
-    @Autowired
-    CategoryRepository categoryRepository;
-    @Autowired
-    ProductMapper productMapper;
+
+    private final ProductRepository productRepository;
+
+    private final SellerRepository sellerRepository;
+
+    private final CategoryRepository categoryRepository;
+
+    private final ProductMapper productMapper;
+
+    public ProductService(ProductRepository productRepository, SellerRepository sellerRepository, CategoryRepository categoryRepository, ProductMapper productMapper) {
+        this.productRepository = productRepository;
+        this.sellerRepository = sellerRepository;
+        this.categoryRepository = categoryRepository;
+        this.productMapper = productMapper;
+    }
+    //todo use relative path
     private static final String uploadPath = "/home/saurav/Downloads/Java-Spring/OrchardCart/src/main/resources/static/img/";
-    private Logger logger = LoggerFactory.getLogger(ProductService.class);
+    private Logger log = LoggerFactory.getLogger(ProductService.class);
     public List<ProductResponse> getProductList() {
         List<Product> products = productRepository.findAll();
         for(Product product: products) {
-            logger.info(product.getImageURL());
+            log.info(product.getImageURL());
         }
         return products.stream()
                 .map(productMapper::mapToResponse) // Using ProductMapper to convert Product to ProductResponse
@@ -127,8 +135,4 @@ public class ProductService {
         return "Updated product Successfully";
     }
 
-    public ProductRequest getProductRequestById(Integer id) throws ElementNotFoundException {
-        Product product =productRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product not found with id:"+id));
-        return productMapper.mapToRequest(product);
-    }
 }

@@ -12,13 +12,16 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 
 @Service
-@RequiredArgsConstructor
 public class EmailSendingService {
     private final JavaMailSender mailSender;
 
-    public String sendSimpleEmail(String toEmail,String fromEmail,
-                                String body,
-                                String subject) {
+    public EmailSendingService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
+
+    public String sendSimpleEmail(String toEmail, String fromEmail,
+                                  String body,
+                                  String subject) {
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setFrom(fromEmail);

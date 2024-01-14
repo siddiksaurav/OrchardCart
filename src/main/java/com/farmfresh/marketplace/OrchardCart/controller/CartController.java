@@ -9,6 +9,7 @@ import com.farmfresh.marketplace.OrchardCart.service.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -28,9 +29,17 @@ public class CartViewController {
 
     @GetMapping("/new")
     public String createCart(Model model) throws ElementNotFoundException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = null;
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails userDetails) {
+                username = userDetails.getUsername();
+            }
+        }
         //UserInfo user = jwtService.getUserByToken(jwt);
         UserDetails userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        logger.info("in new cart: "+userInfo.getUsername());
+        logger.info("in new cart: "+username);
         //Cart cart = cartService.createCart(user);
         model.addAttribute("cart", new Cart());
         return "/cart/cart";
