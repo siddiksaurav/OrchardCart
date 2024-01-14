@@ -4,11 +4,34 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-@Data
 public class ProductInquiry {
-   @Email(message = "Invalid email address")
+   @Email
    private String userEmail;
-   @NotBlank(message = "product name required")
+   @NotBlank
    private String productName;
    private String message;
+
+   public String getUserEmail() {
+      return userEmail;
+   }
+
+   public void setUserEmail(String userEmail) {
+      this.userEmail = userEmail;
+   }
+
+   public String getProductName() {
+      return productName;
+   }
+
+   public void setProductName(String productName) {
+      this.productName = productName;
+   }
+
+   public String getMessage() {
+      return message;
+   }
+
+   public void setMessage(String message) {
+      this.message = message;
+   }
 }
