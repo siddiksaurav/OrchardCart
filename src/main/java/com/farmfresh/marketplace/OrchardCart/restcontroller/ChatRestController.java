@@ -15,13 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-//@RestController
-@RequiredArgsConstructor
+@RestController
 @RequestMapping("/products/query")
-public class ChatController {
+public class ChatRestController {
 
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatMessageService chatMessageService;
+
+    public ChatRestController(SimpMessagingTemplate messagingTemplate, ChatMessageService chatMessageService) {
+        this.messagingTemplate = messagingTemplate;
+        this.chatMessageService = chatMessageService;
+    }
 
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessage chatMessage) {

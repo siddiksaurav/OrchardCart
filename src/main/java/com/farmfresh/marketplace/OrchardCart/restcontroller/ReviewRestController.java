@@ -1,27 +1,23 @@
 package com.farmfresh.marketplace.OrchardCart.restcontroller;
 
-import com.farmfresh.marketplace.OrchardCart.dto.request.RatingRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.request.ReviewRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
-import com.farmfresh.marketplace.OrchardCart.model.Rating;
 import com.farmfresh.marketplace.OrchardCart.model.Review;
 import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.service.JwtService;
-import com.farmfresh.marketplace.OrchardCart.service.RatingService;
 import com.farmfresh.marketplace.OrchardCart.service.ReviewService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@RestController
+@RestController
 @RequestMapping("/api/v1/review")
-public class ReviewController {
+public class ReviewRestController {
 
     private final ReviewService reviewService;
     private final JwtService jwtService;
 
-    public ReviewController(ReviewService reviewService, JwtService jwtService) {
+    public ReviewRestController(ReviewService reviewService, JwtService jwtService) {
         this.reviewService = reviewService;
         this.jwtService = jwtService;
     }

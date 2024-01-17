@@ -6,20 +6,18 @@ import com.farmfresh.marketplace.OrchardCart.model.Rating;
 import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.service.JwtService;
 import com.farmfresh.marketplace.OrchardCart.service.RatingService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@RestController
+@RestController
 @RequestMapping("/api/v1/rating")
-public class RatingController {
+public class RatingRestController {
 
     private final RatingService ratingService;
     private final JwtService jwtService;
 
-    public RatingController(RatingService ratingService, JwtService jwtService) {
+    public RatingRestController(RatingService ratingService, JwtService jwtService) {
         this.ratingService = ratingService;
         this.jwtService = jwtService;
     }

@@ -13,11 +13,16 @@ import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 
-//@RestController
+@RestController
 @RequestMapping("/api/v1/products")
-public class ProductController {
-    @Autowired
-    ProductService productService;
+public class ProductRestController {
+
+    private final ProductService productService;
+
+    public ProductRestController(ProductService productService) {
+        this.productService = productService;
+    }
+
     @GetMapping("/all")
     public List<ProductResponse> getAllProducts(){
         return productService.getProductList();

@@ -3,24 +3,20 @@ package com.farmfresh.marketplace.OrchardCart.restcontroller;
 import com.farmfresh.marketplace.OrchardCart.dto.request.ShippingAddressRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.*;
-import com.farmfresh.marketplace.OrchardCart.service.CartService;
 import com.farmfresh.marketplace.OrchardCart.service.JwtService;
 import com.farmfresh.marketplace.OrchardCart.service.OrderService;
-import jakarta.persistence.Id;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-//@RestController
+@RestController
 @RequestMapping("/api/v1/order")
-public class OrderController {
+public class OrderRestController {
 
     private  final OrderService orderService;
     private final JwtService jwtService;
 
-    public OrderController(OrderService orderService, JwtService jwtService) {
+    public OrderRestController(OrderService orderService, JwtService jwtService) {
         this.orderService = orderService;
         this.jwtService = jwtService;
     }
