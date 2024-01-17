@@ -25,9 +25,8 @@ public class RatingService {
         this.jwtService = jwtService;
     }
 
-    public Rating createRating(RatingRequest ratingRequest, String userToken) throws ElementNotFoundException {
+    public Rating createRating(RatingRequest ratingRequest, UserInfo user) throws ElementNotFoundException {
         Product product = productRepository.findById(ratingRequest.getProductId()).orElseThrow(()->new ElementNotFoundException("product not found with id:"+ratingRequest.getProductId()));
-        UserInfo user = jwtService.getUserByToken(userToken);
         Rating rating = new Rating();
         rating.setProduct(product);
         rating.setRating(ratingRequest.getRating());

@@ -20,20 +20,17 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final CartService cartService;
-    private final JwtService jwtService;
 
-    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService, JwtService jwtService) {
+    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.cartService = cartService;
-        this.jwtService = jwtService;
     }
 
     private final Logger log = LoggerFactory.getLogger(OrderService.class);
-    public Order createOrder(String token, ShippingAddressRequest shippingAddress) throws ElementNotFoundException {
+    public Order createOrder(UserInfo user,ShippingAddressRequest shippingAddress) throws ElementNotFoundException {
         Order order = new Order();
-        UserInfo user = jwtService.getUserByToken(token);
-        Cart cart = cartService.findUserCart(user.getId());
+        Cart cart = cartService.findUserCart(user);
         List<OrderItem> orderItems = new ArrayList<>();
         for (CartItem item : cart.getCartItems()) {
             OrderItem orderItem = new OrderItem();
@@ -79,8 +76,7 @@ public class OrderService {
     public List<Order> getAllOrders(){
         return orderRepository.findAll();
     }
-    public  List<Order> getOrderHistory(String userToken) throws ElementNotFoundException {
-        UserInfo user =jwtService.getUserByToken(userToken);
+    public  List<Order> getOrderHistory(UserInfo user) throws ElementNotFoundException {
         return orderRepository.findByUserId(user.getId());
     }
 

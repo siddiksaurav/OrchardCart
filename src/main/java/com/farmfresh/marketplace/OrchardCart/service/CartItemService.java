@@ -8,11 +8,17 @@ import com.farmfresh.marketplace.OrchardCart.model.Product;
 import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.repository.CartItemRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.UserInfoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CartItemService {
@@ -21,36 +27,38 @@ public class CartItemService {
     public CartItemService(CartItemRepository cartItemRepository) {
         this.cartItemRepository = cartItemRepository;
     }
-
-    public void createCartItem(CartItem cartItem){
+    public Logger log = LoggerFactory.getLogger(CartItemService.class);
+    public void saveCartItem(CartItem cartItem){
         cartItemRepository.save(cartItem);
     }
-    public CartItem updateCartItem(Integer userId,Integer cartItemId, CartItem cartItem) throws ElementNotFoundException {
-        CartItem existingItem = cartItemRepository.findById(cartItemId).orElseThrow(()-> new ElementNotFoundException("CartItem nitfound with Id:"+cartItemId));
-        if(userId.equals(existingItem.getUserId()))
-        {
-            existingItem.setQuantity(cartItem.getQuantity());
-            existingItem.setPrice(cartItem.getProduct().getPrice()*cartItem.getQuantity());
+    public void updateCartItems(Cart existingCart, List<CartItem> updatedCartItems) throws ElementNotFoundException {
+        Set<Integer> updatedCartItemIds = updatedCartItems.stream()
+                .map(CartItem::getId)
+                .collect(Collectors.toSet());
 
+        Iterator<CartItem> iterator = existingCart.getCartItems().iterator();
+        while (iterator.hasNext()) {
+            CartItem existingCartItem = iterator.next();
+            if (!updatedCartItemIds.contains(existingCartItem.getId())) {
+                log.warn("No cart item should be removed at this time");
+                removeCartItem(existingCartItem);
+                iterator.remove();
+            }
         }
-        return cartItemRepository.save(existingItem);
+
+        for (CartItem updatedCartItem : updatedCartItems) {
+            CartItem cartItem = cartItemRepository.save(updatedCartItem);
+        }
+
     }
+
     public CartItem isCartItemExist(Cart cart, Product product, Integer userId){
         CartItem cartItem = cartItemRepository.isCartItemExist(cart,product,userId);
         return  cartItem;
     }
 
-    public void removeCartItem(Integer userId,Integer cartItemId) throws AccessDeniedException, ElementNotFoundException {
-        CartItem cartItem = findCartItemById(cartItemId);
-        if(userId.equals(cartItem.getUserId())){
-            cartItemRepository.deleteById(cartItemId);
-        }
-        else {
-            throw new AccessDeniedException("You are not Authorized to remove cartitem");
-        }
-    }
-    public CartItem findCartItemById(Integer cartItemId) throws ElementNotFoundException {
-        return cartItemRepository.findById(cartItemId).orElseThrow(()->new ElementNotFoundException("cart item not available with id :"+cartItemId));
+    public void removeCartItem(CartItem cartItem) throws AccessDeniedException, ElementNotFoundException {
+            cartItemRepository.deleteById(cartItem.getId());
     }
 
 }

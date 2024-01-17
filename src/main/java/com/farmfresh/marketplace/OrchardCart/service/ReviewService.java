@@ -28,9 +28,8 @@ public class ReviewService {
         this.jwtService = jwtService;
     }
 
-    public Review createReview(ReviewRequest reviewRequest, String userToken) throws ElementNotFoundException {
+    public Review createReview(ReviewRequest reviewRequest, UserInfo user) throws ElementNotFoundException {
         Product product = productRepository.findById(reviewRequest.getProductId()).orElseThrow(()->new ElementNotFoundException("product not found with id:"+reviewRequest.getProductId()));
-        UserInfo user = jwtService.getUserByToken(userToken);
         Review review =new Review();
         review.setProduct(product);
         review.setReview(reviewRequest.getReview());
