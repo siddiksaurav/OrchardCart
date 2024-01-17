@@ -2,19 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit Product - OrchardCart</title>
-    <!-- Bootstrap CSS or your preferred CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Your custom CSS -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
-<!-- Navbar -->
 <th:block th:insert="fragments/navbar"></th:block>
 
 <div class="container mt-4">
     <h2>Edit Product</h2>
     <form th:action="@{/products/save}" method="post" th:object="${productResponse}">
-        <!-- Input fields for editing product attributes -->
         <input type="hidden" th:field="*{id}">
         <label>Name:</label>
         <input type="text" th:field="*{name}">

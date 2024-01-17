@@ -16,7 +16,6 @@
                 <!-- Product Image -->
                 <!--<img th:src="${product.imageUrl}" class="card-img-top" alt="Product Image">-->
                 <div class="card-body">
-                    <!-- Product Title and Description -->
                     <h5 th:text="${product.name}" class="card-title"></h5>
                     <p th:text="${product.description}" class="card-text"></p>
                     <p th:text="'Price: $' + ${product.price}" class="card-text"></p>
@@ -29,7 +28,6 @@
                 </div>
             </div>
         </div>
-        <!-- End of Thymeleaf iteration -->
     </div>
 </div>
 <th:block th:insert="fragments/footer"></th:block>

@@ -24,6 +24,11 @@
                     <p th:text="'Quantity: ' + ${product.quantity}" class="card-text"></p>
                     <p th:text="'Category: ' + ${product.categoryName}" class="card-text"></p>
                     <p th:text="'Business: ' + ${product.businessName}" class="card-text"></p>
+                    <form th:action="@{/cart/addItem}" th:object="${cartItemRequest}" method="post">
+                        <input type="hidden" name="productId" th:value="${product.id}" />
+                        <input type="hidden" name="quantity" value="1" />
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
                     <a th:href="@{'/products/' + ${product.id}}" class="btn btn-primary">Details</a>
                     <a th:href="@{'/inquiry/products/' + ${product.id}}" class="btn btn-secondary">Inquiry</a>
                 </div>

@@ -1,96 +1,78 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Shopping Cart</title>
-    <!-- Add your CSS links and other head content here -->
-
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            margin-top: 50px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .table th,
-        .table td {
-            border: 1px solid #dee2e6;
-            padding: 12px;
-            text-align: left;
-        }
-
-        .total-price {
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        /* Add more custom styling as needed */
-    </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<!-- Include your navbar or header section here -->
-
 <div class="container">
     <h2 class="mb-4">Your Shopping Cart</h2>
+    <form th:action="@{/cart/update}" method="post" id="cartForm" th:object="${cart}">
+        <table class="table">
 
-    <!-- Display Cart Items -->
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <!-- Add more headers as needed -->
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Use Thymeleaf loop to iterate over cart items -->
-        <tr th:each="cartItem : ${cart.items}">
-            <td th:text="${cartItem.productName}"></td>
-            <td th:text="${cartItem.quantity}"></td>
-            <td th:text="${cartItem.price}"></td>
-            <!-- Add more cells as needed -->
-        </tr>
-        </tbody>
-    </table>
+            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{userInfo}" />
+            <tr th:each="cartItem, rowStat : ${cart.cartItems}">
+                <input type="hidden" th:field="*{cartItems[__${rowStat.index}__].id}" />
+                <input type="hidden" th:field="*{cartItems[__${rowStat.index}__].cart}" />
+                <input type="hidden" th:field="*{cartItems[__${rowStat.index}__].product}" />
+                <input type="hidden" th:field="*{cartItems[__${rowStat.index}__].price}" />
+                <input type="hidden" th:field="*{cartItems[__${rowStat.index}__].userId}"/>
+                <td th:text="${cartItem.product.name}"></td>
+                <td>
+                    <input type="number" th:field="*{cartItems[__${rowStat.index}__].quantity}" class="quantity-input" onchange="updateTotalPrice()" />
+                </td>
+                <td th:text="${cartItem.price}"></td>
+            </tr>
+        </table>
+        <input type="hidden" th:field="*{totalItem}" />
+        <input type="hidden" th:field="*{totalPrice}" />
 
-    <!-- Display Total Price -->
-    <div class="total-price">
-        <p>Total Price: $<span th:text="${cart.totalPrice}"></span></p>
-    </div>
+        <div class="total-price">
+            <p>Total Price: $<span id="totalPrice" th:text="${cart.totalPrice}"></span></p>
+        </div>
 
-    <!-- Add Checkout Button or other actions as needed -->
-    <div class="mt-4">
-        <button class="btn btn-primary">Proceed to Checkout</button>
-    </div>
 
+        <div class="mt-4">
+            <button type="button" class="btn btn-primary" onclick="checkout()">Checkout</button>
+        </div>
+    </form>
 </div>
 
-<!-- Footer -->
-<!-- Include your footer section here -->
 
-<!-- Bootstrap JS and other dependencies -->
-<!-- Include your JS script links and other dependencies here -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<script>
+    function updateTotalPrice() {
+
+        var totalPrice = 0.0;
+
+        $('.quantity-input').each(function () {
+            var quantity = $(this).val();
+            var price = parseFloat($(this).closest('tr').find('td:last').text());
+            if (quantity > 0) {
+                totalPrice += quantity * price;
+            } else {
+                $(this).closest('tr').remove();
+            }
+        });
+
+        // Update total price in the UI
+        $('#totalPrice').text(totalPrice.toFixed(2));
+    }
+
+    function checkout() {
+        $('#cartForm').submit();
+    }
+</script>
 
 </body>
 </html>
+
+
+

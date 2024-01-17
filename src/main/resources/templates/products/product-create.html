@@ -1,34 +1,5 @@
 
 <!DOCTYPE html>
-<!--html-- xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Create Product</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-</head>
-<body>
-<th:block th:insert="fragments/navbar"></th:block>
-<h1>Create Product</h1>
-<form action="/products/create" method="post" th:object="${productRequest}" enctype="multipart/form-data">
-    <label>Image:</label>
-    <input type="file" name="imageFile" accept="image/*" /><br/>
-    <label>Name:</label>
-    <input type="text" th:field="*{name}" /><br/>
-    <label>Description:</label>
-    <input type="text" th:field="*{description}" /><br/>
-    <label>Price:</label>
-    <input type="number" th:field="*{price}" /><br/>
-    <label>Quantity:</label>
-    <input type="number" th:field="*{quantity}" /><br/>
-    <label>Category Name:</label>
-    <input type="text" th:field="*{categoryName}" /><br/>
-    <label>Business Name:</label>
-    <input type="text" th:field="*{businessName}" /><br/>
-    <input type="submit" value="Create" />
-</form>
-<th:block th:insert="fragments/footer"></th:block>
-</body>
-</html-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>

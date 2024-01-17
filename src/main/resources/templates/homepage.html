@@ -44,15 +44,12 @@
             <div th:each="category, iterStat : ${categories}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'">
                 <div class="row">
                     <div class="col-md-6">
-                        <!-- Left side (text) -->
                         <div class="carousel-caption text-left">
                             <h5 th:text="${category.categoryName}"></h5>
                             <p>Your description goes here.</p>
-                            <!-- Add any additional information you want to display -->
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <!-- Right side (image) -->
                         <img th:src="${category.imageUrl}" class="d-block mx-auto" alt="Category Image">
                     </div>
                 </div>
