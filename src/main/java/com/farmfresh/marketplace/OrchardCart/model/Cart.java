@@ -2,8 +2,6 @@ package com.farmfresh.marketplace.OrchardCart.model;
 
 import jakarta.persistence.*;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,7 +10,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
-    private List<CartItem> cartItems = new ArrayList<>();
+    private List<CartItem> cartItems;
 
     @OneToOne
     private UserInfo userInfo;
@@ -58,4 +56,6 @@ public class Cart {
     public void setTotalItem(int totalItem) {
         this.totalItem = totalItem;
     }
+
+
 }
