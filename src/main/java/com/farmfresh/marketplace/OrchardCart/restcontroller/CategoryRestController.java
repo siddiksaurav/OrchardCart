@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@RestController
+//@RestController
 @EnableMethodSecurity
 @RequestMapping("/api/vi/category")
 public class CategoryController {
@@ -42,7 +42,7 @@ public class CategoryController {
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public String updateCategoryByCategoryName(@PathVariable Integer id, @RequestParam String categoryName) throws ElementNotFoundException {
-        return categoryService.updateCategoryByCategoryName(id,categoryName);
+    public String updateCategoryByCategoryName(@PathVariable Integer id, @RequestBody CategoryRequest categoryRequest) throws ElementNotFoundException {
+        return categoryService.updateCategory(id,categoryRequest);
     }
 }

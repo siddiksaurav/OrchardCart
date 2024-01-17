@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 
-@RestController
+//@RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
     @Autowired

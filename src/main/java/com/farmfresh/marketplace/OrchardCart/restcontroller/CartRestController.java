@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+//@RestController
 @RequestMapping("/api/v1/cart")
 public class CartController {
 
@@ -30,13 +30,13 @@ public class CartController {
     public String addCartItem(@RequestHeader("Authorization")String jwt,
                                                    @RequestBody CartItemRequest cartItemRequest) throws ElementNotFoundException {
         UserInfo user = jwtService.getUserByToken(jwt);
-        return cartService.addCartItem(user.getId(), cartItemRequest);
+        return cartService.addCartItem(user, cartItemRequest);
     }
 
     @GetMapping("/findCart")
     public Cart getUserCart(@RequestHeader("Authorization")String jwt) throws ElementNotFoundException {
         UserInfo user = jwtService.getUserByToken(jwt);
-        return cartService.findUserCart(user.getId());
+        return cartService.findUserCart(user);
     }
 
 }

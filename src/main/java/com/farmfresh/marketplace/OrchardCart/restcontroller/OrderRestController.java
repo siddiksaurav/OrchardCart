@@ -13,16 +13,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+//@RestController
 @RequestMapping("/api/v1/order")
-@RequiredArgsConstructor
 public class OrderController {
 
     private  final OrderService orderService;
+    private final JwtService jwtService;
+
+    public OrderController(OrderService orderService, JwtService jwtService) {
+        this.orderService = orderService;
+        this.jwtService = jwtService;
+    }
 
     @PostMapping("/place")
     public Order placeOrder(@RequestHeader("Authorization")String token, ShippingAddressRequest shippingAddress) throws ElementNotFoundException {
-         return orderService.createOrder(token,shippingAddress);
+        UserInfo user = jwtService.getUserByToken(token);
+        return orderService.createOrder(user,shippingAddress);
     }
 
     @GetMapping("{id}/update-status")
@@ -47,7 +53,8 @@ public class OrderController {
 
     @GetMapping("/order-history")
     public List<Order> userOrderHistory(@RequestHeader("Authorization")String token) throws ElementNotFoundException {
-        return orderService.getOrderHistory(token);
+        UserInfo user = jwtService.getUserByToken(token);
+        return orderService.getOrderHistory(user);
     }
 
 }
