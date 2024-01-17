@@ -6,6 +6,8 @@ import com.farmfresh.marketplace.OrchardCart.dto.request.SellerRegisterRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.AuthenticationResponse;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
 import com.farmfresh.marketplace.OrchardCart.service.AuthenticationService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -54,13 +56,17 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public String authenticateUser(@ModelAttribute("authenticationRequest") AuthenticationRequest authenticationRequest, Model model) {
+    public String authenticateUser(@ModelAttribute("authenticationRequest") AuthenticationRequest authenticationRequest, Model model, HttpServletResponse response) {
         logger.info("In login post map");
         logger.info(authenticationRequest.getEmail());
-        AuthenticationResponse response = authenticationService.authenticate(authenticationRequest);
-        logger.info(response.getToken());
-        System.out.println("Token:"+response.getToken());
-        if (response != null && response.getToken() != null) {
+        AuthenticationResponse authenticationResponse = authenticationService.authenticate(authenticationRequest);
+        logger.info(authenticationResponse.getToken());
+        if (authenticationResponse.getToken() != null) {
+            Cookie cookie = new Cookie("Bearer",authenticationResponse.getToken());
+            logger.info(cookie.getValue());
+            cookie.setPath("/");
+            cookie.setHttpOnly(true);
+            response.addCookie(cookie);
             return "redirect:/home";
         } else {
             model.addAttribute("error", "Invalid credentials. Please try again.");
