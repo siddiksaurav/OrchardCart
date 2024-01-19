@@ -28,8 +28,8 @@ public class OrderService {
     }
 
     private final Logger log = LoggerFactory.getLogger(OrderService.class);
-    public Order createOrder(UserInfo user,ShippingAddressRequest shippingAddress) throws ElementNotFoundException {
-        Order order = new Order();
+    public Orders createOrder(UserInfo user,ShippingAddressRequest shippingAddress) throws ElementNotFoundException {
+        Orders order = new Orders();
         Cart cart = cartService.findUserCart(user);
         List<OrderItem> orderItems = new ArrayList<>();
         for (CartItem item : cart.getCartItems()) {
@@ -40,7 +40,7 @@ public class OrderService {
             OrderItem createdOrderItem = orderItemRepository.save(orderItem);
             orderItems.add(createdOrderItem);
         }
-        Order createdOrder = new Order();
+        Orders createdOrder = new Orders();
         createdOrder.setOrderStatus(OrderStatus.PENDING);
         createdOrder.setDistrict(shippingAddress.getDistrict());
         createdOrder.setCity(shippingAddress.getCity());
@@ -51,15 +51,15 @@ public class OrderService {
         createdOrder.setTotalItem(cart.getTotalItem());
         createdOrder.setOrderTime(LocalDateTime.now());
         createdOrder.setUser(user);
-        Order savedOrder = orderRepository.save(createdOrder);
+        Orders savedOrder = orderRepository.save(createdOrder);
         for(OrderItem item: orderItems){
             item.setOrder(savedOrder);
             orderItemRepository.save(item);
         }
-        return  order;
+        return  savedOrder;
     }
-    public Order updateOrderStatus(Integer OrderId,String status){
-        Order order = new Order();
+    public Orders updateOrderStatus(Integer OrderId,String status){
+        Orders order = new Orders();
 
         try {
             OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
@@ -70,13 +70,13 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public Order getOrderById(Integer orderId) throws ElementNotFoundException {
+    public Orders getOrderById(Integer orderId) throws ElementNotFoundException {
         return orderRepository.findById(orderId).orElseThrow(()->new ElementNotFoundException("Order not found with id:"+orderId));
     }
-    public List<Order> getAllOrders(){
+    public List<Orders> getAllOrders(){
         return orderRepository.findAll();
     }
-    public  List<Order> getOrderHistory(UserInfo user) throws ElementNotFoundException {
+    public  List<Orders> getOrderHistory(UserInfo user) throws ElementNotFoundException {
         return orderRepository.findByUserId(user.getId());
     }
 

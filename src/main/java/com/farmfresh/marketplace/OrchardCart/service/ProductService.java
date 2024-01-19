@@ -6,6 +6,7 @@ import com.farmfresh.marketplace.OrchardCart.dto.mapper.ProductMapper;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.model.Product;
+import com.farmfresh.marketplace.OrchardCart.model.Rating;
 import com.farmfresh.marketplace.OrchardCart.model.Seller;
 import com.farmfresh.marketplace.OrchardCart.repository.CategoryRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.ProductRepository;
@@ -33,13 +34,9 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
-
     private final SellerRepository sellerRepository;
-
     private final CategoryRepository categoryRepository;
-
     private final ProductMapper productMapper;
-
     public ProductService(ProductRepository productRepository, SellerRepository sellerRepository, CategoryRepository categoryRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.sellerRepository = sellerRepository;
@@ -52,10 +49,10 @@ public class ProductService {
     public List<ProductResponse> getProductList() {
         List<Product> products = productRepository.findAll();
         for(Product product: products) {
-            log.info(product.getImageURL());
+            log.info(product.getImageUrl());
         }
         return products.stream()
-                .map(productMapper::mapToResponse) // Using ProductMapper to convert Product to ProductResponse
+                .map(productMapper::mapToResponse)
                 .collect(Collectors.toList());
     }
 
@@ -66,7 +63,7 @@ public class ProductService {
         Category category = categoryRepository.findByCategoryName(productRequest.getCategoryName())
                 .orElseThrow(() -> new ElementNotFoundException("Category not found with category name: " + productRequest.getCategoryName()));
         Product product = new Product();
-        product.setImageURL("/img/default.png");
+        product.setImageUrl("/img/default.png");
         if(productRequest.getImageFile()!=null && !productRequest.getImageFile().isEmpty()){
             MultipartFile imageFile = productRequest.getImageFile();
             File directory= new File(uploadPath);
@@ -80,7 +77,7 @@ public class ProductService {
             File destinationFile = new File(imageUrl);
             imageFile.transferTo(destinationFile);
 
-            product.setImageURL("/img/"+originalFileName);
+            product.setImageUrl("/img/"+originalFileName);
         }
         product.setName(productRequest.getName());
         product.setDescription(productRequest.getDescription());
@@ -94,18 +91,18 @@ public class ProductService {
         return "success";
     }
 
-    public ProductResponse getProductById(Integer id) throws ElementNotFoundException {
+    public ProductResponse getProduct(Integer id) throws ElementNotFoundException {
         Product product =productRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product not found with id:"+id));
         return productMapper.mapToResponse(product);
     }
 
-    public void deleteProductById(Integer id){
+    public void deleteProduct(Integer id){
         productRepository.deleteById(id);
     }
 
 
     @Transactional
-    public String updateProductById(ProductResponse product) throws ElementNotFoundException, AccessDeniedException {
+    public String updateProduct(ProductResponse product) throws ElementNotFoundException, AccessDeniedException {
         Product existingProduct = productRepository.findById(product.getId()).orElseThrow(() -> new NoSuchElementException("Product not found with id:"+product.getId()));
         Seller seller = sellerRepository.findByBusinessName(product.getBusinessName())
                 .orElseThrow(() -> new ElementNotFoundException("Seller not found with business name: " + product.getBusinessName()));
