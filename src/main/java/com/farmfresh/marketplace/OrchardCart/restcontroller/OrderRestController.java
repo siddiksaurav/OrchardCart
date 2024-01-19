@@ -22,22 +22,22 @@ public class OrderRestController {
     }
 
     @PostMapping("/place")
-    public Order placeOrder(@RequestHeader("Authorization")String token, ShippingAddressRequest shippingAddress) throws ElementNotFoundException {
+    public Orders placeOrder(@RequestHeader("Authorization")String token, ShippingAddressRequest shippingAddress) throws ElementNotFoundException {
         UserInfo user = jwtService.getUserByToken(token);
         return orderService.createOrder(user,shippingAddress);
     }
 
     @GetMapping("{id}/update-status")
-    public Order updateOrderStatus(@PathVariable Integer id, @RequestParam String status){
+    public Orders updateOrderStatus(@PathVariable Integer id, @RequestParam String status){
         return orderService.updateOrderStatus(id,status);
     }
 
     @GetMapping("/{id}")
-    public Order getOrderFromId(@PathVariable Integer id) throws ElementNotFoundException {
+    public Orders getOrderFromId(@PathVariable Integer id) throws ElementNotFoundException {
         return orderService.getOrderById(id);
     }
     @GetMapping("/all")
-    public List<Order> getAllOrders(){
+    public List<Orders> getAllOrders(){
         return orderService.getAllOrders();
     }
 
@@ -48,7 +48,7 @@ public class OrderRestController {
     }
 
     @GetMapping("/order-history")
-    public List<Order> userOrderHistory(@RequestHeader("Authorization")String token) throws ElementNotFoundException {
+    public List<Orders> userOrderHistory(@RequestHeader("Authorization")String token) throws ElementNotFoundException {
         UserInfo user = jwtService.getUserByToken(token);
         return orderService.getOrderHistory(user);
     }

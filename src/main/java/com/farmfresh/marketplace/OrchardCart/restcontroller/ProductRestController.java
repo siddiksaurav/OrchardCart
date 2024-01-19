@@ -35,20 +35,20 @@ public class ProductRestController {
     }
     @GetMapping("/{id}")
     public ProductResponse getProductById(@PathVariable Integer id) throws ElementNotFoundException {
-        return productService.getProductById(id);
+        return productService.getProduct(id);
     }
 
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @DeleteMapping("/{id}")
     public String deleteProductById(@PathVariable Integer id){
-        productService.deleteProductById(id);
+        productService.deleteProduct(id);
         return "deleted";
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @PutMapping("{id}/save")
     public String updateProductById(@PathVariable Long id, @Valid @RequestBody ProductResponse productResponse) throws ElementNotFoundException, AccessDeniedException {
-        return productService.updateProductById(productResponse);
-        }
+        return productService.updateProduct(productResponse);
+    }
 }
 
