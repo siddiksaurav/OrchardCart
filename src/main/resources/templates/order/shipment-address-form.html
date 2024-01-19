@@ -1,0 +1,44 @@
+<!-- src/main/resources/templates/shipmentAddressForm.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Shipping Address Form</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Shipping Address Form</h2>
+    <!-- Thymeleaf form with Bootstrap styling -->
+    <form th:action="@{/place}" th:object="${shippingAddress}" method="post">
+        <div class="form-group">
+            <label for="district">District:</label>
+            <input type="text" class="form-control" id="district" th:field="*{district}" required>
+        </div>
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" class="form-control" id="city" th:field="*{city}" required>
+        </div>
+        <div class="form-group">
+            <label for="additionalAddress">Additional Address:</label>
+            <textarea class="form-control" id="additionalAddress" th:field="*{additionalAddress}" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" pattern="^01\d{9}$" required>
+            <small class="form-text text-muted">Please enter a valid phone number starting with '01'.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<!-- Include Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
