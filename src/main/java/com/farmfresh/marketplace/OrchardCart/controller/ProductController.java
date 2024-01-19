@@ -7,6 +7,9 @@ import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import com.farmfresh.marketplace.OrchardCart.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,64 +20,69 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/products")
-@RequiredArgsConstructor
 public class ProductController {
-
+    private static final Logger log = LoggerFactory.getLogger(ProductController.class);
+    private static final String REDIRECT_PRODUCTS_LIST = "redirect:/products/list";
     private final ProductService productService;
     private final CategoryService categoryService;
 
-
-    @GetMapping("/all")
-    public String getAllProducts(Model model) {
-        List<ProductResponse> productList = productService.getProductList();
-        model.addAttribute("products", productList);
-        return "/products/product-list"; // Assuming "product-list.html" is the Thymeleaf template for listing products
+    public ProductController(ProductService productService, CategoryService categoryService) {
+        this.productService = productService;
+        this.categoryService = categoryService;
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
+
+    @GetMapping("/list")
+    public String listProducts(Model model) {
+        List<ProductResponse> productList = productService.getProductList();
+        model.addAttribute("products", productList);
+        return "products/product-list";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @GetMapping("/create")
-    public String showProductForm(Model model) {
+    public String createProductForm(Model model) {
         List<CategoryResponse> categories = categoryService.getCategoryList();
         model.addAttribute("productRequest", new ProductRequest());
         model.addAttribute("categories", categories);
-        return "products/product-create"; // Assuming "create-product.html" is the Thymeleaf template for creating products
+        return "products/product-create";
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @PostMapping("/create")
-    public String createProduct(@Valid @ModelAttribute("productRequest") ProductRequest productRequest) throws ElementNotFoundException, IOException {
+    public String createProduct(@Valid ProductRequest productRequest) throws IOException {
         productService.addProduct(productRequest);
-        return "redirect:/products/all"; // Redirect to the product list after creating a product
+        return REDIRECT_PRODUCTS_LIST;
     }
 
     @GetMapping("/{id}")
-    public String getProductById(@PathVariable Integer id, Model model) throws ElementNotFoundException {
-        ProductResponse product = productService.getProductById(id);
+    public String getProduct(@PathVariable Integer id, Model model){
+        ProductResponse product = productService.getProduct(id);
         model.addAttribute("product", product);
-        return "/products/product-details"; // Assuming "product-details.html" is the Thymeleaf template for displaying product details
+        return "products/product-details";
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @GetMapping("/delete/{id}")
-    public String deleteProductById(@PathVariable Integer id) {
-        productService.deleteProductById(id);
-        return "redirect:/products/all"; // Redirect to the product list after deleting a product
+    public String deleteProduct(@PathVariable Integer id) {
+        productService.deleteProduct(id);
+        return REDIRECT_PRODUCTS_LIST;
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @GetMapping("/edit/{id}")
-    public String showEditProductForm(@PathVariable Integer id, Model model) throws ElementNotFoundException {
-        ProductResponse product = productService.getProductById(id);
+    public String editProductForm(@PathVariable Integer id, Model model){
+        ProductResponse product = productService.getProduct(id);
         model.addAttribute("productResponse", product);
         model.addAttribute("productId",id);
-        return "/products/product-edit"; // Assuming "edit-product.html" is the Thymeleaf template for editing products
+        return "products/product-edit";
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @PostMapping("/save")
-    public String updateProductById(@Valid @ModelAttribute("productResponse") ProductResponse product) throws ElementNotFoundException, AccessDeniedException {
-        productService.updateProductById(product);
-        return "redirect:/products/all"; // Redirect to the product list after updating a product
+    public String updateProduct(@Valid ProductResponse product) throws AccessDeniedException {
+        productService.updateProduct(product);
+        return REDIRECT_PRODUCTS_LIST;
     }
 }
 
