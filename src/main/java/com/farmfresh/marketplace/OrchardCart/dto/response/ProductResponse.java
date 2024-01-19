@@ -1,6 +1,10 @@
 package com.farmfresh.marketplace.OrchardCart.dto.response;
 
+import com.farmfresh.marketplace.OrchardCart.model.Rating;
+import com.farmfresh.marketplace.OrchardCart.model.Review;
 import lombok.Data;
+
+import java.util.List;
 
 public class ProductResponse {
     private Integer id;
@@ -10,7 +14,36 @@ public class ProductResponse {
     private Integer quantity;
     private String categoryName;
     private String businessName;
-    private String imageURL;
+    private String imageUrl;
+    private double rating;
+    private List<Review> reviews;
+    private List<Rating> ratings;
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+
 
     public Integer getId() {
         return id;
@@ -68,11 +101,11 @@ public class ProductResponse {
         this.businessName = businessName;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

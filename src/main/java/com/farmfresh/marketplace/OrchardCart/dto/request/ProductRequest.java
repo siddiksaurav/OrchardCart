@@ -16,7 +16,7 @@ public class ProductRequest {
     @DecimalMin(value = "0.0")
     private double price;
     @Min(value = 0)
-    private Integer quantity;
+    private int quantity;
     @NotBlank
     private String categoryName;
     @NotBlank
@@ -26,6 +26,8 @@ public class ProductRequest {
     public String getName() {
         return name;
     }
+
+
 
     public void setName(String name) {
         this.name = name;
@@ -47,14 +49,13 @@ public class ProductRequest {
         this.price = price;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
     public String getCategoryName() {
         return categoryName;
     }
