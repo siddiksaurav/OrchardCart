@@ -28,7 +28,7 @@
             <div th:each="product : ${products}" class="col-md-4 mb-4">
                 <div class="card">
                     <a th:href="@{'/products/' + ${product.id}}">
-                        <img th:src="${product.imageURL}" class="card-img-top" alt="Product Image">
+                        <img th:src="${product.imageUrl}" class="card-img-top" alt="Product Image">
                     </a>
                     <div class="card-body">
                         <h5 th:text="${product.name}" class="card-title"></h5>

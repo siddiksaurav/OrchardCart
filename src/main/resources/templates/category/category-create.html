@@ -13,7 +13,6 @@
         <div class="col-md-6 offset-md-3">
             <h2 class="text-center mb-4">Create New Category</h2>
             <div class="card">
-                <img th:src="${category.imageUrl}" class="card-img-top" alt="Image">
                 <div class="card-body">
                     <form action="/category/create" method="post" th:object="${categoryRequest}" enctype="multipart/form-data">
                         <div class="form-group">
