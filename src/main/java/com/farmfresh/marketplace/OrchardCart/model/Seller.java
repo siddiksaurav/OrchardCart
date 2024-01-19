@@ -14,12 +14,12 @@ public class Seller {
     @MapsId
     @JoinColumn(name = "seller_id")
     private UserInfo userInfo;
-    @NotBlank()
+    @NotBlank
     private String address;
     @Column(unique = true)
     private String businessName;
     private String description;
-
+    public Seller(){}
     public Seller(UserInfo userInfo, String address, String businessName, String description) {
         this.userInfo = userInfo;
         this.address = address;

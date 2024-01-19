@@ -3,10 +3,7 @@ package com.farmfresh.marketplace.OrchardCart.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,24 +14,31 @@ import java.util.List;
 
 @Entity
 public class UserInfo implements UserDetails {
+
     @Id
     @GeneratedValue
     private Integer id;
+
     @NotBlank
     private String firstname;
+
     private String lastname;
+
     @Email
     private String email;
     private String password;
+
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Rating> ratings;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Review> reviews;
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Order> orders;
+    private List<Orders> ordersList;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_"+role.name()));
@@ -138,11 +142,11 @@ public class UserInfo implements UserDetails {
         this.reviews = reviews;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public List<Orders> getOrdersList() {
+        return ordersList;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setOrdersList(List<Orders> ordersList) {
+        this.ordersList = ordersList;
     }
 }

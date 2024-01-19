@@ -25,7 +25,7 @@ public class Product {
     @Min(value = 0)
     private int quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Category category;
 
     @ManyToOne
@@ -36,7 +36,7 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> reviews;
-    private String imageURL;
+    private String imageUrl;
 
     public Integer getId() {
         return id;
@@ -110,11 +110,11 @@ public class Product {
         this.reviews = reviews;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

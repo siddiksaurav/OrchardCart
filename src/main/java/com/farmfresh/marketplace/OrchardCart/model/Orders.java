@@ -2,13 +2,12 @@ package com.farmfresh.marketplace.OrchardCart.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-public class Order {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private  Integer id;

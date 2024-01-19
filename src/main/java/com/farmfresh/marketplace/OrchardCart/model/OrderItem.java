@@ -9,7 +9,7 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @ManyToOne
-    private Order order;
+    private Orders order;
     @ManyToOne
     private Product product;
     private int quantity;
@@ -23,11 +23,11 @@ public class OrderItem {
         this.id = id;
     }
 
-    public Order getOrder() {
+    public Orders getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(Orders order) {
         this.order = order;
     }
 
