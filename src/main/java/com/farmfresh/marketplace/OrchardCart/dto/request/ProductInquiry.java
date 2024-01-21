@@ -9,6 +9,7 @@ public class ProductInquiry {
    private String userEmail;
    @NotBlank
    private String productName;
+   @NotBlank
    private String message;
 
    public String getUserEmail() {

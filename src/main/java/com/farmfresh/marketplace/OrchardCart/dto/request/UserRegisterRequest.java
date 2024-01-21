@@ -1,15 +1,18 @@
 package com.farmfresh.marketplace.OrchardCart.dto.request;
 
 import com.farmfresh.marketplace.OrchardCart.model.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-public class RegisterRequest {
+public class UserRegisterRequest {
+    @NotBlank
     private String firstname;
     private String lastname;
+    @Email
     private String email;
+    @NotBlank
+    @Size(min=8)
     private String password;
     private Role role;
 

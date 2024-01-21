@@ -1,11 +1,14 @@
 package com.farmfresh.marketplace.OrchardCart.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 
 public class ShippingAddressRequest {
+    @NotBlank
     private String district;
+    @NotBlank
     private String city;
     private String additionalAddress;
     @Pattern(regexp = "^01\\d{9}$")
