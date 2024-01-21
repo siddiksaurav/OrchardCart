@@ -14,13 +14,15 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/home")
-@RequiredArgsConstructor
 public class HomeController {
 
     private final CategoryService categoryService;
     private final ProductService productService;
 
-
+    public HomeController(CategoryService categoryService, ProductService productService) {
+        this.categoryService = categoryService;
+        this.productService = productService;
+    }
 
     @GetMapping
     public String home(Model model) {

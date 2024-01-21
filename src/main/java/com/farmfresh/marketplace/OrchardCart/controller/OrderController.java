@@ -7,14 +7,17 @@ import com.farmfresh.marketplace.OrchardCart.model.Orders;
 import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.repository.UserInfoRepository;
 import com.farmfresh.marketplace.OrchardCart.service.*;
+import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/order/")
+@RequestMapping("/order")
 public class OrderController {
 
     private final OrderService orderService;
@@ -26,42 +29,45 @@ public class OrderController {
         this.authenticationService = authenticationService;
         this.cartService = cartService;
     }
-    @GetMapping("shipment-address")
+    @GetMapping("/shipment-address")
     public String provideShipmentAddress(Model model) {
         model.addAttribute("shippingAddress", new ShippingAddressRequest());
         return "order/shipment-address-form";
     }
 
-    @PostMapping("place")
-    public String placeOrder(ShippingAddressRequest shippingAddress,
-                             Model model){
+    @PostMapping("/place")
+    public String placeOrder(@Valid ShippingAddressRequest shippingAddress,
+                             Model model, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "order/shipment-address-form";
+        }
         UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
         Orders order = orderService.createOrder(user, shippingAddress);
         model.addAttribute("order", order);
         return "order/order-details-confirmation";
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public String getOrderDetails(@PathVariable Integer id, Model model){
         Orders order = orderService.getOrderById(id);
         model.addAttribute("order", order);
         return "order/order-details";
     }
-
-    @GetMapping("list")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/list")
     public String OrdersList(Model model) {
         List<Orders> orders = orderService.getAllOrders();
         model.addAttribute("orders", orders);
         return "order/order-history";
     }
 
-    @GetMapping("confirm-order")
+    @GetMapping("/confirm-order")
     public String confirmOrder(){
         UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
         cartService.clearUserCart(user);
         return "order/order-success";
     }
-    @GetMapping("order-history")
+    @GetMapping("/order-history")
     public String userOrderHistory(Model model) {
         UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
         List<Orders> orderHistory = orderService.getOrderHistory(user);
@@ -69,7 +75,8 @@ public class OrderController {
         return "order/order-history";
     }
 
-    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/delete/{id}")
     public String deleteOrder(@PathVariable Integer id) {
         orderService.deleteOrder(id);
         return "redirect:/order/list";

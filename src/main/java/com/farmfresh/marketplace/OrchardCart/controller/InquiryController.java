@@ -20,7 +20,7 @@ public class InquiryController {
     }
 
     @GetMapping("/products/{id}")
-    public String showInquiryForm(@PathVariable Long id, Model model) {
+    public String showInquiryForm(@PathVariable Integer id, Model model) {
         model.addAttribute("productId", id);
         model.addAttribute("productInquiry", new ProductInquiry());
         return "inquiry/inquiry";

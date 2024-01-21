@@ -7,11 +7,14 @@ import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import com.farmfresh.marketplace.OrchardCart.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -50,7 +53,12 @@ public class ProductController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @PostMapping("/create")
-    public String createProduct(@Valid ProductRequest productRequest) throws IOException {
+    public String createProduct(@Valid ProductRequest productRequest, BindingResult bindingResult) throws IOException {
+        if(bindingResult.hasErrors()) {
+            log.warn("Validation errors in product create form");
+            return "/products/product-create";
+        }
+
         productService.addProduct(productRequest);
         return REDIRECT_PRODUCTS_LIST;
     }
@@ -74,7 +82,6 @@ public class ProductController {
     public String editProductForm(@PathVariable Integer id, Model model){
         ProductResponse product = productService.getProduct(id);
         model.addAttribute("productResponse", product);
-        model.addAttribute("productId",id);
         return "products/product-edit";
     }
 

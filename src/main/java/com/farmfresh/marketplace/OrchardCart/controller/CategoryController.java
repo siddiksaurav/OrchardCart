@@ -46,26 +46,27 @@ public class CategoryController {
         return REDIRECT_CATEGORY_LIST;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/edit/{id}")
     public String editCategoryForm(@PathVariable Integer id, Model model){
         CategoryResponse category = categoryService.getCategoryById(id);
         model.addAttribute("category", category);
         return "category/category-edit";
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/update/{id}")
     public String updateCategory(@PathVariable Integer id, @RequestBody CategoryRequest categoryRequest){
         categoryService.updateCategory(id,categoryRequest);
         return REDIRECT_CATEGORY_LIST;
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/delete/{id}")
     public String deleteCategory(@PathVariable Integer id, Model model){
         CategoryResponse category = categoryService.getCategoryById(id);
         model.addAttribute("category", category);
         return "category/category-delete";
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/delete/{id}")
     public String deleteCategoryConfirm(@PathVariable Integer id) {
         categoryService.deleteCategoryById(id);
