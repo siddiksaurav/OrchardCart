@@ -1,129 +1,9 @@
 
-<!--DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Order Confirmation</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-header">
-            <h2 class="text-center">Order Details</h2>
-        </div>
-        <div class="card-body">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <h5>Order Items:</h5>
-                    <ul class="list-group">
-                        <li th:each="item : ${order.orderItems}" class="list-group-item">
-                            <span th:text="${item.product.name}"></span> -
-                            Quantity: <span th:text="${item.quantity}"></span> -
-                            Price: $<span th:text="${item.itemPrice}"></span>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="list-group-item">Order Time: <span th:text="${order.orderTime}"></span></li>
-                <li class="list-group-item">Total Price: $<span th:text="${order.totalPrice}"></span></li>
-                <li class="list-group-item">Total Items: <span th:text="${order.totalItem}"></span></li>
-                <li class="list-group-item">
-                    <h5>Shipping Address:</h5>
-                    <ul class="list-group">
-                        <li class="list-group-item">District: <span th:text="${order.district}"></span></li>
-                        <li class="list-group-item">City: <span th:text="${order.city}"></span></li>
-                        <li class="list-group-item">Additional Address: <span th:text="${order.additionalAddress}"></span></li>
-                        <li class="list-group-item">Phone Number: <span th:text="${order.phoneNumber}"></span></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="card-footer text-center">
-            <a th:href="@{/confirm-order}" class="btn btn-success">Confirm Order</a>
-        </div>
-
-    </div>
-    <p class="text-center mt-3">Thank you for choosing our service!</p>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-
-<script>
-</script>
-</body>
-</html-->
-<!--DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Order Confirmation</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-header">
-            <h2 class="text-center">Order Details</h2>
-        </div>
-        <div class="card-body">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <h5>Order Items:</h5>
-                    <ul class="list-group">
-                        <li th:each="item : ${order.orderItems}" class="list-group-item">
-                            <span th:text="${item.product.name}"></span> -
-                            Quantity: <span th:text="${item.quantity}"></span> -
-                            Price: $<span th:text="${item.itemPrice}"></span>
-                        </li>
-                    </ul>
-                </li>
-           >
-                <li class="list-group-item">Order Time: <span th:text="${order.orderTime}"></span></li>
-                <li class="list-group-item">Total Price: $<span th:text="${order.totalPrice}"></span></li>
-                <li class="list-group-item">Total Items: <span th:text="${order.totalItem}"></span></li>
-                <li class="list-group-item">
-                    <h5>Shipping Address:</h5>
-                    <ul class="list-group">
-                        <li class="list-group-item">District: <span th:text="${order.district}"></span></li>
-                        <li class="list-group-item">City: <span th:text="${order.city}"></span></li>
-                        <li class="list-group-item">Additional Address: <span th:text="${order.additionalAddress}"></span></li>
-                        <li class="list-group-item">Phone Number: <span th:text="${order.phoneNumber}"></span></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="card-footer text-center">
-
-            <button class="btn btn-primary">Submit Rating</button>
-            <button class="btn btn-secondary">Submit Review</button>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-</div>
-</body>
-</html-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Order Confirmation</title>
-    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -138,13 +18,10 @@
                 <li class="list-group-item">
                     <h5>Order Items:</h5>
                     <ul class="list-group">
-                        <!-- Iterate through order items and display each item with a form -->
                         <li th:each="item : ${order.orderItems}" class="list-group-item">
                             <span th:text="${item.product.name}"></span> -
                             Quantity: <span th:text="${item.quantity}"></span> -
                             Price: $<span th:text="${item.itemPrice}"></span>
-
-                            <!-- Form for rating submission -->
                             <form th:action="@{/submit-rating}" method="post" class="mt-2">
                                 <input type="hidden" name="productId" th:value="${item.product.id}" />
                                 <label for="rating">Rating:</label>
@@ -152,7 +29,6 @@
                                 <button type="submit" class="btn btn-primary">Submit Rating</button>
                             </form>
 
-                            <!-- Form for review submission -->
                             <form th:action="@{/submit-review}" method="post" class="mt-2">
                                 <input type="hidden" name="productId" th:value="${item.product.id}" />
                                 <label for="review">Review:</label>
@@ -162,7 +38,7 @@
                         </li>
                     </ul>
                 </li>
-                <!-- Add more list items as needed -->
+
                 <li class="list-group-item">Order Time: <span th:text="${order.orderTime}"></span></li>
                 <li class="list-group-item">Total Price: $<span th:text="${order.totalPrice}"></span></li>
                 <li class="list-group-item">Total Items: <span th:text="${order.totalItem}"></span></li>
@@ -179,7 +55,7 @@
         </div>
     </div>
 </div>
-<!-- Include Bootstrap JS and jQuery -->
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

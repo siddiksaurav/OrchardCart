@@ -9,7 +9,7 @@
 <th:block th:insert="fragments/navbar"></th:block>
 <div class="registration-form">
     <h2>Seller Registration</h2>
-    <form action="/auth/user/register" method="post" th:object="${seller}">
+    <form action="/auth/seller/register" method="post" th:object="${seller}">
         <div class="form-group">
             <label for="firstname">First Name</label>
             <input type="text" id="firstname" name="firstname" class="form-control" th:field="*{firstname}" required/>

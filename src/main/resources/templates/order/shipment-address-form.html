@@ -1,17 +1,15 @@
-<!-- src/main/resources/templates/shipmentAddressForm.html -->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8"/>
     <title>Shipping Address Form</title>
-    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 <div class="container mt-5">
     <h2>Shipping Address Form</h2>
-    <!-- Thymeleaf form with Bootstrap styling -->
     <form th:action="@{/place}" th:object="${shippingAddress}" method="post">
         <div class="form-group">
             <label for="district">District:</label>
@@ -33,7 +31,7 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-<!-- Include Bootstrap JS and jQuery -->
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

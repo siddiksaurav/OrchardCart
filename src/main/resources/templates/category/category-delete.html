@@ -16,7 +16,7 @@
                 <form th:action="@{/category/delete/{id}(id=${category.id})}" method="post">
                     <input type="hidden" name="id" th:value="${category.id}" />
                     <button type="submit" class="btn btn-danger">Confirm Delete</button>
-                    <a th:href="@{/category/all}" class="btn btn-secondary">Cancel</a>
+                    <a th:href="@{/category/list}" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>
