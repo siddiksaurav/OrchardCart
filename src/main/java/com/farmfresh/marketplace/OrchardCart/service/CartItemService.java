@@ -22,12 +22,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class CartItemService {
+    public static  final Logger log = LoggerFactory.getLogger(CartItemService.class);
     private final CartItemRepository cartItemRepository;
 
     public CartItemService(CartItemRepository cartItemRepository) {
         this.cartItemRepository = cartItemRepository;
     }
-    public Logger log = LoggerFactory.getLogger(CartItemService.class);
+
     public void saveCartItem(CartItem cartItem){
         cartItemRepository.save(cartItem);
     }

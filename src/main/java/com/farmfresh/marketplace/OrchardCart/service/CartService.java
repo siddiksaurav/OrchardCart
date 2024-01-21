@@ -1,8 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.service;
 
 import com.farmfresh.marketplace.OrchardCart.dto.request.CartItemRequest;
-import com.farmfresh.marketplace.OrchardCart.dto.request.CartItemUpdateRequest;
-import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.Cart;
 import com.farmfresh.marketplace.OrchardCart.model.CartItem;
@@ -10,20 +8,9 @@ import com.farmfresh.marketplace.OrchardCart.model.Product;
 import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.repository.CartRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.ProductRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 @Service
 public class CartService {
@@ -90,7 +77,7 @@ public class CartService {
             return cartRepository.save(cart);
         }
         else{
-            throw new Exception("Existing cart can't be null");
+            throw new Exception("Existing cart can't be null after update");
         }
     }
 

@@ -2,7 +2,7 @@ package com.farmfresh.marketplace.OrchardCart.service;
 
 import com.farmfresh.marketplace.OrchardCart.dto.request.AuthenticationRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.AuthenticationResponse;
-import com.farmfresh.marketplace.OrchardCart.dto.request.RegisterRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.request.UserRegisterRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
 import com.farmfresh.marketplace.OrchardCart.model.Role;
 import com.farmfresh.marketplace.OrchardCart.model.Seller;
@@ -10,8 +10,6 @@ import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.repository.SellerRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.UserInfoRepository;
 import com.farmfresh.marketplace.OrchardCart.dto.request.SellerRegisterRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -38,7 +36,7 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public AuthenticationResponse customerRegister(RegisterRequest request){
+    public AuthenticationResponse customerRegister(UserRegisterRequest request){
         Optional<UserInfo> user = userInfoRepository.findByEmail(request.getEmail());
         if (user.isPresent()) throw new ElementAlreadyExistException("User already exist with email:" + request.getEmail());
         UserInfo newUser = new UserInfo(request.getFirstname(),request.getLastname(),request.getEmail(),passwordEncoder.encode(request.getPassword()), Role.CUSTOMER);
