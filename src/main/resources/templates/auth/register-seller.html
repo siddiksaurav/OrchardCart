@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -9,37 +10,44 @@
 <th:block th:insert="fragments/navbar"></th:block>
 <div class="registration-form">
     <h2>Seller Registration</h2>
-    <form action="/auth/seller/register" method="post" th:object="${seller}">
+    <form action="/auth/seller/register" method="post" th:object="${sellerRegisterRequest}">
         <div class="form-group">
             <label for="firstname">First Name</label>
             <input type="text" id="firstname" name="firstname" class="form-control" th:field="*{firstname}" required/>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></small>
         </div>
 
         <div class="form-group">
             <label for="lastname">Last Name</label>
             <input type="text" id="lastname" name="lastname" class="form-control" th:field="*{lastname}" required/>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></small>
         </div>
 
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" class="form-control" th:field="*{email}" required/>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" class="form-control" th:field="*{password}" required/>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
         </div>
         <div class="form-group">
-            <label for="businessName">BusinessName</label>
+            <label for="businessName">Business Name</label>
             <input type="text" id="businessName" name="businessName" class="form-control" th:field="*{businessName}" required/>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('businessName')}" th:errors="*{businessName}"></small>
         </div>
         <div class="form-group">
             <label for="description">Description</label>
             <input type="text" id="description" name="description" class="form-control" th:field="*{description}" required/>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
         </div>
         <div class="form-group">
             <label for="address">Address</label>
             <input type="text" id="address" name="address" class="form-control" th:field="*{address}" required/>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></small>
         </div>
 
         <div class="form-group">
