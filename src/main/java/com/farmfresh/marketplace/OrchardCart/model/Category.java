@@ -19,7 +19,7 @@ public class Category {
     private Integer id;
     @NotBlank
     private String categoryName;
-    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category")
     private List<Product> products = new ArrayList<>();
     private String imageUrl;
     public Integer getId() {
