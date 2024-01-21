@@ -28,8 +28,7 @@ public class OrderService {
     }
 
     private final Logger log = LoggerFactory.getLogger(OrderService.class);
-    public Orders createOrder(UserInfo user,ShippingAddressRequest shippingAddress) throws ElementNotFoundException {
-        Orders order = new Orders();
+    public Orders createOrder(UserInfo user,ShippingAddressRequest shippingAddress){
         Cart cart = cartService.findUserCart(user);
         List<OrderItem> orderItems = new ArrayList<>();
         for (CartItem item : cart.getCartItems()) {
@@ -70,7 +69,7 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public Orders getOrderById(Integer orderId) throws ElementNotFoundException {
+    public Orders getOrderById(Integer orderId){
         return orderRepository.findById(orderId).orElseThrow(()->new ElementNotFoundException("Order not found with id:"+orderId));
     }
     public List<Orders> getAllOrders(){

@@ -20,12 +20,10 @@ import java.util.List;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ProductRepository productRepository;
-    private final JwtService jwtService;
 
-    public ReviewService(ReviewRepository reviewRepository, ProductRepository productRepository, JwtService jwtService) {
+    public ReviewService(ReviewRepository reviewRepository, ProductRepository productRepository) {
         this.reviewRepository = reviewRepository;
         this.productRepository = productRepository;
-        this.jwtService = jwtService;
     }
 
     public Review createReview(ReviewRequest reviewRequest, UserInfo user) throws ElementNotFoundException {

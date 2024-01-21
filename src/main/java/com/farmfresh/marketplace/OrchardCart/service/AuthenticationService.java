@@ -10,7 +10,6 @@ import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.repository.SellerRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.UserInfoRepository;
 import com.farmfresh.marketplace.OrchardCart.dto.request.SellerRegisterRequest;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,9 +38,7 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    Logger log = LoggerFactory.getLogger(AuthenticationService.class);
-
-    public AuthenticationResponse customerRegister(RegisterRequest request) throws ElementAlreadyExistException {
+    public AuthenticationResponse customerRegister(RegisterRequest request){
         Optional<UserInfo> user = userInfoRepository.findByEmail(request.getEmail());
         if (user.isPresent()) throw new ElementAlreadyExistException("User already exist with email:" + request.getEmail());
         UserInfo newUser = new UserInfo(request.getFirstname(),request.getLastname(),request.getEmail(),passwordEncoder.encode(request.getPassword()), Role.CUSTOMER);
@@ -50,7 +47,7 @@ public class AuthenticationService {
         return new AuthenticationResponse(jwtToken);
     }
 
-    public AuthenticationResponse sellerRegister(SellerRegisterRequest request) throws ElementAlreadyExistException {
+    public AuthenticationResponse sellerRegister(SellerRegisterRequest request){
         Optional<UserInfo> user = userInfoRepository.findByEmail(request.getEmail());
         if (user.isPresent()) throw new ElementAlreadyExistException("User already exist with email:" + request.getEmail());
         UserInfo newUser = new UserInfo(request.getFirstname(),request.getLastname(),request.getEmail(),passwordEncoder.encode(request.getPassword()), Role.SELLER);
@@ -73,17 +70,18 @@ public class AuthenticationService {
         return new AuthenticationResponse(jwtToken);
     }
 
-    public String getAuthUser(){
+    public Optional<UserInfo> getAuthUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = null;
+        Optional<UserInfo> authUser = null;
         if (authentication != null && authentication.isAuthenticated()) {
             Object principal = authentication.getPrincipal();
             if (principal instanceof UserDetails userDetails) {
                 userEmail = userDetails.getUsername();
+                authUser = userInfoRepository.findByEmail(userEmail);
             }
         }
-        return userEmail;
-
+        return authUser;
     }
-
 }
+

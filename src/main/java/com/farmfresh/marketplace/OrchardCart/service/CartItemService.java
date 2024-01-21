@@ -31,7 +31,7 @@ public class CartItemService {
     public void saveCartItem(CartItem cartItem){
         cartItemRepository.save(cartItem);
     }
-    public void updateCartItems(Cart existingCart, List<CartItem> updatedCartItems) throws ElementNotFoundException {
+    public void updateCartItems(Cart existingCart, List<CartItem> updatedCartItems){
         Set<Integer> updatedCartItemIds = updatedCartItems.stream()
                 .map(CartItem::getId)
                 .collect(Collectors.toSet());
@@ -53,11 +53,10 @@ public class CartItemService {
     }
 
     public CartItem isCartItemExist(Cart cart, Product product, Integer userId){
-        CartItem cartItem = cartItemRepository.isCartItemExist(cart,product,userId);
-        return  cartItem;
+        return cartItemRepository.isCartItemExist(cart,product,userId);
     }
 
-    public void removeCartItem(CartItem cartItem) throws AccessDeniedException, ElementNotFoundException {
+    public void removeCartItem(CartItem cartItem){
             cartItemRepository.deleteById(cartItem.getId());
     }
 

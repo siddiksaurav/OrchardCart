@@ -6,7 +6,9 @@ import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.Category;
+import com.farmfresh.marketplace.OrchardCart.model.Product;
 import com.farmfresh.marketplace.OrchardCart.repository.CategoryRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,14 +23,14 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final ImageService imageService;
 
-    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, ImageService imageService) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
+        this.imageService = imageService;
     }
 
-    //need to put relative path
-    private static final String uploadPath = "/home/saurav/Downloads/Java-Spring/OrchardCart/src/main/resources/static/img/";
     public List<CategoryResponse> getCategoryList(){
         List<Category> categories = categoryRepository.findAll();
         return categories.stream()
@@ -37,7 +39,7 @@ public class CategoryService {
     }
 
 
-    public String addCategory(CategoryRequest categoryRequest) throws ElementAlreadyExistException, IOException {
+    public String addCategory(CategoryRequest categoryRequest) throws IOException {
         Optional<Category> category = categoryRepository.findByCategoryName(categoryRequest.getCategoryName());
         if(category.isPresent()){
             throw new ElementAlreadyExistException("Category already exist with "+categoryRequest.getCategoryName());
@@ -46,29 +48,19 @@ public class CategoryService {
         newCategory.setCategoryName(categoryRequest.getCategoryName());
         if(categoryRequest.getImageFile()!=null && !categoryRequest.getImageFile().isEmpty()){
             MultipartFile imageFile = categoryRequest.getImageFile();
-            File directory= new File(uploadPath);
-
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-            String originalFileName = imageFile.getOriginalFilename();
-            String imageUrl = uploadPath + originalFileName;
-
-            File destinationFile = new File(imageUrl);
-            imageFile.transferTo(destinationFile);
-
-            newCategory.setImageUrl("/img/"+originalFileName);
+            String imageUrl = imageService.saveImage(imageFile, "categories");
+            newCategory.setImageUrl(imageUrl);
         }
         categoryRepository.save(newCategory);
         return "success";
     }
 
-    public CategoryResponse getCategory(String categoryName) throws ElementNotFoundException {
+    public CategoryResponse getCategory(String categoryName) {
         Category category = categoryRepository.findByCategoryName(categoryName).orElseThrow(()->new ElementNotFoundException("Category not found with name:"+categoryName));
         return categoryMapper.mapToResponse(category);
     }
 
-    public CategoryResponse getCategoryById(Integer id) throws ElementNotFoundException {
+    public CategoryResponse getCategoryById(Integer id) {
         Category category = categoryRepository.findById(id).orElseThrow(()->new ElementNotFoundException("Category not found with id:"+id));
         return categoryMapper.mapToResponse(category);
     }
@@ -79,10 +71,19 @@ public class CategoryService {
         }
     }
 
-    public String updateCategory(Integer id, CategoryRequest categoryRequest) throws ElementNotFoundException {
+    public String updateCategory(Integer id, CategoryRequest categoryRequest){
         Category existingCategory = categoryRepository.findById(id).orElseThrow(()->new ElementNotFoundException("Category not exist with id:"+id));
         existingCategory.setCategoryName(categoryRequest.getCategoryName());
         categoryRepository.save(existingCategory);
         return "Successfully Updated";
+    }
+    @Transactional
+    public void updateProductCategory(Product product, Category newCategory) {
+        Category previousCategory = product.getCategory();
+        previousCategory.getProducts().remove(product);
+        product.setCategory(newCategory);
+        newCategory.getProducts().add(product);
+        categoryRepository.save(newCategory);
+        categoryRepository.save(previousCategory);
     }
 }

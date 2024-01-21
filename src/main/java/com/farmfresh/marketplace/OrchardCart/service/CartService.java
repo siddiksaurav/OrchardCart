@@ -27,14 +27,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class CartService {
-
     private final CartRepository cartRepository;
-
     private final ProductRepository productRepository;
-
     private  final CartItemService cartItemService;
 
-    private Logger log = LoggerFactory.getLogger(CartService.class);
+
     public CartService(CartRepository cartRepository, ProductRepository productRepository, CartItemService cartItemService) {
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
@@ -47,7 +44,7 @@ public class CartService {
         return  cartRepository.save(cart);
     }
 
-    public String addCartItem(UserInfo user, CartItemRequest cartItemRequest) throws ElementNotFoundException {
+    public String addCartItem(UserInfo user, CartItemRequest cartItemRequest){
         Cart cart = cartRepository.findCartByUserInfoId(user.getId());
         if (cart==null){
             cart = createCart(user);

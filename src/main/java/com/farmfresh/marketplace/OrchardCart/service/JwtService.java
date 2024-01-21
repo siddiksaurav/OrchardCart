@@ -32,7 +32,7 @@ public class JwtService {
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
-    public UserInfo getUserByToken(String token) throws ElementNotFoundException {
+    public UserInfo getUserByToken(String token) {
         String userEmail = extractUsername(token);
         return userInfoRepository.findByEmail(userEmail).orElseThrow(()->new ElementNotFoundException("user not found with email:"+userEmail));
     }

@@ -17,12 +17,10 @@ import java.util.List;
 public class RatingService {
     private final RatingRepository ratingRepository;
     private final ProductRepository productRepository;
-    private final JwtService jwtService;
 
-    public RatingService(RatingRepository ratingRepository, ProductRepository productRepository, JwtService jwtService) {
+    public RatingService(RatingRepository ratingRepository, ProductRepository productRepository) {
         this.ratingRepository = ratingRepository;
         this.productRepository = productRepository;
-        this.jwtService = jwtService;
     }
 
     public Rating createRating(RatingRequest ratingRequest, UserInfo user) throws ElementNotFoundException {
