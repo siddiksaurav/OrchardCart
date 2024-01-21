@@ -18,18 +18,16 @@ public class RatingController {
 
     private final RatingService ratingService;
     private final AuthenticationService authenticationService;
-    private final UserInfoRepository userInfoRepository;
-    public RatingController(RatingService ratingService, AuthenticationService authenticationService, UserInfoRepository userInfoRepository) {
+
+    public RatingController(RatingService ratingService, AuthenticationService authenticationService) {
         this.ratingService = ratingService;
         this.authenticationService = authenticationService;
-        this.userInfoRepository = userInfoRepository;
     }
 
     @PostMapping("/submit-rating")
     public String addRating(@RequestParam Integer productId,
                             @RequestParam double rating, HttpServletRequest request) throws ElementNotFoundException {
-        String userEmail = authenticationService.getAuthUser();
-        UserInfo user = userInfoRepository.findByEmail(userEmail).orElseThrow(()->new ElementNotFoundException("User not found with email:"+userEmail));
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
         RatingRequest ratingRequest = new RatingRequest();
         ratingRequest.setProductId(productId);
         ratingRequest.setRating(rating);

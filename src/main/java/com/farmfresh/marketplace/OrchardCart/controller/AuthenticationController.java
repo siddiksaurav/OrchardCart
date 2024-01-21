@@ -25,7 +25,7 @@ public class AuthenticationController {
     Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
     @GetMapping("/registration-type")
     public String selectRegistrationTypePage() {
-        return "auth/registration-option"; // Return the selection page
+        return "auth/registration-option";
     }
     @GetMapping("/user/register")
     public String showUserRegistrationForm(Model model){
@@ -50,14 +50,12 @@ public class AuthenticationController {
     }
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-        logger.info("In login get map");
         model.addAttribute("authenticationRequest",new AuthenticationRequest());
         return "auth/login";
     }
 
     @PostMapping("/login")
     public String authenticateUser(@ModelAttribute("authenticationRequest") AuthenticationRequest authenticationRequest, Model model, HttpServletResponse response) {
-        logger.info("In login post map");
         logger.info(authenticationRequest.getEmail());
         AuthenticationResponse authenticationResponse = authenticationService.authenticate(authenticationRequest);
         logger.info(authenticationResponse.getToken());

@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/inquiry")
 public class InquiryController {
-    @Autowired
-    private QueryService queryService;
+
+    private final QueryService queryService;
+
+    public InquiryController(QueryService queryService) {
+        this.queryService = queryService;
+    }
 
     @GetMapping("/products/{id}")
     public String showInquiryForm(@PathVariable Long id, Model model) {
@@ -23,7 +27,7 @@ public class InquiryController {
     }
 
     @PostMapping("/products/{id}/submit")
-    public String submitInquiry(@PathVariable Integer id, @Valid @ModelAttribute ProductInquiry productInquiry, BindingResult result) {
+    public String submitInquiry(@PathVariable Integer id, @Valid ProductInquiry productInquiry, BindingResult result) {
         if (result.hasErrors()) {
             return "inquiry/inquiry";
         }

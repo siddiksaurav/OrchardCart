@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/cart")
@@ -28,35 +29,30 @@ public class CartController {
 
     private final CartService cartService;
     private final AuthenticationService authenticationService;
-    private final UserInfoRepository userInfoRepository;
-    public CartController(CartService cartService, AuthenticationService authenticationService, UserInfoRepository userInfoRepository) {
+
+    public CartController(CartService cartService, AuthenticationService authenticationService) {
         this.cartService = cartService;
         this.authenticationService = authenticationService;
-        this.userInfoRepository = userInfoRepository;
+
     }
 
-    Logger logger = LoggerFactory.getLogger(CartController.class);
-
     @GetMapping("/new")
-    public String createCart(Model model) throws ElementNotFoundException {
-        String userEmail = authenticationService.getAuthUser();
-        UserInfo user = userInfoRepository.findByEmail(userEmail).orElseThrow(()->new ElementNotFoundException("User not found with email:"+userEmail));
+    public String createCart(Model model){
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
         Cart cart = cartService.createCart(user);
         return "cart/cart";
     }
     @PostMapping("/addItem")
-    public String addCartItem(@ModelAttribute("cartItemRequest") CartItemRequest cartItemRequest,
-                              Model model) throws ElementNotFoundException {
-        String userEmail = authenticationService.getAuthUser();
-        UserInfo user = userInfoRepository.findByEmail(userEmail).orElseThrow(() -> new ElementNotFoundException("User not found with email:" + userEmail));
+    public String addCartItem(CartItemRequest cartItemRequest,
+                              Model model) {
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
         String result = cartService.addCartItem(user, cartItemRequest);
         model.addAttribute("result", result);
-        return "redirect:/products/all"; // Redirect back to the product list
+        return "redirect:/products/list"; // Redirect back to the product list
     }
     @PostMapping("/update")
-    public String updateCart(@ModelAttribute("cart") Cart cart,Model model) throws Exception {
-        String userEmail = authenticationService.getAuthUser();
-        UserInfo user = userInfoRepository.findByEmail(userEmail).orElseThrow(() -> new ElementNotFoundException("User not found with email:" + userEmail));
+    public String updateCart(Cart cart,Model model) throws Exception {
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
         Cart updatedCart = cartService.updateCartItem(user,cart);
         model.addAttribute("cart", updatedCart);
         return "redirect:/home";
@@ -64,9 +60,8 @@ public class CartController {
 
 
     @GetMapping("/find")
-    public String getUserCart(Model model) throws ElementNotFoundException {
-        String userEmail = authenticationService.getAuthUser();
-        UserInfo user = userInfoRepository.findByEmail(userEmail).orElseThrow(()->new ElementNotFoundException("User not found with email:"+userEmail));
+    public String getUserCart(Model model) {
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
         Cart cart = cartService.findUserCart(user);
         model.addAttribute("cart", cart);
         return "cart/cart";

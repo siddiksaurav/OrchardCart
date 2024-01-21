@@ -6,6 +6,7 @@ import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,46 +18,49 @@ import java.util.List;
 @Controller
 @RequestMapping("/category")
 public class CategoryController {
+    private static final String REDIRECT_CATEGORY_LIST = "redirect:/products/list";
+    private final CategoryService categoryService;
 
-    @Autowired
-    private CategoryService categoryService;
-
-    @GetMapping("/all")
-    public String showAllCategories(Model model) {
-        List<CategoryResponse> categories = categoryService.getCategoryList();
-        model.addAttribute("categories", categories);
-        return "category/category-list";
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/list")
+    public String CategoryList(Model model) {
+        List<CategoryResponse> categories = categoryService.getCategoryList();
+        model.addAttribute("categories", categories);
+        return REDIRECT_CATEGORY_LIST;
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/create")
     public String createCategoryForm(Model model) {
         model.addAttribute("categoryRequest",new CategoryRequest());
         return "category/category-create";
     }
 
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create")
-    public String addCategory(@Valid @ModelAttribute("categoryRequest") CategoryRequest categoryRequest) throws ElementAlreadyExistException, IOException {
+    public String addCategory(@Valid CategoryRequest categoryRequest) throws IOException {
         categoryService.addCategory(categoryRequest);
-        return "redirect:/category/all";
+        return REDIRECT_CATEGORY_LIST;
     }
 
     @GetMapping("/edit/{id}")
-    public String editCategoryForm(@PathVariable Integer id, Model model) throws ElementNotFoundException {
+    public String editCategoryForm(@PathVariable Integer id, Model model){
         CategoryResponse category = categoryService.getCategoryById(id);
         model.addAttribute("category", category);
         return "category/category-edit";
     }
 
     @PostMapping("/update/{id}")
-    public String updateCategory(@PathVariable Integer id, @RequestBody CategoryRequest categoryRequest) throws ElementNotFoundException {
+    public String updateCategory(@PathVariable Integer id, @RequestBody CategoryRequest categoryRequest){
         categoryService.updateCategory(id,categoryRequest);
-        return "redirect:/category/all";
+        return REDIRECT_CATEGORY_LIST;
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteCategory(@PathVariable Integer id, Model model) throws ElementNotFoundException {
+    public String deleteCategory(@PathVariable Integer id, Model model){
         CategoryResponse category = categoryService.getCategoryById(id);
         model.addAttribute("category", category);
         return "category/category-delete";
@@ -65,6 +69,6 @@ public class CategoryController {
     @PostMapping("/delete/{id}")
     public String deleteCategoryConfirm(@PathVariable Integer id) {
         categoryService.deleteCategoryById(id);
-        return "redirect:/category/all";
+        return REDIRECT_CATEGORY_LIST;
     }
 }

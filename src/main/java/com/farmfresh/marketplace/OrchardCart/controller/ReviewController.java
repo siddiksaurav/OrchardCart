@@ -19,19 +19,17 @@ public class ReviewController {
 
     private final ReviewService reviewService;
     private final AuthenticationService authenticationService;
-    private final UserInfoRepository userInfoRepository;
-    public ReviewController(ReviewService reviewService, AuthenticationService authenticationService, UserInfoRepository userInfoRepository) {
+
+    public ReviewController(ReviewService reviewService, AuthenticationService authenticationService) {
         this.reviewService = reviewService;
         this.authenticationService = authenticationService;
-        this.userInfoRepository = userInfoRepository;
     }
 
-    //IHow to send ratingRequest instead of parameters.
+
     @PostMapping("/submit-review")
     public String addRating(@RequestParam Integer productId,
                             @RequestParam String review) throws ElementNotFoundException {
-        String userEmail = authenticationService.getAuthUser();
-        UserInfo user = userInfoRepository.findByEmail(userEmail).orElseThrow(()->new ElementNotFoundException("User not found with email:"+userEmail));
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
         ReviewRequest reviewRequest = new ReviewRequest();
         reviewRequest.setProductId(productId);
         reviewRequest.setReview(review);
