@@ -1,7 +1,7 @@
 package com.farmfresh.marketplace.OrchardCart.restcontroller;
 
 import com.farmfresh.marketplace.OrchardCart.dto.response.AuthenticationResponse;
-import com.farmfresh.marketplace.OrchardCart.dto.request.RegisterRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.request.UserRegisterRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.request.AuthenticationRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.request.SellerRegisterRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
@@ -21,7 +21,7 @@ public class AuthenticationRestController {
 
     @PostMapping("/user/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+            @RequestBody UserRegisterRequest request
     ) throws ElementAlreadyExistException {
         return ResponseEntity.ok(service.customerRegister(request));
     }
