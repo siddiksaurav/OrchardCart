@@ -9,10 +9,9 @@ import java.util.List;
 @Entity
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue
     private  Integer id;
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private UserInfo user;
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;

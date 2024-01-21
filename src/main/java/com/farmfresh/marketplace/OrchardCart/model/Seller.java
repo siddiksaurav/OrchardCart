@@ -12,7 +12,6 @@ public class Seller {
     private Integer id;
     @OneToOne
     @MapsId
-    @JoinColumn(name = "seller_id")
     private UserInfo userInfo;
     @NotBlank
     private String address;

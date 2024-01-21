@@ -6,7 +6,7 @@ import lombok.Data;
 @Entity
 public class OrderItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Integer id;
     @ManyToOne
     private Orders order;
