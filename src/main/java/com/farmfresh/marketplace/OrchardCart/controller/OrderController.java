@@ -1,11 +1,9 @@
 package com.farmfresh.marketplace.OrchardCart.controller;
 
-import com.farmfresh.marketplace.OrchardCart.dto.request.ShippingAddressRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.request.AddressRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
-import com.farmfresh.marketplace.OrchardCart.model.Cart;
 import com.farmfresh.marketplace.OrchardCart.model.Orders;
 import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
-import com.farmfresh.marketplace.OrchardCart.repository.UserInfoRepository;
 import com.farmfresh.marketplace.OrchardCart.service.*;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/order")
@@ -31,12 +28,12 @@ public class OrderController {
     }
     @GetMapping("/shipment-address")
     public String provideShipmentAddress(Model model) {
-        model.addAttribute("shippingAddress", new ShippingAddressRequest());
+        model.addAttribute("shippingAddress", new AddressRequest());
         return "order/shipment-address-form";
     }
 
     @PostMapping("/place")
-    public String placeOrder(@Valid ShippingAddressRequest shippingAddress,
+    public String placeOrder(@Valid AddressRequest shippingAddress,
                              Model model, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "order/shipment-address-form";
