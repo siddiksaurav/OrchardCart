@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/category")
 public class CategoryController {
-    private static final String REDIRECT_CATEGORY_LIST = "redirect:/products/list";
+    private static final String REDIRECT_CATEGORY_LIST = "redirect:/category/list";
     private final CategoryService categoryService;
 
     public CategoryController(CategoryService categoryService) {
@@ -29,7 +29,7 @@ public class CategoryController {
     public String CategoryList(Model model) {
         List<CategoryResponse> categories = categoryService.getCategoryList();
         model.addAttribute("categories", categories);
-        return REDIRECT_CATEGORY_LIST;
+        return "category/category-list";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
