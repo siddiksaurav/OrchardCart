@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<!-- Navbar -->
+
 <th:block th:insert="fragments/navbar"></th:block>
 <div class="jumbotron">
     <h1>Welcome to OrchardCart!</h1>
@@ -29,12 +29,12 @@
                 <div class="card">
                     <a th:href="@{'/products/' + ${product.id}}">
                         <img th:src="${product.imageUrl}" class="card-img-top" alt="Product Image">
-                    </a>
+
                     <div class="card-body">
                         <h5 th:text="${product.name}" class="card-title"></h5>
-
                         <a th:href="@{'/inquiry/products/' + ${product.id}}" class="btn btn-secondary">Contact Seller</a>
                     </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
 
 </div>
 
-<!-- Footer -->
+
 <th:block th:insert="fragments/footer"></th:block>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -76,7 +76,3 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
-
-
-
-
