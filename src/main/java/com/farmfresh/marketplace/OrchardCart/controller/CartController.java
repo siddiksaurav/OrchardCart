@@ -49,7 +49,7 @@ public class CartController {
         UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
         Cart updatedCart = cartService.updateCartItem(user,cart);
         model.addAttribute("cart", updatedCart);
-        return "redirect:/home";
+        return "redirect:/order/shipment-address";
     }
 
 
