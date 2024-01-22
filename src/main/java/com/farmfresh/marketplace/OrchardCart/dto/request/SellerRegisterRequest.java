@@ -1,10 +1,7 @@
 package com.farmfresh.marketplace.OrchardCart.dto.request;
 
 import com.farmfresh.marketplace.OrchardCart.model.Role;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,10 +18,47 @@ public class SellerRegisterRequest {
     private String password;
     private Role role;
     @NotBlank
-    private String address;
-    @NotBlank
     private String businessName;
     private String description;
+    @NotBlank
+    private String district;
+    @NotBlank
+    private String city;
+    private String additionalAddress;
+    @Pattern(regexp = "^01\\d{9}$")
+    private String phoneNumber;
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAdditionalAddress() {
+        return additionalAddress;
+    }
+
+    public void setAdditionalAddress(String additionalAddress) {
+        this.additionalAddress = additionalAddress;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getFirstname() {
         return firstname;
@@ -66,13 +100,6 @@ public class SellerRegisterRequest {
         this.role = role;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getBusinessName() {
         return businessName;
