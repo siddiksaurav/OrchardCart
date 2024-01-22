@@ -1,5 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
+import com.farmfresh.marketplace.OrchardCart.dto.request.AddressRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 
@@ -20,11 +21,8 @@ public class Orders {
     private OrderStatus orderStatus;
     private double totalPrice;
     private int totalItem;
-    private String district;
-    private String city;
-    private String additionalAddress;
-    @Pattern(regexp = "^01\\d{9}$")
-    private String phoneNumber;
+    @OneToOne
+    private Address shippingAddress;
 
     public Integer getId() {
         return id;
@@ -82,35 +80,11 @@ public class Orders {
         this.totalItem = totalItem;
     }
 
-    public String getDistrict() {
-        return district;
+    public Address getShippingAddress() {
+        return shippingAddress;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getAdditionalAddress() {
-        return additionalAddress;
-    }
-
-    public void setAdditionalAddress(String additionalAddress) {
-        this.additionalAddress = additionalAddress;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 }

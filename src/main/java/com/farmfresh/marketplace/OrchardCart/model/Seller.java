@@ -1,7 +1,7 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
+import com.farmfresh.marketplace.OrchardCart.dto.request.AddressRequest;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,18 +12,28 @@ public class Seller {
     private Integer id;
     @OneToOne
     @MapsId
+    // named changed for removing joincolumn. It will give errors
     private UserInfo userInfo;
-    @NotBlank
-    private String address;
     @Column(unique = true)
     private String businessName;
     private String description;
-    public Seller(){}
-    public Seller(UserInfo userInfo, String address, String businessName, String description) {
-        this.userInfo = userInfo;
+    @OneToOne
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Seller(){}
+    public Seller(UserInfo userInfo, String businessName, String description,Address address) {
+        this.userInfo = userInfo;
         this.businessName = businessName;
         this.description = description;
+        this.address= address;
     }
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
@@ -43,14 +53,6 @@ public class Seller {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getBusinessName() {
