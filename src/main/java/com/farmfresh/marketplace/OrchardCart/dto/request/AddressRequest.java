@@ -14,6 +14,13 @@ public class ShippingAddressRequest {
     @Pattern(regexp = "^01\\d{9}$")
     private String phoneNumber;
 
+    public ShippingAddressRequest(String district, String city, String additionalAddress, String phoneNumber) {
+        this.district = district;
+        this.city = city;
+        this.additionalAddress = additionalAddress;
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getDistrict() {
         return district;
     }
