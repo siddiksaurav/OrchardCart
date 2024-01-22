@@ -30,7 +30,8 @@ public class ImageService {
         String originalFileName = imageFile.getOriginalFilename();
         String imageUrl = subDirectoryPath + "/" + originalFileName;
 
-        Path destinationPath = UPLOAD_PATH.resolve(StringUtils.cleanPath(originalFileName));
+        Path destinationPath = Path.of(StringUtils.cleanPath(imageUrl));
+        log.info("destinationPAth:"+destinationPath);
         imageFile.transferTo(destinationPath);
 
         return "/img/" + subDirectory + "/" + originalFileName;
