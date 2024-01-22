@@ -10,7 +10,7 @@
 <body>
 <div class="container mt-5">
     <h2>Shipping Address Form</h2>
-    <form th:action="@{/place}" th:object="${shippingAddress}" method="post">
+    <form th:action="@{/order/place}" th:object="${shippingAddress}" method="post">
         <div class="form-group">
             <label for="district">District:</label>
             <input type="text" class="form-control" id="district" th:field="*{district}" required>

@@ -31,16 +31,16 @@
                 <li class="list-group-item">
                     <h5>Shipping Address:</h5>
                     <ul class="list-group">
-                        <li class="list-group-item">District: <span th:text="${order.district}"></span></li>
-                        <li class="list-group-item">City: <span th:text="${order.city}"></span></li>
-                        <li class="list-group-item">Additional Address: <span th:text="${order.additionalAddress}"></span></li>
-                        <li class="list-group-item">Phone Number: <span th:text="${order.phoneNumber}"></span></li>
+                        <li class="list-group-item">District: <span th:text="${order.shippingAddress.district}"></span></li>
+                        <li class="list-group-item">City: <span th:text="${order.shippingAddress.city}"></span></li>
+                        <li class="list-group-item">Additional Address: <span th:text="${order.shippingAddress.additionalAddress}"></span></li>
+                        <li class="list-group-item">Phone Number: <span th:text="${order.shippingAddress.phoneNumber}"></span></li>
                     </ul>
                 </li>
             </ul>
         </div>
         <div class="card-footer text-center">
-            <a th:href="@{/confirm-order}" class="btn btn-success">Confirm Order</a>
+            <a th:href="@{/order/confirm-order}" class="btn btn-success">Confirm Order</a>
         </div>
 
     </div>
