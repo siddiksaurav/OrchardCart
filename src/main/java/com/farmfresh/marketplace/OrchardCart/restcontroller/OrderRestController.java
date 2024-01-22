@@ -1,6 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.restcontroller;
 
-import com.farmfresh.marketplace.OrchardCart.dto.request.ShippingAddressRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.request.AddressRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.*;
 import com.farmfresh.marketplace.OrchardCart.service.JwtService;
@@ -22,7 +22,7 @@ public class OrderRestController {
     }
 
     @PostMapping("/place")
-    public Orders placeOrder(@RequestHeader("Authorization")String token, ShippingAddressRequest shippingAddress) throws ElementNotFoundException {
+    public Orders placeOrder(@RequestHeader("Authorization")String token, AddressRequest shippingAddress) throws ElementNotFoundException {
         UserInfo user = jwtService.getUserByToken(token);
         return orderService.createOrder(user,shippingAddress);
     }
