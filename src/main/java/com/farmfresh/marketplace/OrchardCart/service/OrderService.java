@@ -1,12 +1,13 @@
 package com.farmfresh.marketplace.OrchardCart.service;
 
-import com.farmfresh.marketplace.OrchardCart.dto.request.ShippingAddressRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.request.AddressRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.*;
 import com.farmfresh.marketplace.OrchardCart.model.OrderStatus;
+import com.farmfresh.marketplace.OrchardCart.repository.AddressRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.OrderItemRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.OrderRepository;
-import lombok.RequiredArgsConstructor;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,15 +21,18 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final CartService cartService;
+    private final AddressRepository addressRepository;
 
-    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService) {
+    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService, AddressRepository addressRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.cartService = cartService;
+        this.addressRepository = addressRepository;
     }
 
     private final Logger log = LoggerFactory.getLogger(OrderService.class);
-    public Orders createOrder(UserInfo user,ShippingAddressRequest shippingAddress){
+    @Transactional
+    public Orders createOrder(UserInfo user, AddressRequest shippingAddress){
         Cart cart = cartService.findUserCart(user);
         List<OrderItem> orderItems = new ArrayList<>();
         for (CartItem item : cart.getCartItems()) {
@@ -39,18 +43,17 @@ public class OrderService {
             OrderItem createdOrderItem = orderItemRepository.save(orderItem);
             orderItems.add(createdOrderItem);
         }
+        Address address = new Address(shippingAddress.getDistrict(),shippingAddress.getCity(),shippingAddress.getAdditionalAddress(), shippingAddress.getPhoneNumber());
         Orders createdOrder = new Orders();
         createdOrder.setOrderStatus(OrderStatus.PENDING);
-        createdOrder.setDistrict(shippingAddress.getDistrict());
-        createdOrder.setCity(shippingAddress.getCity());
-        createdOrder.setAdditionalAddress(shippingAddress.getAdditionalAddress());
-        createdOrder.setPhoneNumber(shippingAddress.getPhoneNumber());
+        createdOrder.setShippingAddress(address);
         createdOrder.setTotalPrice(cart.getTotalPrice());
         createdOrder.setOrderItems(orderItems);
         createdOrder.setTotalItem(cart.getTotalItem());
         createdOrder.setOrderTime(LocalDateTime.now());
         createdOrder.setUser(user);
         Orders savedOrder = orderRepository.save(createdOrder);
+        addressRepository.save(address);
         for(OrderItem item: orderItems){
             item.setOrder(savedOrder);
             orderItemRepository.save(item);
