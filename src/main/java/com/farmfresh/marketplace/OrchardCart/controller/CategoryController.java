@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -41,7 +42,10 @@ public class CategoryController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create")
-    public String addCategory(@Valid CategoryRequest categoryRequest) throws IOException {
+    public String addCategory(@Valid CategoryRequest categoryRequest, BindingResult bindingResult) throws IOException {
+        if(bindingResult.hasErrors()){
+            return "category/create";
+        }
         categoryService.addCategory(categoryRequest);
         return REDIRECT_CATEGORY_LIST;
     }

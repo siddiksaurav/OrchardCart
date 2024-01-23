@@ -1,10 +1,12 @@
 package com.farmfresh.marketplace.OrchardCart.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 
 public class CategoryRequest {
+    @NotBlank
     private String categoryName;
     private String imageUrl;
     private MultipartFile imageFile;
