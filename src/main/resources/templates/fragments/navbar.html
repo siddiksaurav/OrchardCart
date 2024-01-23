@@ -8,8 +8,18 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <form class="d-flex justify-content-center" role="search">
+                <!--form class="d-flex justify-content-center" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px;">
+                    <button class="btn btn-outline-success" type="submit" style="height: 40px; width: 40px;">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form-->
+                <form th:action="@{/products/list}" method="get" class="d-flex justify-content-center" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Product Name" aria-label="Product Name" name="productName" style="width: 400px;">
+                    <!--select class="form-control me-2" name="categoryName">
+                        <option value="" selected>All Categories</option>
+                        <option th:each="category : ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+                    </select-->
                     <button class="btn btn-outline-success" type="submit" style="height: 40px; width: 40px;">
                         <i class="fas fa-search"></i>
                     </button>
