@@ -113,4 +113,17 @@ public class ProductService {
         return "Updated product Successfully";
     }
 
+    public List<ProductResponse> getProductsByCategory(String categoryName) {
+        List<Product> products = productRepository.findProductsByCategory_CategoryName(categoryName);
+        return products.stream()
+                .map(productMapper::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductResponse> getProductsByName(String productName) {
+        List<Product> products = productRepository.findProductsByName(productName);
+        return products.stream()
+                .map(productMapper::mapToResponse)
+                .collect(Collectors.toList());
+    }
 }

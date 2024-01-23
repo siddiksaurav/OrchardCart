@@ -36,8 +36,16 @@ public class ProductController {
 
 
     @GetMapping("/list")
-    public String listProducts(Model model) {
-        List<ProductResponse> productList = productService.getProductList();
+    public String listProducts(Model model,@RequestParam(required = false) String productName) {
+        List<ProductResponse> productList;
+        if (productName != null && !productName.isEmpty()) {
+            productList = productService.getProductsByName(productName);
+        } else {
+            productList = productService.getProductList();
+        }
+        if(productList==null){
+            log.info("No product found");
+        }
         model.addAttribute("products", productList);
         return "products/product-list";
     }
@@ -90,6 +98,16 @@ public class ProductController {
     public String updateProduct(@Valid ProductResponse product) throws AccessDeniedException {
         productService.updateProduct(product);
         return REDIRECT_PRODUCTS_LIST;
+    }
+
+    @GetMapping("/list/{categoryName}")
+    public String listProductsByCategory(@PathVariable String categoryName,Model model) {
+        List<ProductResponse> productList = productService.getProductsByCategory(categoryName);
+        if(productList==null){
+            log.info("No product found");
+        }
+        model.addAttribute("products", productList);
+        return "products/product-list";
     }
 }
 

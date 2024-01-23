@@ -12,7 +12,6 @@ public class Seller {
     private Integer id;
     @OneToOne
     @MapsId
-    // named changed for removing joincolumn. It will give errors
     private UserInfo userInfo;
     @Column(unique = true)
     private String businessName;
