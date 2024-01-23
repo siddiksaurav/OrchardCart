@@ -23,7 +23,7 @@
                 <input type="hidden" th:field="*{cartItems[__${rowStat.index}__].userId}"/>
                 <td th:text="${cartItem.product.name}"></td>
                 <td>
-                    <input type="number" th:field="*{cartItems[__${rowStat.index}__].quantity}" class="quantity-input" onchange="updateTotalPrice()" />
+                    <input type="number" th:field="*{cartItems[__${rowStat.index}__].quantity}" class="quantity-input" onchange="updateTotalPrice(this)" />
                 </td>
                 <td th:text="${cartItem.price}"></td>
             </tr>
@@ -31,9 +31,11 @@
         <input type="hidden" th:field="*{totalItem}" />
         <input type="hidden" th:field="*{totalPrice}" />
 
-        <div class="total-price">
-            <p>Total Price: $<span id="totalPrice" th:text="${cart.totalPrice}"></span></p>
+
+        <div>
+            <p>Total Price: <input name="totalPrice" th:field="*{totalPrice}" /></p>
         </div>
+
 
 
         <div class="mt-4">
@@ -48,29 +50,29 @@
 
 
 <script>
-    // ToDo need to update the code
-    function updateTotalPrice() {
-
+    function updateTotalPrice(input) {
         var totalPrice = 0.0;
 
         $('.quantity-input').each(function () {
             var quantity = $(this).val();
             var price = parseFloat($(this).closest('tr').find('td:last').text());
+
             if (quantity > 0) {
                 totalPrice += quantity * price;
             } else {
                 $(this).closest('tr').remove();
             }
         });
-
-        // Update total price in the UI
-        $('#totalPrice').text(totalPrice.toFixed(2));
+        $('#totalPrice').text('$' + totalPrice.toFixed(2));
+        $('input[name="totalPrice"]').val(totalPrice.toFixed(2));
     }
 
     function checkout() {
         $('#cartForm').submit();
     }
 </script>
+
+
 
 </body>
 </html>

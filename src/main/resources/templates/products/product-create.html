@@ -20,7 +20,6 @@
             <div class="form-group">
                 <label for="description">Description:</label>
                 <input type="text" class="form-control" th:field="*{description}" />
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
             </div>
             <div class="form-group">
                 <label for="price">Price:</label>
@@ -37,7 +36,7 @@
                 <select class="form-control" th:field="*{categoryName}">
                     <option th:each="category : ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
                 </select>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}"></small>
+
             </div>
             <div class="form-group">
                 <label for="businessName">Business Name:</label>
@@ -47,7 +46,6 @@
             <div class="form-group">
                 <label for="imageFile">Image:</label>
                 <input type="file" class="form-control-file" name="imageFile" accept="image/*" />
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}"></small>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Create" />
