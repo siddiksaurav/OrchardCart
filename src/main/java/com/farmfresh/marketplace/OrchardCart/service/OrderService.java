@@ -60,9 +60,8 @@ public class OrderService {
         }
         return  savedOrder;
     }
-    public Orders updateOrderStatus(Integer OrderId,String status){
-        Orders order = new Orders();
-
+    public Orders updateOrderStatus(Integer orderId,String status){
+        Orders order = orderRepository.findById(orderId).orElseThrow(()->new ElementNotFoundException("Order not found with id:"+orderId));
         try {
             OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
             order.setOrderStatus(orderStatus);

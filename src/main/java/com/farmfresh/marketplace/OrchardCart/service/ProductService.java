@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
     public  static String DEFAULT_PRODUCT_URL="/img/default.png";
+    private static Logger log = LoggerFactory.getLogger(ProductService.class);
     private final ProductRepository productRepository;
     private final SellerRepository sellerRepository;
     private final CategoryService categoryService;
@@ -44,7 +45,7 @@ public class ProductService {
         this.authenticationService = authenticationService;
     }
 
-    private Logger log = LoggerFactory.getLogger(ProductService.class);
+
     public List<ProductResponse> getProductList() {
         List<Product> products = productRepository.findAll();
         return products.stream()

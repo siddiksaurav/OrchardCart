@@ -2,8 +2,8 @@ package com.farmfresh.marketplace.OrchardCart.model;
 
 public enum OrderStatus {
     PENDING,
-    PLACED,
     CONFIRMED,
+    SHIPPED,
     DELIVERED,
     CANCELLED
 }

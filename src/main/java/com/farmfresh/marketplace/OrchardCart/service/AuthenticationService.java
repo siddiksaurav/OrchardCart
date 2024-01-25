@@ -47,7 +47,7 @@ public class AuthenticationService {
         UserInfo newUser = new UserInfo(request.getFirstname(),request.getLastname(),request.getEmail(),passwordEncoder.encode(request.getPassword()), Role.CUSTOMER);
         userInfoRepository.save(newUser);
         var jwtToken = jwtService.generateToken(newUser);
-        return new AuthenticationResponse(jwtToken);
+        return new AuthenticationResponse(jwtToken,Role.CUSTOMER);
     }
     @Transactional
     public AuthenticationResponse sellerRegister(SellerRegisterRequest request){
@@ -59,7 +59,7 @@ public class AuthenticationService {
         addressRepository.save(address);
         sellerRepository.save(seller);
         var jwtToken = jwtService.generateToken(newUser);
-        return new AuthenticationResponse(jwtToken);
+        return new AuthenticationResponse(jwtToken,Role.SELLER);
     }
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
@@ -71,7 +71,7 @@ public class AuthenticationService {
         var user = userInfoRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-        return new AuthenticationResponse(jwtToken);
+        return new AuthenticationResponse(jwtToken,user.getRole());
     }
 
     public Optional<UserInfo> getAuthUser() {
