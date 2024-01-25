@@ -5,6 +5,7 @@ import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.Orders;
 import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.service.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -71,7 +72,12 @@ public class OrderController {
         model.addAttribute("orders", orderHistory);
         return "order/order-history";
     }
-
+    @GetMapping("update-status/{id}")
+    public String updateOrderStatus(@PathVariable Integer id, @RequestParam String status, HttpServletRequest request){
+        orderService.updateOrderStatus(id,status);
+        String referer = request.getHeader("Referer");
+        return "redirect:" + (referer != null ? referer : "/");
+    }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/delete/{id}")
     public String deleteOrder(@PathVariable Integer id) {

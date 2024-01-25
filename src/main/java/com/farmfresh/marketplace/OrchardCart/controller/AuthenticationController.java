@@ -4,6 +4,7 @@ import com.farmfresh.marketplace.OrchardCart.dto.request.AuthenticationRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.request.UserRegisterRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.request.SellerRegisterRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.AuthenticationResponse;
+import com.farmfresh.marketplace.OrchardCart.model.Role;
 import com.farmfresh.marketplace.OrchardCart.service.AuthenticationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -78,6 +79,9 @@ public class AuthenticationController {
             cookie.setPath("/");
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
+            if (authenticationResponse.getRole() == Role.ADMIN){
+                return "redirect:/admin-dashboard";
+            }
             return "redirect:/home";
         } else {
             model.addAttribute("error", "Invalid credentials. Please try again.");

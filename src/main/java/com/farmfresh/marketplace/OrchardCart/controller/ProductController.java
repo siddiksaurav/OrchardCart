@@ -43,9 +43,7 @@ public class ProductController {
         } else {
             productList = productService.getProductList();
         }
-        if(productList==null){
-            log.info("No product found");
-        }
+
         model.addAttribute("products", productList);
         return "products/product-list";
     }

@@ -32,7 +32,6 @@ public class CategoryController {
         model.addAttribute("categories", categories);
         return "category/category-list";
     }
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/create")
     public String createCategoryForm(Model model) {
