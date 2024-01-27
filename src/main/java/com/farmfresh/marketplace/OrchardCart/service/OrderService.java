@@ -10,6 +10,7 @@ import com.farmfresh.marketplace.OrchardCart.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,12 +23,14 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final CartService cartService;
     private final AddressRepository addressRepository;
+    private final JmsTemplate jmsTemplate;
 
-    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService, AddressRepository addressRepository) {
+    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService, AddressRepository addressRepository, JmsTemplate jmsTemplate) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.cartService = cartService;
         this.addressRepository = addressRepository;
+        this.jmsTemplate = jmsTemplate;
     }
 
     private final Logger log = LoggerFactory.getLogger(OrderService.class);
@@ -58,6 +61,7 @@ public class OrderService {
             item.setOrder(savedOrder);
             orderItemRepository.save(item);
         }
+        jmsTemplate.convertAndSend("orderQueue",savedOrder.getUser().getEmail());
         return  savedOrder;
     }
     public Orders updateOrderStatus(Integer orderId,String status){
