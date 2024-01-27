@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+
+    <style>
+        .dropdown-btn {
+            margin-right: 5px;
+        }
+
+        .order-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-column {
+            width: 150px;
+        }
+
+        /* Match the button sizes */
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        /* Match the sizes for "Update Status" button */
+        .update-status-btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        /* Match the sizes for "Delete" and "Details" buttons */
+        .delete-details-btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            margin-right: 5px;
+        }
+    </style>
+
+    <title>Order Management</title>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Orders List</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Order Date</th>
+                    <th class="status-column">Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.orderTime}"></td>
+                    <td class="status-column" th:text="${order.orderStatus}"></td>
+                    <td>
+                        <div class="order-actions">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle dropdown-btn update-status-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Change Status
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a th:href="@{'/order/update-status/' + ${order.id} + '?status=PENDING'}" class="dropdown-item" th:if="${order.orderStatus != 'PENDING'}">Pending</a>
+                                    <a th:href="@{'/order/update-status/' + ${order.id} + '?status=CONFIRMED'}" class="dropdown-item" th:if="${order.orderStatus != 'CONFIRMED'}">Confirmed</a>
+                                    <a th:href="@{'/order/update-status/' + ${order.id} + '?status=SHIPPED'}" class="dropdown-item" th:if="${order.orderStatus != 'SHIPPED'}">Shipped</a>
+                                    <a th:href="@{'/order/update-status/' + ${order.id} + '?status=DELIVERED'}" class="dropdown-item" th:if="${order.orderStatus != 'DELIVERED'}">Delivered</a>
+                                    <a th:href="@{'/order/update-status/' + ${order.id} + '?status=CANCELLED'}" class="dropdown-item" th:if="${order.orderStatus != 'CANCELLED'}">Cancelled</a>
+                                </div>
+                            </div>
+                            <a th:href="@{'/order/delete/' + ${order.id}}" class="btn btn-danger btn-sm delete-details-btn">Delete</a>
+                            <a th:href="@{'/order/' + ${order.id}}" class="btn btn-info btn-sm delete-details-btn">Details</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
+
