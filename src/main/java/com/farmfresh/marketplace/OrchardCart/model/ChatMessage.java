@@ -7,8 +7,6 @@ import jakarta.persistence.Id;
 
 import java.util.Date;
 
-
-
 @Entity
 public class ChatMessage {
     @Id
@@ -28,6 +26,7 @@ public class ChatMessage {
         this.content = content;
         this.timestamp = timestamp;
     }
+    public ChatMessage() {}
 
     public Integer getId() {
         return id;

@@ -1,9 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
-import com.farmfresh.marketplace.OrchardCart.dto.request.AddressRequest;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;

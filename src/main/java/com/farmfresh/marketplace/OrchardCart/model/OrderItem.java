@@ -1,8 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
 import java.math.BigDecimal;
 
 @Entity

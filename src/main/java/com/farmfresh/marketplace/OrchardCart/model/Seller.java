@@ -1,8 +1,5 @@
 package com.farmfresh.marketplace.OrchardCart.model;
-
-import com.farmfresh.marketplace.OrchardCart.dto.request.AddressRequest;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 

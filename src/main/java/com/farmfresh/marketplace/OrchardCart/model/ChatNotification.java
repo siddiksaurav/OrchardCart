@@ -1,16 +1,12 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-
 public class ChatNotification {
     private Integer id;
     private Integer senderId;
     private Integer recipientId;
     private String content;
+
+    public ChatNotification() {}
 
     public ChatNotification(Integer id, Integer senderId, Integer recipientId, String content) {
         this.id = id;

@@ -1,14 +1,10 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.DataAmount;
-import lombok.Data;
-
 import java.math.BigDecimal;
 import java.util.List;
 
