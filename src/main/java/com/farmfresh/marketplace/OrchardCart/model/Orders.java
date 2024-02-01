@@ -4,6 +4,7 @@ import com.farmfresh.marketplace.OrchardCart.dto.request.AddressRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Orders {
     private LocalDateTime orderTime;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    private double totalPrice;
+    private BigDecimal totalPrice;
     private int totalItem;
     @OneToOne
     private Address shippingAddress;
@@ -64,11 +65,11 @@ public class Orders {
         this.orderStatus = orderStatus;
     }
 
-    public Double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 

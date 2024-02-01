@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Size;
 import jdk.jfr.DataAmount;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Product {
     private String name;
     private String description;
     @DecimalMin(value = "0.0")
-    private double price;
+    private BigDecimal price;
     @Min(value = 0)
     private int quantity;
 
@@ -62,11 +63,11 @@ public class Product {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

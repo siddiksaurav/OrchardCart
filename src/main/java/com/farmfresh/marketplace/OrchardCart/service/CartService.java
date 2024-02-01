@@ -9,6 +9,8 @@ import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.repository.CartRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.ProductRepository;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -43,7 +45,7 @@ public class CartService {
             cartItem.setCart(cart);
             cartItem.setProduct(product);
             cartItem.setQuantity(cartItemRequest.getQuantity());
-            cartItem.setPrice(cartItemRequest.getQuantity() * product.getPrice());
+            cartItem.setPrice(BigDecimal.valueOf(cartItemRequest.getQuantity()).multiply(product.getPrice()));
             cartItem.setUserId(user.getId());
             cartItemService.saveCartItem(cartItem);
             cart.getCartItems().add(cartItem);
@@ -66,10 +68,11 @@ public class CartService {
         if (existingCart != null) {
             List<CartItem> updatedCartItems = cart.getCartItems();
             cartItemService.updateCartItems(existingCart, updatedCartItems);
-            double totalPrice = 0;
+            BigDecimal totalPrice = BigDecimal.ZERO;
             int totalItem = 0;
             for (CartItem item : cart.getCartItems()) {
-                totalPrice = totalPrice + item.getPrice()*item.getQuantity();
+                BigDecimal itemTotal = item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
+                totalPrice = totalPrice.add(itemTotal);
                 totalItem= totalItem + item.getQuantity();
             }
             cart.setTotalItem(totalItem);

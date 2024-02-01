@@ -3,6 +3,8 @@ package com.farmfresh.marketplace.OrchardCart.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Entity
 public class OrderItem {
     @Id
@@ -13,7 +15,7 @@ public class OrderItem {
     @ManyToOne
     private Product product;
     private int quantity;
-    private double itemPrice;
+    private BigDecimal itemPrice;
 
     public Integer getId() {
         return id;
@@ -47,11 +49,11 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public Double getItemPrice() {
+    public BigDecimal getItemPrice() {
         return itemPrice;
     }
 
-    public void setItemPrice(double itemPrice) {
+    public void setItemPrice(BigDecimal itemPrice) {
         this.itemPrice = itemPrice;
     }
 }

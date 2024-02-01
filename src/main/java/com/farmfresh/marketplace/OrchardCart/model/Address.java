@@ -15,18 +15,12 @@ public class Address {
 
     @NotBlank
     private String district;
-
     @NotBlank
     private String city;
-
     private String additionalAddress;
-
     @Pattern(regexp = "^01\\d{9}$")
     private String phoneNumber;
-
-    public Address() {
-    }
-
+    public Address() {}
     public Address(String district, String city, String additionalAddress, String phoneNumber) {
         this.district = district;
         this.city = city;

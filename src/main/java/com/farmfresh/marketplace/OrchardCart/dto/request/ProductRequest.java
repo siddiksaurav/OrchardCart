@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
+
 
 public class ProductRequest {
     @NotBlank
@@ -14,7 +16,7 @@ public class ProductRequest {
     private String name;
     private String description;
     @DecimalMin(value = "0.0")
-    private double price;
+    private BigDecimal price;
     @Min(value = 0)
     private int quantity;
     @NotBlank
@@ -41,11 +43,11 @@ public class ProductRequest {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

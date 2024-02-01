@@ -4,13 +4,14 @@ import com.farmfresh.marketplace.OrchardCart.model.Rating;
 import com.farmfresh.marketplace.OrchardCart.model.Review;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductResponse {
     private Integer id;
     private String name;
     private String description;
-    private double price;
+    private BigDecimal price;
     private Integer quantity;
     private String categoryName;
     private String businessName;
@@ -69,11 +70,11 @@ public class ProductResponse {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
