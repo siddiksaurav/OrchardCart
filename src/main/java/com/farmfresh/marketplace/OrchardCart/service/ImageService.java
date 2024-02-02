@@ -2,7 +2,6 @@ package com.farmfresh.marketplace.OrchardCart.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +15,7 @@ import java.nio.file.Paths;
 public class ImageService {
     //@Value("${file.upload.path}")
     //public String fileUploadPath;
-    private  static final Logger log = LoggerFactory.getLogger(ImageService.class);
+    private static final Logger log = LoggerFactory.getLogger(ImageService.class);
     private final Path UPLOAD_PATH = Paths.get("src/main/resources/static/img/");
 
 
@@ -31,7 +30,7 @@ public class ImageService {
         String imageUrl = subDirectoryPath + "/" + originalFileName;
 
         Path destinationPath = Path.of(StringUtils.cleanPath(imageUrl));
-        log.info("destinationPAth:"+destinationPath);
+        log.info("destinationPAth:" + destinationPath);
         imageFile.transferTo(destinationPath);
 
         return "/img/" + subDirectory + "/" + originalFileName;

@@ -1,8 +1,7 @@
 package com.farmfresh.marketplace.OrchardCart.service;
 
-import com.farmfresh.marketplace.OrchardCart.repository.ChatMessageRepository;
 import com.farmfresh.marketplace.OrchardCart.model.ChatMessage;
-import lombok.RequiredArgsConstructor;
+import com.farmfresh.marketplace.OrchardCart.repository.ChatMessageRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class ChatMessageService {
 
     public List<ChatMessage> findChatMessages(Integer senderId, Integer recipientId) {
         var chatId = chatRoomService.getChatRoomId(senderId, recipientId, false);
-            return repository.findByChatId(chatId);
+        return repository.findByChatId(chatId);
     }
 
 }

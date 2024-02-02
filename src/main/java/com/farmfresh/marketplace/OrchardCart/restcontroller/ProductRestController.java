@@ -5,7 +5,6 @@ import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.service.ProductService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,7 @@ public class ProductRestController {
     }
 
     @GetMapping("/all")
-    public List<ProductResponse> getAllProducts(){
+    public List<ProductResponse> getAllProducts() {
         return productService.getProductList();
     }
 
@@ -33,6 +32,7 @@ public class ProductRestController {
     public String createProduct(@Valid @RequestBody ProductRequest productRequest) throws ElementNotFoundException, IOException {
         return productService.addProduct(productRequest);
     }
+
     @GetMapping("/{id}")
     public ProductResponse getProductById(@PathVariable Integer id) throws ElementNotFoundException {
         return productService.getProduct(id);
@@ -41,10 +41,11 @@ public class ProductRestController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @DeleteMapping("/{id}")
-    public String deleteProductById(@PathVariable Integer id){
+    public String deleteProductById(@PathVariable Integer id) {
         productService.deleteProduct(id);
         return "deleted";
     }
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @PutMapping("{id}/save")
     public String updateProductById(@PathVariable Long id, @Valid @RequestBody ProductResponse productResponse) throws ElementNotFoundException, AccessDeniedException {

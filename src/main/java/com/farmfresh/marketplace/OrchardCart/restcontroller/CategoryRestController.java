@@ -7,7 +7,6 @@ import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -20,14 +19,16 @@ public class CategoryRestController {
     private CategoryService categoryService;
 
     @GetMapping("/all")
-    public List<CategoryResponse> showAllCategories(){
+    public List<CategoryResponse> showAllCategories() {
         return categoryService.getCategoryList();
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create")
     public String addCategory(@RequestParam CategoryRequest categoryRequest) throws ElementAlreadyExistException, IOException {
         return categoryService.addCategory(categoryRequest);
     }
+
     @GetMapping("/")
     public CategoryResponse getCategoryByCategoryName(@RequestParam String categoryName) throws ElementNotFoundException {
         return categoryService.getCategory(categoryName);
@@ -35,13 +36,14 @@ public class CategoryRestController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    public String deleteCategoryById(@PathVariable Integer id){
+    public String deleteCategoryById(@PathVariable Integer id) {
         categoryService.deleteCategoryById(id);
         return "Deleted category successfully";
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public String updateCategoryByCategoryName(@PathVariable Integer id, @RequestBody CategoryRequest categoryRequest) throws ElementNotFoundException {
-        return categoryService.updateCategory(id,categoryRequest);
+        return categoryService.updateCategory(id, categoryRequest);
     }
 }

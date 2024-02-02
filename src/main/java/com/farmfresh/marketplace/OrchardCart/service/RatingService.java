@@ -7,7 +7,6 @@ import com.farmfresh.marketplace.OrchardCart.model.Rating;
 import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.repository.ProductRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.RatingRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,16 +23,16 @@ public class RatingService {
     }
 
     public Rating createRating(RatingRequest ratingRequest, UserInfo user) throws ElementNotFoundException {
-        Product product = productRepository.findById(ratingRequest.getProductId()).orElseThrow(()->new ElementNotFoundException("product not found with id:"+ratingRequest.getProductId()));
+        Product product = productRepository.findById(ratingRequest.getProductId()).orElseThrow(() -> new ElementNotFoundException("product not found with id:" + ratingRequest.getProductId()));
         Rating rating = new Rating();
         rating.setProduct(product);
         rating.setRating(ratingRequest.getRating());
         rating.setUser(user);
         rating.setCreateTime(LocalDateTime.now());
-        return  ratingRepository.save(rating);
+        return ratingRepository.save(rating);
     }
 
-    public List<Rating> getProductRatings(Integer productId){
+    public List<Rating> getProductRatings(Integer productId) {
         return ratingRepository.findRatingsByProductId(productId);
     }
 }

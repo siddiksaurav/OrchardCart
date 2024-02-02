@@ -27,7 +27,9 @@ public class ChatMessage {
         this.content = content;
         this.timestamp = timestamp;
     }
-    public ChatMessage() {}
+
+    public ChatMessage() {
+    }
 
     public Integer getId() {
         return id;

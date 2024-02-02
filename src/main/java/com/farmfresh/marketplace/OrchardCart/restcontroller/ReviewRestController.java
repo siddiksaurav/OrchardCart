@@ -24,11 +24,12 @@ public class ReviewRestController {
 
     @PostMapping("/create")
     public Review addRating(@RequestHeader("Authorization") String userToken, ReviewRequest reviewRequest) throws ElementNotFoundException {
-        UserInfo user =jwtService.getUserByToken(userToken);
-        return reviewService.createReview(reviewRequest,user);
+        UserInfo user = jwtService.getUserByToken(userToken);
+        return reviewService.createReview(reviewRequest, user);
     }
+
     @GetMapping("/product/{producid}")
-    public List<Review> getProductReviews(@PathVariable Integer productId){
+    public List<Review> getProductReviews(@PathVariable Integer productId) {
         return reviewService.getProductReviews(productId);
     }
 }

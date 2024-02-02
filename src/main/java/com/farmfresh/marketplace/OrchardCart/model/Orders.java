@@ -1,6 +1,7 @@
 package com.farmfresh.marketplace.OrchardCart.model;
 
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,10 +10,10 @@ import java.util.List;
 public class Orders {
     @Id
     @GeneratedValue
-    private  Integer id;
+    private Integer id;
     @ManyToOne
     private UserInfo user;
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
     private LocalDateTime orderTime;
     @Enumerated(EnumType.STRING)

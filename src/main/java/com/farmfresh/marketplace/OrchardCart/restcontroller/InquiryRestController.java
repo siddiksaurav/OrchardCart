@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 public class InquiryRestController {
     @Autowired
     private QueryService queryService;
-    @PostMapping ("/products/{id}")
-    public String InquiryOverEmail(@PathVariable Integer id, @Valid @RequestBody ProductInquiry productInquiry){
-        return queryService.sendQuery(id,productInquiry);
-   }
+
+    @PostMapping("/products/{id}")
+    public String InquiryOverEmail(@PathVariable Integer id, @Valid @RequestBody ProductInquiry productInquiry) {
+        return queryService.sendQuery(id, productInquiry);
+    }
 }

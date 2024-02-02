@@ -12,7 +12,7 @@ public class UserRegisterRequest {
     @Email
     private String email;
     @NotBlank
-    @Size(min=8)
+    @Size(min = 8)
     private String password;
     private Role role;
 

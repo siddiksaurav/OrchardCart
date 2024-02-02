@@ -2,7 +2,6 @@ package com.farmfresh.marketplace.OrchardCart.dto.response;
 
 import com.farmfresh.marketplace.OrchardCart.model.Rating;
 import com.farmfresh.marketplace.OrchardCart.model.Review;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -43,7 +42,6 @@ public class ProductResponse {
     public void setRating(double rating) {
         this.rating = rating;
     }
-
 
 
     public Integer getId() {

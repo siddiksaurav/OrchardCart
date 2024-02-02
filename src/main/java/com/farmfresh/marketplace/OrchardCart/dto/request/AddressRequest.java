@@ -12,7 +12,10 @@ public class AddressRequest {
     private String additionalAddress;
     @Pattern(regexp = "^01\\d{9}$")
     private String phoneNumber;
-    public AddressRequest(){}
+
+    public AddressRequest() {
+    }
+
     public AddressRequest(String district, String city, String additionalAddress, String phoneNumber) {
         this.district = district;
         this.city = city;

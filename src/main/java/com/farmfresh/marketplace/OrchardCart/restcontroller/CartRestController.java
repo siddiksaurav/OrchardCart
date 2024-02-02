@@ -1,8 +1,8 @@
 package com.farmfresh.marketplace.OrchardCart.restcontroller;
 
+import com.farmfresh.marketplace.OrchardCart.dto.request.CartItemRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.Cart;
-import com.farmfresh.marketplace.OrchardCart.dto.request.CartItemRequest;
 import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.service.CartService;
 import com.farmfresh.marketplace.OrchardCart.service.JwtService;
@@ -20,20 +20,20 @@ public class CartRestController {
 
 
     @GetMapping("/")
-    public Cart createCart(@RequestHeader("Authorization")String jwt ) throws ElementNotFoundException {
+    public Cart createCart(@RequestHeader("Authorization") String jwt) throws ElementNotFoundException {
         UserInfo user = jwtService.getUserByToken(jwt);
         return cartService.createCart(user);
     }
 
     @PostMapping("/addItem")
-    public String addCartItem(@RequestHeader("Authorization")String jwt,
-                                                   @RequestBody CartItemRequest cartItemRequest) throws ElementNotFoundException {
+    public String addCartItem(@RequestHeader("Authorization") String jwt,
+                              @RequestBody CartItemRequest cartItemRequest) throws ElementNotFoundException {
         UserInfo user = jwtService.getUserByToken(jwt);
         return cartService.addCartItem(user, cartItemRequest);
     }
 
     @GetMapping("/findCart")
-    public Cart getUserCart(@RequestHeader("Authorization")String jwt) throws ElementNotFoundException {
+    public Cart getUserCart(@RequestHeader("Authorization") String jwt) throws ElementNotFoundException {
         UserInfo user = jwtService.getUserByToken(jwt);
         return cartService.findUserCart(user);
     }

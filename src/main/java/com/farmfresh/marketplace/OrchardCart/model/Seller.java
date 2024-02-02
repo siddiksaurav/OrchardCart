@@ -1,5 +1,7 @@
 package com.farmfresh.marketplace.OrchardCart.model;
+
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,18 @@ public class Seller {
     private String description;
     @OneToOne
     private Address address;
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
+    private List<Product> products = new ArrayList<>();
+
+    public Seller() {
+    }
+
+    public Seller(UserInfo userInfo, String businessName, String description, Address address) {
+        this.userInfo = userInfo;
+        this.businessName = businessName;
+        this.description = description;
+        this.address = address;
+    }
 
     public Address getAddress() {
         return address;
@@ -23,17 +37,6 @@ public class Seller {
     public void setAddress(Address address) {
         this.address = address;
     }
-
-    public Seller(){}
-    public Seller(UserInfo userInfo, String businessName, String description,Address address) {
-        this.userInfo = userInfo;
-        this.businessName = businessName;
-        this.description = description;
-        this.address= address;
-    }
-
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
-    private List<Product> products = new ArrayList<>();
 
     public Integer getId() {
         return id;

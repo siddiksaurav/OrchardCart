@@ -1,10 +1,6 @@
 package com.farmfresh.marketplace.OrchardCart.dto.request;
 
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 public class AuthenticationRequest {
@@ -12,7 +8,8 @@ public class AuthenticationRequest {
     private String email;
     private String password;
 
-    public AuthenticationRequest() {}
+    public AuthenticationRequest() {
+    }
 
     public AuthenticationRequest(String email, String password) {
         this.email = email;

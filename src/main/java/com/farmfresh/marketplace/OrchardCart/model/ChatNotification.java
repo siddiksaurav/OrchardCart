@@ -6,7 +6,8 @@ public class ChatNotification {
     private Integer recipientId;
     private String content;
 
-    public ChatNotification() {}
+    public ChatNotification() {
+    }
 
     public ChatNotification(Integer id, Integer senderId, Integer recipientId, String content) {
         this.id = id;

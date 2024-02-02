@@ -1,9 +1,9 @@
 package com.farmfresh.marketplace.OrchardCart.restcontroller;
 
-import com.farmfresh.marketplace.OrchardCart.dto.response.AuthenticationResponse;
-import com.farmfresh.marketplace.OrchardCart.dto.request.UserRegisterRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.request.AuthenticationRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.request.SellerRegisterRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.request.UserRegisterRequest;
+import com.farmfresh.marketplace.OrchardCart.dto.response.AuthenticationResponse;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
 import com.farmfresh.marketplace.OrchardCart.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +25,14 @@ public class AuthenticationRestController {
     ) throws ElementAlreadyExistException {
         return ResponseEntity.ok(service.customerRegister(request));
     }
+
     @PostMapping("/seller/register")
     public ResponseEntity<AuthenticationResponse> registerAsSeller(
             @RequestBody SellerRegisterRequest request
     ) throws ElementAlreadyExistException {
         return ResponseEntity.ok(service.sellerRegister(request));
     }
+
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request

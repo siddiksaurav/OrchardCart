@@ -1,8 +1,8 @@
 package com.farmfresh.marketplace.OrchardCart.service;
 
+import com.farmfresh.marketplace.OrchardCart.dto.mapper.ProductMapper;
 import com.farmfresh.marketplace.OrchardCart.dto.request.ProductRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
-import com.farmfresh.marketplace.OrchardCart.dto.mapper.ProductMapper;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.model.Product;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
@@ -26,8 +25,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
-    public  static String DEFAULT_PRODUCT_URL="/img/default.png";
-    private static Logger log = LoggerFactory.getLogger(ProductService.class);
+    public static String DEFAULT_PRODUCT_URL = "/img/default.png";
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
     private final ProductRepository productRepository;
     private final SellerRepository sellerRepository;
     private final CategoryService categoryService;
@@ -35,6 +34,7 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ImageService imageService;
     private final AuthenticationService authenticationService;
+
     public ProductService(ProductRepository productRepository, SellerRepository sellerRepository, CategoryService categoryService, CategoryRepository categoryRepository, ProductMapper productMapper, ImageService imageService, AuthenticationService authenticationService) {
         this.productRepository = productRepository;
         this.sellerRepository = sellerRepository;
@@ -79,19 +79,19 @@ public class ProductService {
         return "success";
     }
 
-    public ProductResponse getProduct(Integer id){
-        Product product =productRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product not found with id:"+id));
+    public ProductResponse getProduct(Integer id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product not found with id:" + id));
         return productMapper.mapToResponse(product);
     }
 
-    public void deleteProduct(Integer id){
+    public void deleteProduct(Integer id) {
         productRepository.deleteById(id);
     }
 
 
     @Transactional
     public String updateProduct(ProductResponse product) throws AccessDeniedException {
-        Product existingProduct = productRepository.findById(product.getId()).orElseThrow(() -> new NoSuchElementException("Product not found with id:"+product.getId()));
+        Product existingProduct = productRepository.findById(product.getId()).orElseThrow(() -> new NoSuchElementException("Product not found with id:" + product.getId()));
         Seller seller = sellerRepository.findByBusinessName(product.getBusinessName())
                 .orElseThrow(() -> new ElementNotFoundException("Seller not found with business name: " + product.getBusinessName()));
         Category category = categoryRepository.findByCategoryName(product.getCategoryName())
@@ -102,7 +102,7 @@ public class ProductService {
         }
 
         if (!Objects.equals(existingProduct.getCategory().getCategoryName(), product.getCategoryName())) {
-            categoryService.updateProductCategory(existingProduct,category);
+            categoryService.updateProductCategory(existingProduct, category);
         }
         existingProduct.setName(product.getName());
         existingProduct.setDescription(product.getDescription());

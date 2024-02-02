@@ -1,8 +1,5 @@
 package com.farmfresh.marketplace.OrchardCart.dto.request;
 
-import lombok.Data;
-
-
 public class CartItemRequest {
     private Integer cartId;
     private Integer productId;

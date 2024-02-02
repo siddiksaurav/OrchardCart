@@ -1,11 +1,10 @@
 package com.farmfresh.marketplace.OrchardCart.dto.request;
 
 import com.farmfresh.marketplace.OrchardCart.model.Role;
-import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public class SellerRegisterRequest {
     @NotBlank
@@ -14,7 +13,7 @@ public class SellerRegisterRequest {
     @Email
     private String email;
     @NotBlank
-    @Size(min=8)
+    @Size(min = 8)
     private String password;
     private Role role;
     @NotBlank

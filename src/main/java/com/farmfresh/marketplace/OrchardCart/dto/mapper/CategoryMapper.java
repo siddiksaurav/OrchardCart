@@ -1,8 +1,7 @@
 package com.farmfresh.marketplace.OrchardCart.dto.mapper;
+
 import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
-import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
 import com.farmfresh.marketplace.OrchardCart.model.Category;
-import com.farmfresh.marketplace.OrchardCart.model.Product;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

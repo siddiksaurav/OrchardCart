@@ -4,7 +4,6 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
@@ -28,7 +27,6 @@ public class ProductRequest {
     public String getName() {
         return name;
     }
-
 
 
     public void setName(String name) {
@@ -58,6 +56,7 @@ public class ProductRequest {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
     public String getCategoryName() {
         return categoryName;
     }

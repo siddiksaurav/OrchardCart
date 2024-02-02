@@ -1,7 +1,7 @@
 package com.farmfresh.marketplace.OrchardCart.service;
 
-import com.farmfresh.marketplace.OrchardCart.repository.ChatRoomRepository;
 import com.farmfresh.marketplace.OrchardCart.model.ChatRoom;
+import com.farmfresh.marketplace.OrchardCart.repository.ChatRoomRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +19,12 @@ public class ChatRoomService {
     public String getChatRoomId(Integer senderId, Integer recipientId, boolean createNewRoomIfNotExists) {
         Optional<ChatRoom> existingChatRoom = chatRoomRepository.findBySenderIdAndRecipientId(senderId, recipientId);
 
-            if (existingChatRoom.isPresent()) {
-                return existingChatRoom.get().getChatId();
-            }
-            else {
-                String chatId = createChatId(senderId, recipientId);
-                return chatId;
-            }
+        if (existingChatRoom.isPresent()) {
+            return existingChatRoom.get().getChatId();
+        } else {
+            String chatId = createChatId(senderId, recipientId);
+            return chatId;
+        }
     }
 
     @Transactional

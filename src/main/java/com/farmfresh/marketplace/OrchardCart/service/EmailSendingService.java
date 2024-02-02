@@ -2,7 +2,6 @@ package com.farmfresh.marketplace.OrchardCart.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -34,9 +33,9 @@ public class EmailSendingService {
     }
 
     public String sendEmailWithAttachment(String toEmail, String fromEmail,
-                                        String body,
-                                        String subject,
-                                        String attachment) throws MessagingException {
+                                          String body,
+                                          String subject,
+                                          String attachment) throws MessagingException {
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
 

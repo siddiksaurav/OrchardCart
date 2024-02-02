@@ -1,4 +1,5 @@
 package com.farmfresh.marketplace.OrchardCart.dto.mapper;
+
 import com.farmfresh.marketplace.OrchardCart.dto.request.ProductRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
 import com.farmfresh.marketplace.OrchardCart.model.Product;
@@ -23,6 +24,7 @@ public class ProductMapper {
                 .addMapping(src -> src.getCategory().getCategoryName(), ProductRequest::setCategoryName)
                 .addMapping(src -> src.getSeller().getBusinessName(), ProductRequest::setBusinessName);
     }
+
     public ProductResponse mapToResponse(Product product) {
         ProductResponse productResponse = modelMapper.map(product, ProductResponse.class);
         double sum = product.getRatings().stream().mapToDouble(Rating::getRating).sum();
@@ -30,6 +32,7 @@ public class ProductMapper {
         productResponse.setRating(avgRating);
         return productResponse;
     }
+
     public ProductRequest mapToRequest(Product product) {
         return modelMapper.map(product, ProductRequest.class);
     }
