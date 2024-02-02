@@ -1,16 +1,13 @@
 package com.farmfresh.marketplace.OrchardCart.controller;
+
 import com.farmfresh.marketplace.OrchardCart.dto.request.ProductRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
 import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
-import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import com.farmfresh.marketplace.OrchardCart.service.ProductService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +33,7 @@ public class ProductController {
 
 
     @GetMapping("/list")
-    public String listProducts(Model model,@RequestParam(required = false) String productName) {
+    public String listProducts(Model model, @RequestParam(required = false) String productName) {
         List<ProductResponse> productList;
         if (productName != null && !productName.isEmpty()) {
             productList = productService.getProductsByName(productName);
@@ -60,7 +57,7 @@ public class ProductController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @PostMapping("/create")
     public String createProduct(@Valid ProductRequest productRequest, BindingResult bindingResult) throws IOException {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             log.warn("Validation errors in product create form");
             return "/products/product-create";
         }
@@ -70,7 +67,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public String getProduct(@PathVariable Integer id, Model model){
+    public String getProduct(@PathVariable Integer id, Model model) {
         ProductResponse product = productService.getProduct(id);
         model.addAttribute("product", product);
         return "products/product-details";
@@ -85,7 +82,7 @@ public class ProductController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @GetMapping("/edit/{id}")
-    public String editProductForm(@PathVariable Integer id, Model model){
+    public String editProductForm(@PathVariable Integer id, Model model) {
         ProductResponse product = productService.getProduct(id);
         model.addAttribute("productResponse", product);
         return "products/product-edit";
@@ -99,9 +96,9 @@ public class ProductController {
     }
 
     @GetMapping("/list/{categoryName}")
-    public String listProductsByCategory(@PathVariable String categoryName,Model model) {
+    public String listProductsByCategory(@PathVariable String categoryName, Model model) {
         List<ProductResponse> productList = productService.getProductsByCategory(categoryName);
-        if(productList==null){
+        if (productList == null) {
             log.info("No product found");
         }
         model.addAttribute("products", productList);

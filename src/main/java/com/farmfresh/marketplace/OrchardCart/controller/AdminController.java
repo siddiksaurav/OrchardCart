@@ -3,7 +3,6 @@ package com.farmfresh.marketplace.OrchardCart.controller;
 import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
 import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
 import com.farmfresh.marketplace.OrchardCart.model.Orders;
-import com.farmfresh.marketplace.OrchardCart.repository.ProductRepository;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import com.farmfresh.marketplace.OrchardCart.service.OrderService;
 import com.farmfresh.marketplace.OrchardCart.service.ProductService;
@@ -28,27 +27,28 @@ public class AdminController {
     }
 
     @GetMapping
-    public String showAdminDashboard(){
+    public String showAdminDashboard() {
         return "dashboard/admin-dashboard";
     }
 
     @GetMapping("/products")
-    public String showProductList(Model model){
+    public String showProductList(Model model) {
         List<ProductResponse> products = productService.getProductList();
-        model.addAttribute("products",products);
+        model.addAttribute("products", products);
         return "admin/admin-products";
     }
 
     @GetMapping("/orders")
-    public String showOrders(Model model){
+    public String showOrders(Model model) {
         List<Orders> orders = orderService.getAllOrders();
-        model.addAttribute("orders",orders);
+        model.addAttribute("orders", orders);
         return "admin/admin-orders";
     }
+
     @GetMapping("/categories")
-    public String showCategories(Model model){
-        List< CategoryResponse> categories = categoryService.getCategoryList();
-        model.addAttribute("categories",categories);
+    public String showCategories(Model model) {
+        List<CategoryResponse> categories = categoryService.getCategoryList();
+        model.addAttribute("categories", categories);
         return "admin/admin-categories";
     }
 }

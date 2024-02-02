@@ -3,7 +3,6 @@ package com.farmfresh.marketplace.OrchardCart.controller;
 import com.farmfresh.marketplace.OrchardCart.dto.request.RatingRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
-import com.farmfresh.marketplace.OrchardCart.repository.UserInfoRepository;
 import com.farmfresh.marketplace.OrchardCart.service.AuthenticationService;
 import com.farmfresh.marketplace.OrchardCart.service.RatingService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,13 +26,13 @@ public class RatingController {
     @PostMapping("/submit-rating")
     public String addRating(@RequestParam Integer productId,
                             @RequestParam double rating, HttpServletRequest request) throws ElementNotFoundException {
-        UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
         RatingRequest ratingRequest = new RatingRequest();
         ratingRequest.setProductId(productId);
         ratingRequest.setRating(rating);
         ratingService.createRating(ratingRequest, user);
         String referer = request.getHeader("Referer");
-        return "redirect:"+referer;
+        return "redirect:" + referer;
     }
 }
 

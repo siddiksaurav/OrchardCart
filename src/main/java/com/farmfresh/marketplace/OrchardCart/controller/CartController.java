@@ -1,27 +1,16 @@
 package com.farmfresh.marketplace.OrchardCart.controller;
 
 import com.farmfresh.marketplace.OrchardCart.dto.request.CartItemRequest;
-import com.farmfresh.marketplace.OrchardCart.dto.request.CartItemUpdateRequest;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.Cart;
-import com.farmfresh.marketplace.OrchardCart.model.CartItem;
 import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
-import com.farmfresh.marketplace.OrchardCart.repository.UserInfoRepository;
 import com.farmfresh.marketplace.OrchardCart.service.AuthenticationService;
 import com.farmfresh.marketplace.OrchardCart.service.CartService;
-import com.farmfresh.marketplace.OrchardCart.service.JwtService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/cart")
@@ -39,15 +28,16 @@ public class CartController {
     @PostMapping("/addItem")
     public String addCartItem(CartItemRequest cartItemRequest,
                               Model model) {
-        UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
         String result = cartService.addCartItem(user, cartItemRequest);
         model.addAttribute("result", result);
         return "redirect:/products/list";
     }
+
     @PostMapping("/update")
-    public String updateCart(Cart cart,Model model) throws Exception {
-        UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
-        Cart updatedCart = cartService.updateCartItem(user,cart);
+    public String updateCart(Cart cart, Model model) throws Exception {
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
+        Cart updatedCart = cartService.updateCartItem(user, cart);
         model.addAttribute("cart", updatedCart);
         return "redirect:/order/shipment-address";
     }
@@ -55,7 +45,7 @@ public class CartController {
 
     @GetMapping("/find")
     public String getUserCart(Model model) {
-        UserInfo user = authenticationService.getAuthUser().orElseThrow(()->new ElementNotFoundException("User not signed in"));
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
         Cart cart = cartService.findUserCart(user);
         model.addAttribute("cart", cart);
         return "cart/cart";
