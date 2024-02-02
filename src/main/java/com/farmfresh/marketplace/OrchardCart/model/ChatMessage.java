@@ -5,7 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Entity
 public class ChatMessage {
@@ -16,9 +17,9 @@ public class ChatMessage {
     private Integer senderId;
     private Integer recipientId;
     private String content;
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
-    public ChatMessage(Integer id, String chatId, Integer senderId, Integer recipientId, String content, Date timestamp) {
+    public ChatMessage(Integer id, String chatId, Integer senderId, Integer recipientId, String content, LocalDateTime timestamp) {
         this.id = id;
         this.chatId = chatId;
         this.senderId = senderId;
@@ -68,11 +69,11 @@ public class ChatMessage {
         this.content = content;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 }
