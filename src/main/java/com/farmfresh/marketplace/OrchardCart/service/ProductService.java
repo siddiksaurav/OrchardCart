@@ -12,6 +12,7 @@ import com.farmfresh.marketplace.OrchardCart.repository.ProductRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.SellerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +26,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
-    public static String DEFAULT_PRODUCT_URL = "/img/default.png";
+
+    @Value("${product.default-image-url}")
+    String defaultProductUrl;
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
     private final ProductRepository productRepository;
     private final SellerRepository sellerRepository;
@@ -60,7 +63,7 @@ public class ProductService {
         Category category = categoryRepository.findByCategoryName(productRequest.getCategoryName())
                 .orElseThrow(() -> new ElementNotFoundException("Category not found with category name: " + productRequest.getCategoryName()));
         Product product = new Product();
-        product.setImageUrl(DEFAULT_PRODUCT_URL);
+        product.setImageUrl(defaultProductUrl);
         if (productRequest.getImageFile() != null && !productRequest.getImageFile().isEmpty()) {
             MultipartFile imageFile = productRequest.getImageFile();
             String imageUrl = imageService.saveImage(imageFile, "products");

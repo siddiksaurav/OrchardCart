@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
@@ -25,7 +27,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     Logger log = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getServletPath().contains("/auth")) {
@@ -35,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         final String userEmail;
         Cookie[] cookies = request.getCookies();
-        String jwt = null;
+        String jwt=null;
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {

@@ -18,12 +18,13 @@ import java.util.List;
 
 @Service
 public class OrderService {
+    private static final Logger log = LoggerFactory.getLogger(OrderService.class);
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final CartService cartService;
     private final AddressRepository addressRepository;
     private final JmsTemplate jmsTemplate;
-    private final Logger log = LoggerFactory.getLogger(OrderService.class);
+
 
     public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService, AddressRepository addressRepository, JmsTemplate jmsTemplate) {
         this.orderRepository = orderRepository;
@@ -86,8 +87,7 @@ public class OrderService {
     public List<Orders> getOrderHistory(UserInfo user) throws ElementNotFoundException {
         return orderRepository.findByUserId(user.getId());
     }
-
-
+    
     public void deleteOrder(Integer orderId) {
         orderRepository.deleteById(orderId);
     }

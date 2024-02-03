@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin-dashboard")
+@RequestMapping("/admin")
 public class AdminController {
     private final ProductService productService;
     private final OrderService orderService;
@@ -26,7 +26,7 @@ public class AdminController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
+    @GetMapping("/dashboard")
     public String showAdminDashboard() {
         return "dashboard/admin-dashboard";
     }

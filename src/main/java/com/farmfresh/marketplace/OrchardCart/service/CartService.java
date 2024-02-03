@@ -19,12 +19,14 @@ public class CartService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
     private final CartItemService cartItemService;
+    private final AuthenticationService authenticationService;
 
 
-    public CartService(CartRepository cartRepository, ProductRepository productRepository, CartItemService cartItemService) {
+    public CartService(CartRepository cartRepository, ProductRepository productRepository, CartItemService cartItemService, AuthenticationService authenticationService) {
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
         this.cartItemService = cartItemService;
+        this.authenticationService = authenticationService;
     }
 
     public Cart createCart(UserInfo user) {

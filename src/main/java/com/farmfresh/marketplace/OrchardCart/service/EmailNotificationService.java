@@ -16,7 +16,7 @@ public class EmailNotificationService {
 
     @JmsListener(destination = "orderQueue")
     public void handleConfirmationOrder(String toEmail) {
-        //UserInfo user = order.getUser();
+        //TODO: send order details as document
         String subject = "Order Confirmation";
         String body = "Your order has been placed. We have started processing your order. Thank you for using our service";
         emailSendingService.sendSimpleEmail(toEmail, COMPANY_EMAIL, body, subject);

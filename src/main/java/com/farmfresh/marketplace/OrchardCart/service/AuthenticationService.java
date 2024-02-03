@@ -80,16 +80,14 @@ public class AuthenticationService {
 
     public Optional<UserInfo> getAuthUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = null;
-        Optional<UserInfo> authUser = null;
         if (authentication != null && authentication.isAuthenticated()) {
             Object principal = authentication.getPrincipal();
             if (principal instanceof UserDetails userDetails) {
-                userEmail = userDetails.getUsername();
-                authUser = userInfoRepository.findByEmail(userEmail);
+                String userEmail = userDetails.getUsername();
+                return userInfoRepository.findByEmail(userEmail);
             }
         }
-        return authUser;
+        return Optional.empty();
     }
 }
 

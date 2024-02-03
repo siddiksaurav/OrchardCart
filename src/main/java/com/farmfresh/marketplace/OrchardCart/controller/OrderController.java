@@ -78,7 +78,7 @@ public class OrderController {
         model.addAttribute("orders", orderHistory);
         return "order/order-history";
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("update-status/{id}")
     public String updateOrderStatus(@PathVariable Integer id, @RequestParam String status, HttpServletRequest request) {
         orderService.updateOrderStatus(id, status);
