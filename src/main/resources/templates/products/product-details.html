@@ -9,7 +9,6 @@
 
 <th:block th:insert="fragments/navbar"></th:block>
 <div class="container mt-4">
-    <h2>All Products</h2>
     <div class="row">
         <div th:each="product : ${product}" class="col-md-4 mb-4">
             <div class="card">
@@ -23,9 +22,12 @@
                     <p th:text="'Quantity: ' + ${product.quantity}" class="card-text"></p>
                     <p th:text="'Category: ' + ${product.categoryName}" class="card-text"></p>
                     <p th:text="'Business: ' + ${product.businessName}" class="card-text"></p>
+                    <form method="post" th:action="@{/cart/addItem}" th:object="${cartItemRequest}">
+                        <input name="productId" th:value="${product.id}" type="hidden"/>
+                        <input name="quantity" type="hidden" value="1"/>
+                        <button class="btn btn-success" type="submit">Add to Cart</button>
+                    </form>
                     <a th:href="@{'/inquiry/products/' + ${product.id}}" class="btn btn-secondary">Inquiry</a>
-                    <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-info">Edit</a>
-                    <a th:href="@{'/products/delete/' + ${product.id}}" class="btn btn-danger">Delete</a>
                 </div>
                 <div>
                     <h3>Reviews and Ratings:</h3>

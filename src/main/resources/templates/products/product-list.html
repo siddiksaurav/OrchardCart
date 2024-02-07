@@ -9,34 +9,34 @@
 <!-- Navbar -->
 <th:block th:insert="fragments/navbar"></th:block>
 <div class="flex-grow-1">
-<div class="container mt-4">
-    <h2>All Products</h2>
-    <div class="row">
+    <div class="container mt-4">
+        <h2>All Products</h2>
+        <div class="row">
 
-        <div th:each="product : ${products}" class="col-md-4 mb-4">
-            <div class="card">
-                <img th:src="${product.imageUrl}" class="card-img-top" alt="Image">
-                <div class="card-body">
+            <div th:each="product : ${products}" class="col-md-4 mb-4">
+                <div class="card">
+                    <img th:src="${product.imageUrl}" class="card-img-top" alt="Image">
+                    <div class="card-body">
 
-                    <h5 th:text="${product.name}" class="card-title"></h5>
-                    <p th:text="${product.description}" class="card-text"></p>
-                    <!--<p th:text="'Price: $' + ${product.price}" class="card-text"></p>-->
-                    <p th:text="'Quantity: ' + ${product.quantity}" class="card-text"></p>
-                    <p th:text="'Category: ' + ${product.categoryName}" class="card-text"></p>
-                    <p th:text="'Business: ' + ${product.businessName}" class="card-text"></p>
-                    <form th:action="@{/cart/addItem}" th:object="${cartItemRequest}" method="post">
-                        <input type="hidden" name="productId" th:value="${product.id}" />
-                        <input type="hidden" name="quantity" value="1" />
-                        <button type="submit" class="btn btn-success">Add to Cart</button>
-                    </form>
-                    <a th:href="@{'/products/' + ${product.id}}" class="btn btn-primary">Details</a>
-                    <a th:href="@{'/inquiry/products/' + ${product.id}}" class="btn btn-secondary">Inquiry</a>
+                        <h5 th:text="${product.name}" class="card-title"></h5>
+                        <p th:text="${product.description}" class="card-text"></p>
+                        <p th:text="'Price: $' + ${product.price}" class="card-text"></p>
+                        <p th:text="'Quantity: ' + ${product.quantity}" class="card-text"></p>
+                        <p th:text="'Category: ' + ${product.categoryName}" class="card-text"></p>
+                        <p th:text="'Business: ' + ${product.businessName}" class="card-text"></p>
+                        <form th:action="@{/cart/addItem}" th:object="${cartItemRequest}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id}" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                        </form>
+                        <a th:href="@{'/products/' + ${product.id}}" class="btn btn-primary">Details</a>
+                        <a th:href="@{'/inquiry/products/' + ${product.id}}" class="btn btn-secondary">Inquiry</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
 </div>
 <th:block th:insert="fragments/footer"></th:block>
 
