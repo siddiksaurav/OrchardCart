@@ -1,81 +1,76 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Shopping Cart</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+    <meta charset="UTF-8">
+    <title>Cart</title>
 </head>
 <body>
-
-<div class="container">
-    <h2 class="mb-4">Your Shopping Cart</h2>
-    <form th:action="@{/cart/update}" method="post" id="cartForm" th:object="${cart}">
-        <table class="table">
-
-            <input type="hidden" th:field="*{id}" />
-            <input type="hidden" th:field="*{userInfo}" />
-            <tr th:each="cartItem, rowStat : ${cart.cartItems}">
-                <input type="hidden" th:field="*{cartItems[__${rowStat.index}__].id}" />
-                <input type="hidden" th:field="*{cartItems[__${rowStat.index}__].cart}" />
-                <input type="hidden" th:field="*{cartItems[__${rowStat.index}__].product}" />
-                <input type="hidden" th:field="*{cartItems[__${rowStat.index}__].price}" />
-                <input type="hidden" th:field="*{cartItems[__${rowStat.index}__].userId}"/>
-                <td th:text="${cartItem.product.name}"></td>
-                <td>
-                    <input type="number" th:field="*{cartItems[__${rowStat.index}__].quantity}" class="quantity-input" onchange="updateTotalPrice(this)" />
-                </td>
-                <td th:text="${cartItem.price}"></td>
-            </tr>
-        </table>
-        <input type="hidden" th:field="*{totalItem}" />
-        <input type="hidden" th:field="*{totalPrice}" />
-
-
-        <div>
-            <p>Total Price: <input name="totalPrice" th:field="*{totalPrice}" /></p>
-        </div>
+<h1>Cart</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${cart.cartItems}" th:data-item-id="${item.id}" th:data-update-url="@{/cart-item/update/{id}(id=${item.id})}" th:data-remove-url="@{/cart-item/remove/{id}(id=${item.id})}">
+        <td th:text="${item.product.name}"></td>
+        <td>
+            <span id="quantity-${item.id}" th:text="${item.quantity}"></span>
+            <button th:attr="onclick='updateQuantity(this, -1 )'">-</button>
+            <button th:attr="onclick='updateQuantity(this, 1 )'">+</button>
+        </td>
+        <!--td th:text="${item.price}"></td-->
+        <td th:text="${item.price}" data-price="${item.price}"></td>
+        <td th:text="${item.quantity * item.price}"></td>
+        <td>
+            <a th:href="@{/cart-item/remove/{id}(id=${item.id})}">Remove</a>
+        </td>
+    </tr>
 
 
+    </tbody>
+</table>
+<a href="/products/list">Continue Shopping</a>
 
-        <div class="mt-4">
-            <button type="button" class="btn btn-primary" onclick="checkout()">Checkout</button>
-        </div>
-    </form>
-</div>
-
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-    function updateTotalPrice(input) {
-        var totalPrice = 0.0;
+    function updateQuantity(button, change) {
+        var row = button.closest('tr'); // Find the closest table row
+        var quantityElement = row.querySelector('[id^="quantity-"]');
+        if (quantityElement) {
+            var currentQuantity = parseInt(quantityElement.textContent);
+            var newQuantity = currentQuantity + change;
 
-        $('.quantity-input').each(function () {
-            var quantity = $(this).val();
-            var price = parseFloat($(this).closest('tr').find('td:last').text());
+            if (newQuantity >= 0) {
+                var updateUrl = row.dataset.updateUrl;
+                $.ajax({
+                    url: updateUrl,
+                    type: 'POST',
+                    data: {quantity: newQuantity},
+                    success: function(data) {
+                        quantityElement.textContent = newQuantity; // Update quantity on success
+                        //var totalPrice = newQuantity * price;
+                        //console.log('total prace'+totalPrice)
+                        //row.querySelector('[data-total-price]').textContent = totalPrice.toFixed(2); // Update total price
 
-            if (quantity > 0) {
-                totalPrice += quantity * price;
-            } else {
-                $(this).closest('tr').remove();
+                    },
+                    error: function(xhr, status, error) {
+                    }
+                });
             }
-        });
-        $('#totalPrice').text('$' + totalPrice.toFixed(2));
-        $('input[name="totalPrice"]').val(totalPrice.toFixed(2));
-    }
-
-    function checkout() {
-        $('#cartForm').submit();
+        } else {
+            console.error("Quantity element not found in the current row.");
+        }
     }
 </script>
 
 
-
 </body>
 </html>
-
-
 

@@ -34,19 +34,10 @@ public class CartController {
         return "redirect:/products/list";
     }
 
-    @PostMapping("/update")
-    public String updateCart(Cart cart, Model model) throws Exception {
-        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
-        Cart updatedCart = cartService.updateCartItem(user, cart);
-        model.addAttribute("cart", updatedCart);
-        return "redirect:/order/shipment-address";
-    }
-
-
     @GetMapping("/find")
     public String getUserCart(Model model) {
         UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
-        Cart cart = cartService.findUserCart(user);
+        Cart cart = cartService.showUserCart(user);
         model.addAttribute("cart", cart);
         return "cart/cart";
     }

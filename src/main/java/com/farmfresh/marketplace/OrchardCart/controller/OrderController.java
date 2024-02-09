@@ -67,7 +67,7 @@ public class OrderController {
     @GetMapping("/confirm-order")
     public String confirmOrder() {
         UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
-        cartService.clearUserCart(user);
+        //cartService.clearUserCart(user);
         return "order/order-success";
     }
 
