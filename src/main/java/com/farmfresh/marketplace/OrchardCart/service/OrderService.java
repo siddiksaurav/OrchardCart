@@ -36,7 +36,7 @@ public class OrderService {
 
     @Transactional
     public Orders createOrder(UserInfo user, AddressRequest shippingAddress) {
-        Cart cart = cartService.findUserCart(user);
+        Cart cart = cartService.showUserCart(user);
         List<OrderItem> orderItems = new ArrayList<>();
         for (CartItem item : cart.getCartItems()) {
             OrderItem orderItem = new OrderItem();

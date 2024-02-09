@@ -28,14 +28,18 @@ public class CartService {
         this.cartItemService = cartItemService;
     }
 
-    public Cart createCart(UserInfo user) {
-        Cart cart = new Cart();
-        cart.setUserInfo(user);
-        return cartRepository.save(cart);
+    public Cart getCart(UserInfo user) {
+        Cart cart = cartRepository.findCartByUserInfoId(user.getId());
+        if (cart==null) {
+            Cart newCart = new Cart();
+            newCart.setUserInfo(user);
+            return cartRepository.save(newCart);
+        }
+        return cart;
     }
 
     public String addCartItem(UserInfo user, CartItemRequest cartItemRequest) {
-        Cart cart = cartRepository.findCartByUserInfoId(user.getId());
+        Cart cart = getCart(user);
         Product product = productRepository.findById(cartItemRequest.getProductId()).orElseThrow(() -> new ElementNotFoundException("Product not found with Id:" + cartItemRequest.getProductId()));
         CartItem isExist = cartItemService.isCartItemExist(cart, product, user.getId());
         if (isExist == null) {
@@ -51,8 +55,8 @@ public class CartService {
         return "Added cart item successfully";
     }
 
-    public Cart findUserCart(UserInfo user) {
-        Cart cart = cartRepository.findCartByUserInfoId(user.getId());
+    public Cart showUserCart(UserInfo user) {
+        Cart cart = getCart(user);
         BigDecimal totalPrice = BigDecimal.ZERO;
         int totalItem = 0;
         for (CartItem cartItem : cart.getCartItems()) {
