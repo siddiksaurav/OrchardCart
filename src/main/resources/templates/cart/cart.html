@@ -2,75 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cart</title>
+    <link rel="stylesheet" href="/css/style.css"> </head>
+    <title>Shopping Cart</title>
 </head>
 <body>
-<h1>Cart</h1>
-<table border="1">
-    <thead>
-    <tr>
-        <th>Product Name</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Total</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="item : ${cart.cartItems}" th:data-item-id="${item.id}" th:data-update-url="@{/cart-item/update/{id}(id=${item.id})}" th:data-remove-url="@{/cart-item/remove/{id}(id=${item.id})}">
-        <td th:text="${item.product.name}"></td>
-        <td>
-            <span id="quantity-${item.id}" th:text="${item.quantity}"></span>
-            <button th:attr="onclick='updateQuantity(this, -1 )'">-</button>
-            <button th:attr="onclick='updateQuantity(this, 1 )'">+</button>
-        </td>
-        <!--td th:text="${item.price}"></td-->
-        <td th:text="${item.price}" data-price="${item.price}"></td>
-        <td th:text="${item.quantity * item.price}"></td>
-        <td>
-            <a th:href="@{/cart-item/remove/{id}(id=${item.id})}">Remove</a>
-        </td>
-    </tr>
-
-
-    </tbody>
-</table>
-<a href="/products/list">Continue Shopping</a>
+<h1>Your Shopping Cart</h1>
+<div class="container">
+    <table>
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${cart.cartItems}" th:data-item-id="${item.id}" th:data-update-url="@{/cart-item/update/{id}(id=${item.id})}" th:data-remove-url="@{/cart-item/remove/{id}(id=${item.id})}">
+            <td th:text="${item.product.name}"></td>
+            <td>
+                <span id="quantity-${item.id}" th:text="${item.quantity}"></span>
+                <button th:attr="onclick='updateQuantity(this, -1 )'">-</button>
+                <button th:attr="onclick='updateQuantity(this, 1 )'">+</button>
+            </td>
+            <td th:text="${item.price}" data-price="${item.price}" id="price-${item.id}"></td>
+            <td th:text="${item.quantity * item.price}" id="total-${item.id}"></td>
+            <td>
+                <a th:href="@{/cart-item/remove/{id}(id=${item.id})}">Remove</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<a href="/products/list" style="display: block; text-align: center; margin-top: 20px;">Continue Shopping</a>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script>
-    function updateQuantity(button, change) {
-        var row = button.closest('tr'); // Find the closest table row
-        var quantityElement = row.querySelector('[id^="quantity-"]');
-        if (quantityElement) {
-            var currentQuantity = parseInt(quantityElement.textContent);
-            var newQuantity = currentQuantity + change;
-
-            if (newQuantity >= 0) {
-                var updateUrl = row.dataset.updateUrl;
-                $.ajax({
-                    url: updateUrl,
-                    type: 'POST',
-                    data: {quantity: newQuantity},
-                    success: function(data) {
-                        quantityElement.textContent = newQuantity; // Update quantity on success
-                        //var totalPrice = newQuantity * price;
-                        //console.log('total prace'+totalPrice)
-                        //row.querySelector('[data-total-price]').textContent = totalPrice.toFixed(2); // Update total price
-
-                    },
-                    error: function(xhr, status, error) {
-                    }
-                });
-            }
-        } else {
-            console.error("Quantity element not found in the current row.");
-        }
-    }
-</script>
-
-
+<script src="/js/cart.js"></script> </body>
 </body>
 </html>
 
