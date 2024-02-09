@@ -2,6 +2,7 @@ package com.farmfresh.marketplace.OrchardCart.controller;
 
 import com.farmfresh.marketplace.OrchardCart.dto.request.CategoryRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
+import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,15 +51,15 @@ public class CategoryController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/edit/{id}")
     public String editCategoryForm(@PathVariable Integer id, Model model) {
-        CategoryResponse category = categoryService.getCategoryById(id);
+        Category category = categoryService.getCategory(id);
         model.addAttribute("category", category);
         return "category/category-edit";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/update/{id}")
-    public String updateCategory(@PathVariable Integer id, @RequestBody CategoryRequest categoryRequest) {
-        categoryService.updateCategory(id, categoryRequest);
+    public String updateCategory(@PathVariable Integer id, Category category) {
+        categoryService.updateCategory(category);
         return REDIRECT_CATEGORY_LIST;
     }
 

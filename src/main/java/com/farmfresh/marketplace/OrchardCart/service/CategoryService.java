@@ -64,16 +64,17 @@ public class CategoryService {
         return categoryMapper.mapToResponse(category);
     }
 
+    public Category getCategory(Integer id){
+        return categoryRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Category not found with id:" + id));
+    }
     public void deleteCategoryById(Integer id) {
         if (categoryRepository.existsById(id)) {
             categoryRepository.deleteById(id);
         }
     }
 
-    public String updateCategory(Integer id, CategoryRequest categoryRequest) {
-        Category existingCategory = categoryRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Category not exist with id:" + id));
-        existingCategory.setCategoryName(categoryRequest.getCategoryName());
-        categoryRepository.save(existingCategory);
+    public String updateCategory(Category category) {
+        categoryRepository.save(category);
         return "Successfully Updated";
     }
 

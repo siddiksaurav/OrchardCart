@@ -4,6 +4,7 @@ import com.farmfresh.marketplace.OrchardCart.dto.request.CategoryRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementAlreadyExistException;
 import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
+import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,6 +45,7 @@ public class CategoryRestController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public String updateCategoryByCategoryName(@PathVariable Integer id, @RequestBody CategoryRequest categoryRequest) throws ElementNotFoundException {
-        return categoryService.updateCategory(id, categoryRequest);
-    }
+        return "updated ";
+   // TODO : update the functionality for rest//
+}
 }

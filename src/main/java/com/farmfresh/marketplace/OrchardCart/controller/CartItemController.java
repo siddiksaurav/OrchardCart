@@ -22,13 +22,6 @@ public class CartItemController {
         return "redirect:/cart/find";
     }
 
-    /*@GetMapping("/update/{id}")
-    public String showCartItem(@PathVariable Integer id, Model model){
-        CartItem cartItem = cartItemService.getCartItem(id);
-        model.addAttribute("cartItem",cartItem);
-        return "cart/update-cart-item";
-    }
-    */
     @PostMapping("/update/{id}")
     public ResponseEntity<?> updateCartItemQuantity(@PathVariable Integer id, @RequestParam Integer quantity) {
         CartItem cartItem = cartItemService.getCartItem(id);
@@ -39,11 +32,5 @@ public class CartItemController {
         cartItemService.updateCartItem(cartItem);
         return ResponseEntity.ok().build();
     }
-    /*@PostMapping("/update/save")
-    public String updateCartItem(@ModelAttribute CartItem cartItem){
-        cartItemService.updateCartItem(cartItem);
-        return "redirect:/cart/find";
-    }*/
-
 }
 
