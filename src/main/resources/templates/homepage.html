@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>OrchardCart - Your Online Marketplace</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
         .carousel-item img {
             height: 200px; /* Adjust the height as needed */
@@ -17,31 +17,39 @@
 <th:block th:insert="fragments/navbar"></th:block>
 <div class="jumbotron">
     <h1>Welcome to OrchardCart!</h1>
-    <p>OrchardCart is your one-stop destination for the freshest fruits and vegetables. We connect local farmers and sellers directly to you, ensuring quality and freshness.
+    <p>OrchardCart is your one-stop destination for the freshest fruits and vegetables. We connect local farmers and
+        sellers directly to you, ensuring quality and freshness.
         Join us in supporting local farmers and enjoy farm-fresh produce delivered to your doorstep</p>
 </div>
 <div class="flex-grow-1">
     <div class="container mt-5">
         <h2>Featured Products</h2>
         <div class="row">
-
-            <div th:each="product : ${products}" class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4" th:each="product : ${products}">
                 <div class="card">
                     <a th:href="@{'/products/' + ${product.id}}">
-                        <img th:src="${product.imageUrl}" class="card-img-top" alt="Product Image">
-
-                    <div class="card-body">
-                        <h5 th:text="${product.name}" class="card-title"></h5>
-                        <a th:href="@{'/inquiry/products/' + ${product.id}}" class="btn btn-secondary">Contact Seller</a>
-                    </div>
+                        <img alt="Product Image" class="card-img-top" th:src="${product.imageUrl}">
+                        <div class="home-card-body">
+                            <div class="card-title">
+                                <!-- Apply card-title class to capitalize and style the title -->
+                                <h5 th:text="${#strings.capitalize(product.name)}"></h5>
+                            </div>
+                            <div class="card-price">
+                                <h5>Price: <span th:text="${product.price}"></span></h5>
+                            </div>
+                        </div>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    <div id="categoryCarousel" class="carousel slide" data-ride="carousel">
+
+
+
+    <div class="carousel slide" data-ride="carousel" id="categoryCarousel">
         <div class="carousel-inner">
-            <div th:each="category, iterStat : ${categories}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'">
+            <div class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'"
+                 th:each="category, iterStat : ${categories}">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="carousel-caption text-left">
@@ -50,17 +58,17 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <img th:src="${category.imageUrl}" class="d-block mx-auto" alt="Category Image">
+                        <img alt="Category Image" class="d-block mx-auto" th:src="${category.imageUrl}">
                     </div>
                 </div>
             </div>
         </div>
-        <a class="carousel-control-prev" href="#categoryCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <a class="carousel-control-prev" data-slide="prev" href="#categoryCarousel" role="button">
+            <span aria-hidden="true" class="carousel-control-prev-icon"></span>
             <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#categoryCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <a class="carousel-control-next" data-slide="next" href="#categoryCarousel" role="button">
+            <span aria-hidden="true" class="carousel-control-next-icon"></span>
             <span class="sr-only">Next</span>
         </a>
     </div>

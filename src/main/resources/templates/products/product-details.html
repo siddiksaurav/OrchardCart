@@ -8,37 +8,38 @@
 <body>
 
 <th:block th:insert="fragments/navbar"></th:block>
-<div class="container mt-4">
+<div class="container center-card">
     <div class="row">
-        <div th:each="product : ${product}" class="col-md-4 mb-4">
+        <div th:each="product : ${product}" class="col-md-6">
             <div class="card">
 
                 <img th:src="${product.imageUrl}" class="card-img-top" alt="Image">
                 <div class="card-body">
-                    <h5 th:text="${product.name}" class="card-title"></h5>
+                    <h5 th:text="'Product name: ' + ${#strings.capitalize(product.name)}" class="card-title"></h5>
+                    <p th:text="'Description: ' + ${product.description}" class="card-text"></p>
                     <p th:text="'Rating: '+ ${product.rating}" class="card-text"></p>
-                    <p th:text="${product.description}" class="card-text"></p>
                     <p th:text="'Price: $' + ${product.price}" class="card-text"></p>
                     <p th:text="'Quantity: ' + ${product.quantity}" class="card-text"></p>
                     <p th:text="'Category: ' + ${product.categoryName}" class="card-text"></p>
                     <p th:text="'Business: ' + ${product.businessName}" class="card-text"></p>
-                    <form method="post" th:action="@{/cart/addItem}" th:object="${cartItemRequest}">
-                        <input name="productId" th:value="${product.id}" type="hidden"/>
-                        <input name="quantity" type="hidden" value="1"/>
-                        <button class="btn btn-success" type="submit">Add to Cart</button>
+                    <form th:action="@{/cart/addItem}" th:object="${cartItemRequest}" method="post">
+                        <input type="hidden" name="productId" th:value="${product.id}" />
+                        <input type="hidden" name="quantity" value="1" />
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-primary detail-btn-icon btn-add-to-cart"><i class="fas fa-cart-plus fa-lg"></i></button>
+                            <a th:href="@{'/inquiry/products/' + ${product.id}}" class="btn btn-secondary detail-btn-icon"><i class="fas fa-envelope fa-lg"></i></a>
+                        </div>
                     </form>
-                    <a th:href="@{'/inquiry/products/' + ${product.id}}" class="btn btn-secondary">Inquiry</a>
                 </div>
                 <div>
                     <h3>Reviews and Ratings:</h3>
                     <ul>
                         <hr>
-                        <li th:each="productRating : ${product.ratings}">
+                        <li th:each="productRating : ${product.ratings}" class="review-item">
                             <p th:text="'Rating: ' + ${productRating.rating}"></p>
                         </li>
-
-                        <li th:each="productReview : ${product.reviews}">
-                            <p th:text="'Review: ' + ${productReview.user.firstname} + ${productReview.review}"></p>
+                        <li th:each="productReview : ${product.reviews}" class="review-item">
+                            <p th:text="'Review: ' + ${productReview.user.firstname} + ' - ' + ${productReview.review}"></p>
                         </li>
                         <hr>
                     </ul>
