@@ -29,7 +29,7 @@ public class CartController {
     public String addCartItem(CartItemRequest cartItemRequest,
                               Model model) {
         UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
-        String result = cartService.addCartItem(user, cartItemRequest);
+        String result = cartService.addCartItem(cartItemRequest);
         model.addAttribute("result", result);
         return "redirect:/products/list";
     }

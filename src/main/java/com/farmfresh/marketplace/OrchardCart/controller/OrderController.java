@@ -22,12 +22,10 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
-    private final AuthenticationService authenticationService;
     private final CartService cartService;
 
-    public OrderController(OrderService orderService, AuthenticationService authenticationService, CartService cartService) {
+    public OrderController(OrderService orderService, CartService cartService) {
         this.orderService = orderService;
-        this.authenticationService = authenticationService;
         this.cartService = cartService;
     }
 
@@ -43,8 +41,7 @@ public class OrderController {
         if (bindingResult.hasErrors()) {
             return "order/shipment-address-form";
         }
-        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
-        Orders order = orderService.createOrder(user, shippingAddress);
+        Orders order = orderService.createOrder(shippingAddress);
         model.addAttribute("order", order);
         return "order/order-details-confirmation";
     }
@@ -66,15 +63,13 @@ public class OrderController {
 
     @GetMapping("/confirm-order")
     public String confirmOrder() {
-        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
         //cartService.clearUserCart(user);
         return "order/order-success";
     }
 
     @GetMapping("/order-history")
     public String userOrderHistory(Model model) {
-        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
-        List<Orders> orderHistory = orderService.getOrderHistory(user);
+        List<Orders> orderHistory = orderService.getOrderHistory();
         model.addAttribute("orders", orderHistory);
         return "order/order-history";
     }

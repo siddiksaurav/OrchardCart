@@ -20,16 +20,13 @@ public class CartRestController {
 
 
     @GetMapping("/")
-    public Cart createCart(@RequestHeader("Authorization") String jwt) throws ElementNotFoundException {
-        UserInfo user = jwtService.getUserByToken(jwt);
-        return cartService.getCart(user);
+    public Cart createCart() throws ElementNotFoundException {
+        return cartService.getCart();
     }
 
     @PostMapping("/addItem")
-    public String addCartItem(@RequestHeader("Authorization") String jwt,
-                              @RequestBody CartItemRequest cartItemRequest) throws ElementNotFoundException {
-        UserInfo user = jwtService.getUserByToken(jwt);
-        return cartService.addCartItem(user, cartItemRequest);
+    public String addCartItem(@RequestBody CartItemRequest cartItemRequest) throws ElementNotFoundException {
+        return cartService.addCartItem(cartItemRequest);
     }
 
     @GetMapping("/findCart")

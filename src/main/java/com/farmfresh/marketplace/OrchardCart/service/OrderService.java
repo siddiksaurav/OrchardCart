@@ -24,18 +24,21 @@ public class OrderService {
     private final CartService cartService;
     private final AddressRepository addressRepository;
     private final JmsTemplate jmsTemplate;
+    private final AuthenticationService authenticationService;
 
 
-    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService, AddressRepository addressRepository, JmsTemplate jmsTemplate) {
+    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService, AddressRepository addressRepository, JmsTemplate jmsTemplate, AuthenticationService authenticationService) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.cartService = cartService;
         this.addressRepository = addressRepository;
         this.jmsTemplate = jmsTemplate;
+        this.authenticationService = authenticationService;
     }
 
     @Transactional
-    public Orders createOrder(UserInfo user, AddressRequest shippingAddress) {
+    public Orders createOrder(AddressRequest shippingAddress) {
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
         Cart cart = cartService.showUserCart(user);
         List<OrderItem> orderItems = new ArrayList<>();
         for (CartItem item : cart.getCartItems()) {
@@ -84,7 +87,8 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public List<Orders> getOrderHistory(UserInfo user) throws ElementNotFoundException {
+    public List<Orders> getOrderHistory() throws ElementNotFoundException {
+        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
         return orderRepository.findByUserId(user.getId());
     }
     

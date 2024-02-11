@@ -13,19 +13,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/order")
 public class OrderRestController {
-
     private final OrderService orderService;
-    private final JwtService jwtService;
-
-    public OrderRestController(OrderService orderService, JwtService jwtService) {
+    public OrderRestController(OrderService orderService) {
         this.orderService = orderService;
-        this.jwtService = jwtService;
     }
 
     @PostMapping("/place")
-    public Orders placeOrder(@RequestHeader("Authorization") String token, AddressRequest shippingAddress) throws ElementNotFoundException {
-        UserInfo user = jwtService.getUserByToken(token);
-        return orderService.createOrder(user, shippingAddress);
+    public Orders placeOrder(AddressRequest shippingAddress) throws ElementNotFoundException {
+        return orderService.createOrder(shippingAddress);
     }
 
     @GetMapping("{id}/update-status")
@@ -50,9 +45,8 @@ public class OrderRestController {
     }
 
     @GetMapping("/order-history")
-    public List<Orders> userOrderHistory(@RequestHeader("Authorization") String token) throws ElementNotFoundException {
-        UserInfo user = jwtService.getUserByToken(token);
-        return orderService.getOrderHistory(user);
+    public List<Orders> userOrderHistory() throws ElementNotFoundException {
+        return orderService.getOrderHistory();
     }
 
 }

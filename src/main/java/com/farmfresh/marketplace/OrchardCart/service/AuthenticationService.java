@@ -31,16 +31,15 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final AddressRepository addressRepository;
-    private final CartService cartService;
 
-    public AuthenticationService(UserInfoRepository userInfoRepository, SellerRepository sellerRepository, JwtService jwtService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, AddressRepository addressRepository, CartService cartService) {
+
+    public AuthenticationService(UserInfoRepository userInfoRepository, SellerRepository sellerRepository, JwtService jwtService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, AddressRepository addressRepository) {
         this.userInfoRepository = userInfoRepository;
         this.sellerRepository = sellerRepository;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.addressRepository = addressRepository;
-        this.cartService = cartService;
     }
 
     public AuthenticationResponse customerRegister(UserRegisterRequest request) {

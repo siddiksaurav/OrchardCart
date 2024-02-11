@@ -75,8 +75,8 @@ public class ProductService {
         product.setQuantity(productRequest.getQuantity());
         product.setCategory(category);
         product.setSeller(seller);
-        category.getProducts().add(product);
-        categoryRepository.save(category);
+        //category.getProducts().add(product);
+        //categoryRepository.save(category);
         productRepository.save(product);
         log.info("Product added successfully: {}", product.getId());
         return "success";
