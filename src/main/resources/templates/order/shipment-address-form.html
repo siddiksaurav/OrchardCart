@@ -1,44 +1,47 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Shipping Address Form</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<div class="container mt-5">
+<th:block th:insert="fragments/navbar"></th:block>
+<div class="form-style">
     <h2>Shipping Address Form</h2>
-    <form th:action="@{/order/place}" th:object="${shippingAddress}" method="post">
+    <form method="post" th:action="@{/order/place}" th:object="${shippingAddress}">
         <div class="form-group">
             <label for="district">District:</label>
-            <input type="text" class="form-control" id="district" th:field="*{district}" required>
-            <small class="form-text text-danger" th:if="${#fields.hasErrors('district')}" th:errors="*{district}"></small>
+            <input class="form-control" id="district" required th:field="*{district}" type="text">
+            <small class="form-text text-danger" th:errors="*{district}"
+                   th:if="${#fields.hasErrors('district')}"></small>
         </div>
         <div class="form-group">
             <label for="city">City:</label>
-            <input type="text" class="form-control" id="city" th:field="*{city}" required>
-            <small class="form-text text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></small>
+            <input class="form-control" id="city" required th:field="*{city}" type="text">
+            <small class="form-text text-danger" th:errors="*{city}" th:if="${#fields.hasErrors('city')}"></small>
         </div>
         <div class="form-group">
             <label for="additionalAddress">Additional Address:</label>
-            <textarea class="form-control" id="additionalAddress" th:field="*{additionalAddress}" rows="3"></textarea>
+            <input class="form-control" id="additionalAddress" th:field="*{additionalAddress}" type="text"></input>
         </div>
         <div class="form-group">
             <label for="phoneNumber">Phone Number:</label>
-            <input type="tel" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" pattern="^01\d{9}$" required>
-            <small class="form-text text-muted">Please enter a valid phone number.</small>
+            <input class="form-control" id="phoneNumber" pattern="^01\d{9}$" required th:field="*{phoneNumber}"
+                   type="text">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button class="btn btn-primary" type="submit">Submit</button>
     </form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+<script crossorigin="anonymous"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script crossorigin="anonymous"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<th:block th:insert="fragments/footer"></th:block>
 </body>
 </html>

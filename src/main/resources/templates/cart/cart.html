@@ -1,17 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/style.css"> </head>
     <title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <style>
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #f3d72a; /* Blue color for heading */
+        }
+    </style>
 </head>
 <body>
+<th:block th:insert="fragments/navbar"></th:block>
 <h1>Your Shopping Cart</h1>
-<div class="container">
-    <table>
-        <thead>
+<div class="flex-grow-1">
+<div class="container" th:if="${cart.cartItems.isEmpty()}">
+    <div class="alert alert-info" role="alert">
+        <p>Your cart is currently empty!!!</p>
+        <a href="/products/list" class="btn btn-secondary continue-shopping-btn">Continue Shopping</a>
+    </div>
+</div>
+    <div class="container" th:unless="${cart.cartItems.isEmpty()}">
+    <table class="table">
+        <thead class="thead-dark">
         <tr>
             <th>Product Name</th>
+            <th>Image</th>
             <th>Quantity</th>
             <th>Price</th>
             <th>Total</th>
@@ -22,23 +40,30 @@
         <tr th:each="item : ${cart.cartItems}" th:data-item-id="${item.id}" th:data-update-url="@{/cart-item/update/{id}(id=${item.id})}" th:data-remove-url="@{/cart-item/remove/{id}(id=${item.id})}">
             <td th:text="${item.product.name}"></td>
             <td>
+                <img th:src="${item.product.imageUrl}" alt="Product Image" style="max-width: 80px; max-height: 40px;">
+            </td>
+            <td>
                 <span id="quantity-${item.id}" th:text="${item.quantity}"></span>
-                <button th:attr="onclick='updateQuantity(this, -1 )'">-</button>
-                <button th:attr="onclick='updateQuantity(this, 1 )'">+</button>
+                <button class="quantity-btn" th:attr="onclick='updateQuantity(this, -1 )'">-</button>
+                <button class="quantity-btn" th:attr="onclick='updateQuantity(this, 1 )'">+</button>
             </td>
             <td th:text="${item.price}" data-price="${item.price}" id="price-${item.id}"></td>
             <td th:text="${item.quantity * item.price}" id="total-${item.id}"></td>
             <td>
-                <a th:href="@{/cart-item/remove/{id}(id=${item.id})}">Remove</a>
+                <a href="#" th:href="@{/cart-item/remove/{id}(id=${item.id})}" class="remove-link"><i class="fas fa-trash-alt remove-icon"></i></a>
             </td>
         </tr>
         </tbody>
     </table>
-</div>
-<a href="/products/list" style="display: block; text-align: center; margin-top: 20px;">Continue Shopping</a>
+    <div class="text-center">
+        <a href="/order/shipment-address" class="btn btn-info checkout-btn">Checkout</a>
+        <a href="/products/list" class="btn btn-secondary continue-shopping-btn">Continue Shopping</a>
+    </div>
 
+</div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="/js/cart.js"></script> </body>
+<script src="/js/cart.js"></script>
+<th:block th:insert="fragments/footer"></th:block>
 </body>
 </html>
-
