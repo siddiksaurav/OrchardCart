@@ -28,16 +28,13 @@ public class CartController {
     @PostMapping("/addItem")
     public String addCartItem(CartItemRequest cartItemRequest,
                               Model model) {
-        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
-        String result = cartService.addCartItem(cartItemRequest);
-        model.addAttribute("result", result);
+        cartService.addCartItem(cartItemRequest);
         return "redirect:/products/list";
     }
 
     @GetMapping("/find")
     public String getUserCart(Model model) {
-        UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
-        Cart cart = cartService.showUserCart(user);
+        Cart cart = cartService.showUserCart();
         model.addAttribute("cart", cart);
         return "cart/cart";
     }

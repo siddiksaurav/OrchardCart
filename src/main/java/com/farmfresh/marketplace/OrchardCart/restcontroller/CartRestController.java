@@ -30,9 +30,8 @@ public class CartRestController {
     }
 
     @GetMapping("/findCart")
-    public Cart getUserCart(@RequestHeader("Authorization") String jwt) throws ElementNotFoundException {
-        UserInfo user = jwtService.getUserByToken(jwt);
-        return cartService.showUserCart(user);
+    public Cart getUserCart() throws ElementNotFoundException {
+        return cartService.showUserCart();
     }
 
 }

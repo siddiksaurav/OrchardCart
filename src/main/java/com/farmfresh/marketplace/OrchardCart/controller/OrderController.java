@@ -63,7 +63,7 @@ public class OrderController {
 
     @GetMapping("/confirm-order")
     public String confirmOrder() {
-        //cartService.clearUserCart(user);
+        cartService.removeCart();
         return "order/order-success";
     }
 

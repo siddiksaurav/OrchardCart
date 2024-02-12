@@ -85,7 +85,7 @@ public class AuthenticationController {
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
             if (authenticationResponse.getRole() == Role.ADMIN) {
-                return "redirect:/admin-dashboard";
+                return "redirect:/admin/dashboard";
             }
             return "redirect:/home";
         } else {
