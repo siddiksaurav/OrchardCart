@@ -39,7 +39,7 @@ public class OrderService {
     @Transactional
     public Orders createOrder(AddressRequest shippingAddress) {
         UserInfo user = authenticationService.getAuthUser().orElseThrow(() -> new ElementNotFoundException("User not signed in"));
-        Cart cart = cartService.showUserCart(user);
+        Cart cart = cartService.showUserCart();
         List<OrderItem> orderItems = new ArrayList<>();
         for (CartItem item : cart.getCartItems()) {
             OrderItem orderItem = new OrderItem();
@@ -54,6 +54,7 @@ public class OrderService {
         createdOrder.setOrderStatus(OrderStatus.PENDING);
         createdOrder.setShippingAddress(address);
         createdOrder.setTotalPrice(cart.getTotalPrice());
+        log.info("total price:"+cart.getTotalPrice());
         createdOrder.setOrderItems(orderItems);
         createdOrder.setTotalItem(cart.getTotalItem());
         createdOrder.setOrderTime(LocalDateTime.now());
@@ -64,7 +65,7 @@ public class OrderService {
             item.setOrder(savedOrder);
             orderItemRepository.save(item);
         }
-        jmsTemplate.convertAndSend("orderQueue", savedOrder.getUser().getEmail());
+        //jmsTemplate.convertAndSend("orderQueue", savedOrder.getUser().getEmail());
         return savedOrder;
     }
 

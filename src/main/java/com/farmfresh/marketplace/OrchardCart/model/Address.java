@@ -31,6 +31,26 @@ public class Address {
         this.phoneNumber = phoneNumber;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getAdditionalAddress() {
+        return additionalAddress;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

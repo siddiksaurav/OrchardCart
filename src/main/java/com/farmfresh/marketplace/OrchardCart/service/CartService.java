@@ -59,17 +59,26 @@ public class CartService {
         return "Added cart item successfully";
     }
 
-    public Cart showUserCart(UserInfo user) {
+    public Cart showUserCart() {
         Cart cart = getCart();
+        if(cart.getCartItems().isEmpty()){
+            return cart;
+        }
+
         BigDecimal totalPrice = BigDecimal.ZERO;
         int totalItem = 0;
         for (CartItem cartItem : cart.getCartItems()) {
-            totalPrice.add(cartItem.getPrice());
+            totalPrice = totalPrice.add(cartItem.getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())));
             totalItem += cartItem.getQuantity();
         }
         cart.setTotalItem(totalItem);
         cart.setTotalPrice(totalPrice);
         return cartRepository.save(cart);
+    }
+
+    public void removeCart(){
+        Cart cart = getCart();
+        cartRepository.delete(cart);
     }
 
 
