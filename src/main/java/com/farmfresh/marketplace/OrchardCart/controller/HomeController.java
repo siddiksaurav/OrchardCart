@@ -9,7 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/home")
@@ -24,11 +30,23 @@ public class HomeController {
     }
 
     @GetMapping
-    public String home(Model model) {
+    public String home(Model model) throws FileNotFoundException {
+        List<String> imagePaths = getImagePaths();
+        model.addAttribute("imagePaths", imagePaths);
         List<CategoryResponse> categories = categoryService.getCategoryList();
         List<ProductResponse> products = productService.getProductList();
         model.addAttribute("categories", categories);
         model.addAttribute("products", products);
         return "homepage";
+    }
+    public List<String> getImagePaths() {
+        File directory = new File("src/main/resources/static/img/promo/");
+        if (directory.exists() && directory.isDirectory()) {
+            return Arrays.stream(Objects.requireNonNull(directory.listFiles()))
+                    .filter(File::isFile)
+                    .map(file -> "/img/promo/" + file.getName())
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
     }
 }

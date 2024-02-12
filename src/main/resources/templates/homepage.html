@@ -5,23 +5,35 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
-        .carousel-item img {
-            height: 200px; /* Adjust the height as needed */
-            object-fit: cover; /* Maintain aspect ratio and cover the container */
-        }
+
+
     </style>
 </head>
 <body>
 
 
 <th:block th:insert="fragments/navbar"></th:block>
-<div class="jumbotron">
-    <h1>Welcome to OrchardCart!</h1>
-    <p>OrchardCart is your one-stop destination for the freshest fruits and vegetables. We connect local farmers and
-        sellers directly to you, ensuring quality and freshness.
-        Join us in supporting local farmers and enjoy farm-fresh produce delivered to your doorstep</p>
-</div>
 <div class="flex-grow-1">
+    <div class="carousel slide" data-ride="carousel" id="categoryCarousel">
+        <div class="carousel-inner">
+            <div class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'"
+                 th:each="imagePath, iterStat : ${imagePaths}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img alt="Category Image" class="d-block mx-auto carousel-image" th:src="${imagePath}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" data-slide="prev" href="#categoryCarousel" role="button">
+            <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" data-slide="next" href="#categoryCarousel" role="button">
+            <span aria-hidden="true" class="carousel-control-next-icon"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
     <div class="container mt-5">
         <h2>Featured Products</h2>
         <div class="row">
@@ -41,36 +53,22 @@
                     </a>
                 </div>
             </div>
-        </div>
-    </div>
-
-
-
-    <div class="carousel slide" data-ride="carousel" id="categoryCarousel">
-        <div class="carousel-inner">
-            <div class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'"
-                 th:each="category, iterStat : ${categories}">
+            <div class="col-md-8 offset-md-2">
+                <h2 class="text-center mb-4">Featured Categories</h2>
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="carousel-caption text-left">
-                            <h5 th:text="${category.categoryName}"></h5>
-                            <p>Your description goes here.</p>
+                    <div class="col-md-4 mb-3" th:each="category : ${categories}">
+                        <div class="card bg-light">
+                            <a th:href="@{'/products/list/' + ${category.categoryName}}">
+                                <img alt="Image" class="card-img-top" th:src="${category.imageUrl}">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${category.categoryName}"></h5>
+                                </div>
+                            </a>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <img alt="Category Image" class="d-block mx-auto" th:src="${category.imageUrl}">
                     </div>
                 </div>
             </div>
         </div>
-        <a class="carousel-control-prev" data-slide="prev" href="#categoryCarousel" role="button">
-            <span aria-hidden="true" class="carousel-control-prev-icon"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" data-slide="next" href="#categoryCarousel" role="button">
-            <span aria-hidden="true" class="carousel-control-next-icon"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
 
 
