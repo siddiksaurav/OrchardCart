@@ -4,10 +4,6 @@
     <title>OrchardCart - Your Online Marketplace</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <style>
-
-
-    </style>
 </head>
 <body>
 
@@ -43,7 +39,6 @@
                         <img alt="Product Image" class="card-img-top" th:src="${product.imageUrl}">
                         <div class="home-card-body">
                             <div class="card-title">
-                                <!-- Apply card-title class to capitalize and style the title -->
                                 <h5 th:text="${#strings.capitalize(product.name)}"></h5>
                             </div>
                             <div class="card-price">
@@ -80,5 +75,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="${contextPath}/webjars/bootstrap-jquery/5.2.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

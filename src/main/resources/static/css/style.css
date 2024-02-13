@@ -263,7 +263,7 @@ tr:hover {
     color: #d73609;
     cursor: pointer;
 }
-.remove-icon {
+.icon-size {
     font-size: 20px;
 }
 .checkout-btn, .continue-shopping-btn {
@@ -272,3 +272,25 @@ tr:hover {
     height:40px;
     margin-right: 10px;
 }
+.spacer {
+    margin-left: 5px;
+}
+.user-spacer{
+    margin-right: 50px;
+    margin-left: 20px;
+}
+
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right:100px;
+}
+
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
