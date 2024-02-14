@@ -7,6 +7,7 @@ import com.farmfresh.marketplace.OrchardCart.exception.ElementNotFoundException;
 import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.model.Product;
 import com.farmfresh.marketplace.OrchardCart.model.Seller;
+import com.farmfresh.marketplace.OrchardCart.model.UserInfo;
 import com.farmfresh.marketplace.OrchardCart.repository.CategoryRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.ProductRepository;
 import com.farmfresh.marketplace.OrchardCart.repository.SellerRepository;
@@ -75,8 +76,6 @@ public class ProductService {
         product.setQuantity(productRequest.getQuantity());
         product.setCategory(category);
         product.setSeller(seller);
-        //category.getProducts().add(product);
-        //categoryRepository.save(category);
         productRepository.save(product);
         log.info("Product added successfully: {}", product.getId());
         return "success";
@@ -130,4 +129,5 @@ public class ProductService {
                 .map(productMapper::mapToResponse)
                 .collect(Collectors.toList());
     }
+
 }

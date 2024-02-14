@@ -71,16 +71,41 @@
                         <i class="fas fa-shopping-cart fa-lg"></i>
                     </a>
                 </li>
+<!--                <li class="nav-item dropdown user-spacer icon-size" th:if="${#authentication.isAuthenticated()}">-->
+<!--                    <a class="nav-link" href="#" id="userDropdown" role="button" aria-expanded="false">-->
+<!--                        <i class="fas fa-user-circle fa-lg"></i>-->
+<!--                    </a>-->
+<!--                    <ul class="dropdown-menu" aria-labelledby="userDropdown">-->
+<!--                        <li><a class="dropdown-item" href="/user/profile">Profile</a></li>-->
+<!--                        <li><a class="dropdown-item" href="/user/update-profile">Update Profile</a></li>-->
+<!--                        <li><a class="dropdown-item" href="/order/order-history">My Orders</a></li>-->
+<!--                        <li><a class="dropdown-item" href="#" >Complain</a></li>-->
+<!--                        <li><a class="dropdown-item" href="#">Terms & conditions</a></li>-->
+<!--                        <li><a class="dropdown-item" href="/user/logout">Logout</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
                 <li class="nav-item dropdown user-spacer icon-size" th:if="${#authentication.isAuthenticated()}">
                     <a class="nav-link" href="#" id="userDropdown" role="button" aria-expanded="false">
                         <i class="fas fa-user-circle fa-lg"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
+                        <li><a class="dropdown-item" href="/order/order-history">My Orders</a></li>
+                        <li><a class="dropdown-item" href="#" >Complain</a></li>
+                        <li><a class="dropdown-item" href="#">Terms & conditions</a></li>
+                        <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_SELLER'')')}">
+                            <a class="dropdown-item" th:href="@{/seller/profile}">Seller Profile</a>
+                        </li>
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_SELLER'')')}">
+                            <a class="dropdown-item" th:href="@{/seller/update-profile}">Update Seller Profile</a>
+                        </li>
                     </ul>
                 </li>
+                <li class="nav-item user-spacer" th:unless="${#authentication.isAuthenticated()}">
+                    <a class="nav-link" href="/auth/login">Login</a>
                 </li>
+
                 <li class="nav-item user-spacer" th:unless="${#authentication.isAuthenticated()}">
                     <a class="nav-link" href="/auth/login">Login</a>
                 </li>
