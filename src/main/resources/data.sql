@@ -1,3 +1,19 @@
-INSERT INTO product (id,name, description, price, quantity) VALUES
-(3,'Product 1', 'Description 1', 19.99, 100),
-(4,'Product 2', 'Description 2', 29.99, 50);
+INSERT INTO category (category_name, image_url) VALUES
+                                                    ('Vegetable', '/img/vegetable.jpg'),
+                                                    ('Dairy', '/img/dairy.jpg'),
+                                                    ('Meat', '/img/meat.jpg'),
+                                                    ('Seafood', '/img/seafood.jpg'),
+                                                    ('Beverage', '/img/beverage.jpg'),
+                                                    ('Snack', '/img/snack.jpg'),
+                                                    ('Spice', '/img/spice.jpg'),
+                                                    ('Canned', '/img/canned.jpg'),
+                                                    ('Frozen', '/img/frozen.jpg'),
+                                                    ('Bakery', '/img/bakery.jpg'),
+                                                    ('Sweet', '/img/sweet.jpg'),
+                                                    ('Nut', '/img/nut.jpg'),
+                                                    ('Oil', '/img/oil.jpg'),
+                                                    ('Condiment', '/img/condiment.jpg'),
+                                                    ('Grass-fed', '/img/grass-fed.jpg'),
+                                                    ('Organic', '/img/organic.jpg'),
+                                                    ('Gluten-free', '/img/gluten-free.jpg'),
+                                                    ('Vegan', '/img/vegan.jpg');

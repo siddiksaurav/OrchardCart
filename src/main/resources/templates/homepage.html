@@ -10,7 +10,7 @@
 
 <th:block th:insert="fragments/navbar"></th:block>
 <div class="flex-grow-1">
-    <div class="carousel slide" data-ride="carousel" id="categoryCarousel">
+    <div class="carousel slide" data-ride="carousel" id="promoCarousel">
         <div class="carousel-inner">
             <div class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'"
                  th:each="imagePath, iterStat : ${imagePaths}">
@@ -21,11 +21,11 @@
                 </div>
             </div>
         </div>
-        <a class="carousel-control-prev" data-slide="prev" href="#categoryCarousel" role="button">
+        <a class="carousel-control-prev" data-slide="prev" href="#promoCarousel" role="button">
             <span aria-hidden="true" class="carousel-control-prev-icon"></span>
             <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" data-slide="next" href="#categoryCarousel" role="button">
+        <a class="carousel-control-next" data-slide="next" href="#promoCarousel" role="button">
             <span aria-hidden="true" class="carousel-control-next-icon"></span>
             <span class="sr-only">Next</span>
         </a>
@@ -48,20 +48,46 @@
                     </a>
                 </div>
             </div>
-            <div class="col-md-8 offset-md-2">
-                <h2 class="text-center mb-4">Featured Categories</h2>
-                <div class="row">
-                    <div class="col-md-4 mb-3" th:each="category : ${categories}">
-                        <div class="card bg-light">
-                            <a th:href="@{'/products/list/' + ${category.categoryName}}">
-                                <img alt="Image" class="card-img-top" th:src="${category.imageUrl}">
-                                <div class="card-body">
-                                    <h5 class="card-title" th:text="${category.categoryName}"></h5>
+<!--            <div class="col-md-8 offset-md-2">-->
+<!--                <h2 class="text-center mb-4">Featured Categories</h2>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-4 mb-3" th:each="category : ${categories}">-->
+<!--                        <div class="card bg-light">-->
+<!--                            <a th:href="@{'/products/list/' + ${category.categoryName}}">-->
+<!--                                <img alt="Image" class="card-img-top" th:src="${category.imageUrl}">-->
+<!--                                <div class="card-body">-->
+<!--                                    <h5 class="card-title" th:text="${category.categoryName}"></h5>-->
+<!--                                </div>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div id="categoryCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-md-4 mb-3" th:each="category : ${categories}">
+                                <div class="card bg-light">
+                                    <a th:href="@{'/products/list/' + ${category.categoryName}}">
+                                        <img alt="Image" class="card-img-top" th:src="${category.imageUrl}">
+                                        <div class="card-body">
+                                            <h5 class="card-title" th:text="${category.categoryName}"></h5>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <a class="carousel-control-prev" href="#categoryCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#categoryCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         </div>
     </div>
