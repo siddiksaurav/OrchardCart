@@ -25,30 +25,31 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String showUserProfile(Model model){
+    public String showUserProfile(Model model) {
         UserInfo user = userService.getUserDetails();
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "user/profile";
     }
 
     @GetMapping("/seller-profile")
-    public String showSellerProfile(Model model){
+    public String showSellerProfile(Model model) {
         Seller seller = userService.getSellerDetails();
-        model.addAttribute("seller",seller);
-        return "user/profile";
+        model.addAttribute("seller", seller);
+        return "seller/profile";
     }
 
 
     @GetMapping("/update/profile")
-    public String updateUserProfileForm(Model model){
+    public String updateUserProfileForm(Model model) {
         UserInfo user = userService.getUserDetails();
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "user/profile-edit";
 
     }
+
     @PostMapping("/update/profile")
     public String updateUserProfile(@Valid UserInfo user, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "user/profile-edit";
         }
         userService.updateUserInfo(user);
@@ -58,24 +59,25 @@ public class UserController {
     @GetMapping("/products")
     public String listSellerProducts(Model model) {
         List<Product> products = userService.getSellerProducts();
-        model.addAttribute("products",products);
+        model.addAttribute("products", products);
         return "products/product-list";
     }
 
     @GetMapping("/update/seller-profile")
-    public String updateSellerProfileForm(Model model){
+    public String updateSellerProfileForm(Model model) {
         Seller seller = userService.getSellerDetails();
-        model.addAttribute("seller",seller);
-        return "user/profile-edit";
+        model.addAttribute("seller", seller);
+        return "seller/profile-edit";
 
     }
+
     @PostMapping("/update/seller-profile")
     public String updateSellerProfile(@Valid Seller seller, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
-            return "user/profile-edit";
+        if (bindingResult.hasErrors()) {
+            return "seller/profile-edit";
         }
         userService.updateSellerInfo(seller);
-        return "redirect:/user/profile";
+        return "redirect:/user/seller-profile";
     }
 
 
