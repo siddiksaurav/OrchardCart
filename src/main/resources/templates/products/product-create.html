@@ -40,7 +40,9 @@
             </div>
             <div class="form-group">
                 <label for="businessName">Business Name:</label>
-                <input type="text" class="form-control" th:field="*{businessName}" />
+                <select class="form-control" th:field="*{businessName}">
+                    <option th:each="seller : ${sellers}" th:value="${seller.businessName}" th:text="${seller.businessName}"></option>
+                </select>
                 <small class="form-text text-danger" th:if="${#fields.hasErrors('businessName')}" th:errors="*{businessName}"></small>
             </div>
             <div class="form-group">

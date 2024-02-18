@@ -1,77 +1,4 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8"/>-->
-<!--    <title>Order Confirmation</title>-->
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
-<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
-<!--&lt;!&ndash;    <link th:href="@{/css/style.css}" rel="stylesheet">&ndash;&gt;-->
-<!--</head>-->
-<!--<body>-->
-<!--<th:block th:insert="fragments/navbar"></th:block>-->
-<!--<div class="container mt-5">-->
-<!--    <div class="card">-->
-<!--        <div class="card-header">-->
-<!--            <h2 class="text-center">Order Details</h2>-->
-<!--        </div>-->
-<!--        <div class="card-body">-->
-<!--            <ul class="list-group">-->
-<!--                <li class="list-group-item">-->
-<!--                    <h5>Order Items:</h5>-->
-<!--                    <ul class="list-group">-->
-<!--                        <li th:each="item : ${order.orderItems}" class="list-group-item">-->
-<!--                            <span th:text="${item.product.name}"></span> - -->
-<!--                            Quantity: <span th:text="${item.quantity}"></span> - -->
-<!--                            Unit Price: $<span th:text="${item.itemPrice}"></span> - -->
-<!--                            Sub Total: $<span th:text="${item.itemPrice}*${item.quantity}"></span>-->
-<!--                        </li>-->
-<!--                        <li class="list-group-item">Total Price: $<span th:text="${order.totalPrice}"></span></li>-->
-<!--                        <li class="list-group-item">Total Items: <span th:text="${order.totalItem}"></span></li>-->
-<!--                    </ul>-->
 
-<!--                </li>-->
-
-<!--                <li class="list-group-item">-->
-<!--                    <div class="list-group-item">-->
-<!--                        <h5>Payment Method:</h5>-->
-<!--                        <div class="form-check">-->
-<!--                            <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" value="cash" checked>-->
-<!--                            <label class="form-check-label" for="cashOnDelivery">-->
-<!--                                Cash on Delivery-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                        &lt;!&ndash; need to add other payment options &ndash;&gt;-->
-<!--                    </div>-->
-<!--                    <h5>Shipping Address:</h5>-->
-<!--                    <ul class="list-group">-->
-<!--                        <li class="list-group-item">District: <span th:text="${order.shippingAddress.district}"></span></li>-->
-<!--                        <li class="list-group-item">City: <span th:text="${order.shippingAddress.city}"></span></li>-->
-<!--                        <li class="list-group-item">Additional Address: <span th:text="${order.shippingAddress.additionalAddress}"></span></li>-->
-<!--                        <li class="list-group-item">Phone Number: <span th:text="${order.shippingAddress.phoneNumber}"></span></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--        <div class="card-footer text-center">-->
-<!--            <a th:href="@{/order/confirm-order}" class="btn btn-success">Confirm Order</a>-->
-<!--        </div>-->
-
-<!--    </div>-->
-<!--    <p class="text-center mt-3">Thank you for choosing our service!</p>-->
-<!--</div>-->
-
-<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"-->
-<!--        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"-->
-<!--        crossorigin="anonymous"></script>-->
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"-->
-<!--        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"-->
-<!--        crossorigin="anonymous"></script>-->
-
-<!--<script>-->
-<!--</script>-->
-<!--<th:block th:insert="fragments/footer"></th:block>-->
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -80,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
+<!--    <link th:href="@{/css/style.css}" rel="stylesheet">-->
     <style>
         .order-details {
             border: 1px solid #ced4da;
@@ -96,14 +24,16 @@
         }
 
         .order-item {
+            padding: 0.75rem 1.25rem;
+            background-color: #f8f9fa;
             border-bottom: 1px solid #ced4da;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
         }
 
-        .total-price {
+        .total{
             font-weight: bold;
             color: #007bff;
+            background-color: #f8f9fa;
+            padding: 0.75rem 1.25rem;
         }
 
         .payment-method {
@@ -118,6 +48,7 @@
             margin-top: 20px;
         }
     </style>
+
 </head>
 <body>
 <th:block th:insert="fragments/navbar"></th:block>
@@ -126,38 +57,51 @@
         <div class="order-details-header">
             <h2 class="text-center">Order Details</h2>
         </div>
-        <ul class="list-group">
+        <table class="table">
+            <tbody>
+            <tr>
+                <td colspan="4">
+                    <h5>Order Items:</h5>
+                </td>
+            </tr>
+            <tr th:each="item : ${order.orderItems}">
+                <td th:text="${item.product.name}"></td>
+                <td>Quantity: <span th:text="${item.quantity}"></span></td>
+                <td>Unit Price: $<span th:text="${item.itemPrice}"></span></td>
+                <td>Sub Total: $<span th:text="${item.itemPrice * item.quantity}"></span></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="total">Total Price: $<span th:text="${order.totalPrice}"></span></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="total">Total Items: <span th:text="${order.totalItem}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+        <ul class="list-group payment-method">
             <li class="list-group-item">
-                <h5>Order Items:</h5>
-                <ul class="list-group">
-                    <li th:each="item : ${order.orderItems}" class="list-group-item order-item">
-                        <span th:text="${item.product.name}"></span> -
-                        Quantity: <span th:text="${item.quantity}"></span> -
-                        Unit Price: $<span th:text="${item.itemPrice}"></span> -
-                        Sub Total: $<span th:text="${item.itemPrice * item.quantity}"></span>
-                    </li>
-                    <li class="list-group-item total-price">Total Price: $<span th:text="${order.totalPrice}"></span></li>
-                    <li class="list-group-item">Total Items: <span th:text="${order.totalItem}"></span></li>
-                </ul>
-            </li>
-            <li class="list-group-item payment-method">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" value="cash" checked>
                     <label class="form-check-label" for="cashOnDelivery">
                         Cash on Delivery
                     </label>
                 </div>
-                <!-- Add other payment options here -->
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="OnlinePayment" value="cash" checked>
+                    <label class="form-check-label" for="OnlinePayment">
+                        Online Payment
+                    </label>
+                </div>
             </li>
-            <li class="list-group-item shipping-address">
+        </ul>
+        <ul class="list-group shipping-address">
+            <li class="list-group-item">
                 <h5>Shipping Address:</h5>
-                <ul class="list-group">
-                    <li class="list-group-item">District: <span th:text="${order.shippingAddress.district}"></span></li>
-                    <li class="list-group-item">City: <span th:text="${order.shippingAddress.city}"></span></li>
-                    <li class="list-group-item">Additional Address: <span th:text="${order.shippingAddress.additionalAddress}"></span></li>
-                    <li class="list-group-item">Phone Number: <span th:text="${order.shippingAddress.phoneNumber}"></span></li>
-                </ul>
             </li>
+            <li class="list-group-item">District: <span th:text="${order.shippingAddress.district}"></span></li>
+            <li class="list-group-item">City: <span th:text="${order.shippingAddress.city}"></span></li>
+            <li class="list-group-item">Additional Address: <span th:text="${order.shippingAddress.additionalAddress}"></span></li>
+            <li class="list-group-item">Phone Number: <span th:text="${order.shippingAddress.phoneNumber}"></span></li>
         </ul>
         <div class="text-center confirm-order-btn">
             <a th:href="@{/order/confirm-order}" class="btn btn-success">Confirm Order</a>
@@ -178,3 +122,6 @@
 <th:block th:insert="fragments/footer"></th:block>
 </body>
 </html>
+
+
+

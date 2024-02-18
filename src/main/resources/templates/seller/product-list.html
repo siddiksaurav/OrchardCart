@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Products - OrchardCart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        .custom-btn-group {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+        .custom-btn-group .btn {
+            width: calc(50% - 5px); /* subtracting 5px for margin/padding */
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+<th:block th:insert="fragments/navbar"></th:block>
+<div class="flex-grow-1">
+    <div class="container mt-4">
+        <h2>All Products</h2>
+        <div class="row">
+            <div th:each="product : ${products}" class="col-md-4 mb-4">
+                <div class="card">
+                    <img th:src="${product.imageUrl}" class="card-img-top" alt="Image">
+                    <div class="card-body">
+                        <h5 th:text="'Product name: ' + ${#strings.capitalize(product.name)}" class="card-title"></h5>
+                        <p th:text="'Description: ' + ${product.description}" class="card-text"></p>
+                        <p th:text="'Price: $' + ${product.price}" class="card-text"></p>
+                        <p th:text="'Quantity: ' + ${product.quantity}" class="card-text"></p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="custom-btn-group">
+                            <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-primary">Edit</a>
+                            <a th:href="@{'/products/delete/' + ${product.id}}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:insert="fragments/footer"></th:block>
+</body>
+</html>
+

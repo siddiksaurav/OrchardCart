@@ -1,0 +1,189 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>User Profile</title>-->
+<!--    <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <link th:href="@{/css/style.css}" rel="stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container mt-5">-->
+<!--    <div class="row justify-content-center">-->
+<!--        <div class="col-md-6">-->
+<!--            <div class="card">-->
+<!--                <div class="card-header bg-primary text-white">-->
+<!--                    <h3 class="card-title">User Profile</h3>-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                    <table class="table table-bordered">-->
+<!--                        <tr>-->
+<!--                            <th>Field</th>-->
+<!--                            <th>Value</th>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>First Name</td>-->
+<!--                            <td th:text="${seller.userInfo.firstname}"></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>Last Name</td>-->
+<!--                            <td th:text="${seller.userInfo.lastname}"></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>Email</td>-->
+<!--                            <td th:text="${seller.userInfo.email}"></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>Description</td>-->
+<!--                            <td th:text="${seller.description}"></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>Business Name</td>-->
+<!--                            <td th:text="${seller.businessName}"></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>District</td>-->
+<!--                            <td th:text="${seller.address.district}"></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>City</td>-->
+<!--                            <td th:text="${seller.address.city}"></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>Additional Address</td>-->
+<!--                            <td th:text="${seller.address.additionalAddress}"></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>Phone Number</td>-->
+<!--                            <td th:text="${seller.address.phoneNumber}"></td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Bootstrap JS (optional, for certain features like collapse) &ndash;&gt;-->
+<!--<script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <style>
+        /* Custom styles for Seller Profile */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .card-header {
+            border-radius: 20px 20px 0 0;
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .profile-details {
+            margin-bottom: 20px;
+        }
+
+        .profile-details label {
+            font-weight: bold;
+        }
+
+        .profile-details p {
+            margin: 5px 0;
+        }
+
+        .profile-actions {
+            text-align: center;
+        }
+
+        .btn-edit {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-edit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<th:block th:insert="fragments/navbar"></th:block>
+<div class="flex-grow-1">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Seller Profile</h3>
+                </div>
+                <div class="card-body">
+                    <div class="profile-details">
+                        <label>First Name:</label>
+                        <p th:text="${seller.userInfo.firstname}"></p>
+                        <label>Last Name:</label>
+                        <p th:text="${seller.userInfo.lastname}"></p>
+                        <label>Email:</label>
+                        <p><a th:href="'mailto:' + ${seller.userInfo.email}" class="email" th:text="${seller.userInfo.email}"></a></p>
+                        <label>Description:</label>
+                        <p th:text="${seller.description}"></p>
+                        <label>Business Name:</label>
+                        <p th:text="${seller.businessName}"></p>
+                        <label>District:</label>
+                        <p th:text="${seller.address.district}"></p>
+                        <label>City:</label>
+                        <p th:text="${seller.address.city}"></p>
+                        <label>Additional Address:</label>
+                        <p th:text="${seller.address.additionalAddress}"></p>
+                        <label>Phone Number:</label>
+                        <p th:text="${seller.address.phoneNumber}"></p>
+                    </div>
+                    <div class="profile-actions">
+                        <a class="btn-edit" th:href="@{/user/update/seller-profile}">Update Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<th:block th:insert="fragments/footer"></th:block>
+</body>
+</html>

@@ -10,10 +10,12 @@ body {
     position: relative;
     background-color: #ffffff;
     color: #333333;
+    /*opacity: .98;*/
 }
 .carousel-image {
-    width: 100%;
-    height: 350px;
+    margin-top: 20px;
+    width: 98%;
+    height: 400px;
 }
 
 .form-control {
@@ -82,7 +84,7 @@ body {
 .card {
     border-radius: 20px;
     height: 100%;
-    background: #fff;
+    background: #f5f5f6;
     box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
     transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
     cursor: pointer;
@@ -158,7 +160,7 @@ body {
 }
 
 .form-style {
-    width: 400px;
+    width: 50%;
     margin: 100px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -235,8 +237,8 @@ button[type="submit"]:hover {
 table {
     width: 100%;
     border-collapse: collapse;
-    border-left: 1px solid #202525; /* Add left border */
-    border-right: 1px solid #202525; /* Add right border */
+    border-left: 1px solid #f3d72a; /* Add left border */
+    border-right: 1px solid #f3d72a; /* Add right border */
 }
 th, td {
     padding: 8px;
@@ -275,6 +277,9 @@ tr:hover {
 .spacer {
     margin-left: 5px;
 }
+.spacer-right {
+    margin-right: 30px;
+}
 .user-spacer{
     margin-right: 50px;
     margin-left: 20px;
@@ -293,4 +298,49 @@ tr:hover {
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-top: 20px;
+    color: #34ccc7; /* Blue color for heading */
+}
 
+h2 {
+    text-align: center;
+    margin:10px;
+    color: #03b299; /* Blue color for heading */
+}
+
+.dropdown-menu {
+    background-color: rgba(236, 236, 243, 0.04); /* Elegant background color */
+    color: #d70a0a;
+    border: 1px solid #ced4da; /* Border */
+    border-radius: 0.25rem; /* Border radius */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Box shadow */
+}
+
+.dropdown-menu a {
+    color: #212529; /* Text color */
+    padding: 0.5rem 1rem; /* Padding */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.dropdown-menu a:hover {
+    background-color: #f8f9fa; /* Hover background color */
+    color: #007bff; /* Hover text color */
+}
+
+.dropdown-divider {
+    border-top: 1px solid #ced4da; /* Divider line */
+}
+
+.dropdown-menu-right {
+    right: 0; /* Position on the right */
+}
+
+/* Styling for dropdown menu container */
+.my-dropdown-menu {
+    left: auto;
+    right: 50%;
+    transform: translateX(50%);
+}

@@ -1,16 +1,99 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>OrchardCart - Your Online Marketplace</title>-->
+<!--    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <link rel="stylesheet" th:href="@{/css/style.css}">-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<th:block th:insert="fragments/navbar"></th:block>-->
+<!--<div class="flex-grow-1">-->
+<!--    <div class="carousel slide" data-ride="carousel" data-interval="1500" id="promoCarousel">-->
+<!--        <div class="carousel-inner">-->
+<!--            <div class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'"-->
+<!--                 th:each="imagePath, iterStat : ${imagePaths}">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-12">-->
+<!--                        <img alt="Category Image" class="d-block mx-auto carousel-image" th:src="${imagePath}"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <a class="carousel-control-prev" data-slide="prev" href="#promoCarousel" role="button">-->
+<!--            <span aria-hidden="true" class="carousel-control-prev-icon"></span>-->
+<!--            <span class="sr-only">Previous</span>-->
+<!--        </a>-->
+<!--        <a class="carousel-control-next" data-slide="next" href="#promoCarousel" role="button">-->
+<!--            <span aria-hidden="true" class="carousel-control-next-icon"></span>-->
+<!--            <span class="sr-only">Next</span>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--&lt;!&ndash;    <div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <h1>Featured Products</h1>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <th:block th:each="category : ${categories}">-->
+<!--            <div class="col-md-12">-->
+<!--                <h1 th:text="${category.categoryName}"></h1>-->
+<!--            </div>-->
+<!--            <th:block th:each="product, iterStat : ${category.products}" th:if="${iterStat.index lt 4}">-->
+<!--                <div class="col-md-3 mb-2">-->
+<!--                    <div class="card">-->
+<!--                        <a th:href="@{'/products/' + ${product.id}}">-->
+<!--                            <img alt="Product Image" class="card-img-top" th:src="${product.imageUrl}">-->
+<!--                            <div class="home-card-body">-->
+<!--                                <div class="card-title">-->
+<!--                                    <h5 th:text="${#strings.capitalize(product.name)}"></h5>-->
+<!--                                </div>-->
+<!--                                <div class="card-price">-->
+<!--                                    <h5>Price: <span th:text="${product.price}"></span></h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </th:block>-->
+<!--        </th:block>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <h2>-->
+<!--            <a href="/category/list">all categories</a>-->
+<!--        </h2>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<th:block th:insert="fragments/footer"></th:block>-->
+
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+<!--<script src="${contextPath}/webjars/bootstrap-jquery/5.2.2/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>OrchardCart - Your Online Marketplace</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* CSS styles for the Featured Products text */
+        .featured-products-heading {
+            margin: 50px;
+            font-size: 35px;
+            color: #e1c307; /* You can adjust the color as per your design */
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
-
 <th:block th:insert="fragments/navbar"></th:block>
 <div class="flex-grow-1">
-    <div class="carousel slide" data-ride="carousel" id="promoCarousel">
+    <div class="carousel slide" data-ride="carousel" data-interval="1500" id="promoCarousel">
         <div class="carousel-inner">
             <div class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'"
                  th:each="imagePath, iterStat : ${imagePaths}">
@@ -30,71 +113,42 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-    <div class="container mt-5">
-        <h2>Featured Products</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4" th:each="product : ${products}">
-                <div class="card">
-                    <a th:href="@{'/products/' + ${product.id}}">
-                        <img alt="Product Image" class="card-img-top" th:src="${product.imageUrl}">
-                        <div class="home-card-body">
-                            <div class="card-title">
-                                <h5 th:text="${#strings.capitalize(product.name)}"></h5>
-                            </div>
-                            <div class="card-price">
-                                <h5>Price: <span th:text="${product.price}"></span></h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+    <div class="featured-products-heading">Featured Products</div> <!-- Stylish heading for Featured Products -->
+    <div class="row">
+        <th:block th:each="category : ${categories}">
+            <div class="col-md-12">
+                <h1 th:text="${category.categoryName}"></h1>
             </div>
-<!--            <div class="col-md-8 offset-md-2">-->
-<!--                <h2 class="text-center mb-4">Featured Categories</h2>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-md-4 mb-3" th:each="category : ${categories}">-->
-<!--                        <div class="card bg-light">-->
-<!--                            <a th:href="@{'/products/list/' + ${category.categoryName}}">-->
-<!--                                <img alt="Image" class="card-img-top" th:src="${category.imageUrl}">-->
-<!--                                <div class="card-body">-->
-<!--                                    <h5 class="card-title" th:text="${category.categoryName}"></h5>-->
-<!--                                </div>-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-            <div id="categoryCarousel" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-md-4 mb-3" th:each="category : ${categories}">
-                                <div class="card bg-light">
-                                    <a th:href="@{'/products/list/' + ${category.categoryName}}">
-                                        <img alt="Image" class="card-img-top" th:src="${category.imageUrl}">
-                                        <div class="card-body">
-                                            <h5 class="card-title" th:text="${category.categoryName}"></h5>
-                                        </div>
-                                    </a>
+            <th:block th:each="product, iterStat : ${category.products}" th:if="${iterStat.index lt 4}">
+                <div class="col-md-3 mb-2">
+                    <div class="card">
+                        <a th:href="@{'/products/' + ${product.id}}">
+                            <img alt="Product Image" class="card-img-top" th:src="${product.imageUrl}">
+                            <div class="home-card-body">
+                                <div class="card-title">
+                                    <h5 th:text="${#strings.capitalize(product.name)}"></h5>
+                                </div>
+                                <div class="card-price">
+                                    <h5>Price: <span th:text="${product.price}"></span></h5>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#categoryCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#categoryCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
+            </th:block>
+        </th:block>
+    </div>
+    <div>
+        <h2>
+            <a href="/category/list">all categories</a>
+        </h2>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <img src="/img/footer.webp" alt="Random Image" class="img-fluid">
         </div>
     </div>
-
-
 </div>
-
 
 <th:block th:insert="fragments/footer"></th:block>
 
@@ -104,3 +158,4 @@
 <script src="${contextPath}/webjars/bootstrap-jquery/5.2.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

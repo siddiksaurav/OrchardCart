@@ -1,47 +1,3 @@
-
-<!--<div xmlns:th="http://www.thymeleaf.org">-->
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">-->
-<!--    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">-->
-<!--        <a class="navbar-brand" href="/home">-->
-<!--            <img th:src="@{/img/logo10.png}" alt="Logo" width="140" height="30" class="d-inline-block align-text-top">-->
-<!--        </a>-->
-
-<!--        <div class="collapse navbar-collapse" id="navbarNav">-->
-<!--            <ul class="navbar-nav ml-auto">-->
-
-<!--                <form th:action="@{/products/list}" method="get" class="d-flex justify-content-center" role="search">-->
-<!--                    <input class="form-control me-2" type="search" placeholder="Product Name" aria-label="Product Name" name="productName" style="width: 400px; margin-top: 3px;">-->
-<!--                    <button class="btn btn-outline-success" type="submit" style="height: 38px; width: 40px;margin-top: 3px;">-->
-<!--                        <i class="fas fa-search"></i>-->
-<!--                    </button>-->
-<!--                </form>-->
-<!--                <li class="nav-item spacer">-->
-<!--                    <a class="nav-link" href="/products/list">products</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item spacer">-->
-<!--                    <a class="nav-link" href="/category/list">categories</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item spacer">-->
-<!--                    <a class="nav-link" href="#">About Us</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item spacer">-->
-<!--                    <a class="nav-link" href="/cart/find">-->
-<!--                        <i class="fas fa-shopping-cart fa-lg"></i>-->
-<!--                    </a>-->
-<!--                </li>-->
-<!--                <li class="nav-item user-spacer icon-size" th:if="${#authentication.isAuthenticated()}">-->
-<!--                    <a class="nav-link" href="/profile">-->
-<!--                        <i class="fas fa-user-circle fa-lg"></i>-->
-<!--                    </a>-->
-<!--                </li>-->
-<!--                <li class="nav-item user-spacer" th:unless="${#authentication.isAuthenticated()}">-->
-<!--                    <a class="nav-link" href="/auth/login">Login</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </nav>-->
-<!--</div>-->
-
 <div xmlns:th="http://www.thymeleaf.org">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -71,35 +27,33 @@
                         <i class="fas fa-shopping-cart fa-lg"></i>
                     </a>
                 </li>
-<!--                <li class="nav-item dropdown user-spacer icon-size" th:if="${#authentication.isAuthenticated()}">-->
-<!--                    <a class="nav-link" href="#" id="userDropdown" role="button" aria-expanded="false">-->
-<!--                        <i class="fas fa-user-circle fa-lg"></i>-->
-<!--                    </a>-->
-<!--                    <ul class="dropdown-menu" aria-labelledby="userDropdown">-->
-<!--                        <li><a class="dropdown-item" href="/user/profile">Profile</a></li>-->
-<!--                        <li><a class="dropdown-item" href="/user/update-profile">Update Profile</a></li>-->
-<!--                        <li><a class="dropdown-item" href="/order/order-history">My Orders</a></li>-->
-<!--                        <li><a class="dropdown-item" href="#" >Complain</a></li>-->
-<!--                        <li><a class="dropdown-item" href="#">Terms & conditions</a></li>-->
-<!--                        <li><a class="dropdown-item" href="/user/logout">Logout</a></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
                 <li class="nav-item dropdown user-spacer icon-size" th:if="${#authentication.isAuthenticated()}">
                     <a class="nav-link" href="#" id="userDropdown" role="button" aria-expanded="false">
                         <i class="fas fa-user-circle fa-lg"></i>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
-                        <li><a class="dropdown-item" href="/order/order-history">My Orders</a></li>
+                    <ul class="dropdown-menu my-dropdown-menu spacer-right" aria-labelledby="userDropdown">
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_SELLER'')')}">
+                            <a class="dropdown-item" th:href="@{/user/seller-profile}">Profile</a>
+                        </li>
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}">
+                            <a class="dropdown-item" th:href="@{/user/profile}">Profile</a>
+                        </li>
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}">
+                            <a class="dropdown-item" th:href="@{/user/update/profile}">Update Profile</a>
+                        </li>
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_SELLER'')')}">
+                            <a class="dropdown-item" th:href="@{/user/update/seller-profile}">Update Profile</a>
+                        </li>
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}">
+                            <a class="dropdown-item" href="/order/order-history">My Orders</a>
+                        </li>
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_SELLER'')')}">
+                            <a class="dropdown-item" href="/user/products">My Products</a>
+                        </li>
                         <li><a class="dropdown-item" href="#" >Complain</a></li>
                         <li><a class="dropdown-item" href="#">Terms & conditions</a></li>
                         <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
-                        <li th:if="${#authorization.expression('hasRole(''ROLE_SELLER'')')}">
-                            <a class="dropdown-item" th:href="@{/seller/profile}">Seller Profile</a>
-                        </li>
-                        <li th:if="${#authorization.expression('hasRole(''ROLE_SELLER'')')}">
-                            <a class="dropdown-item" th:href="@{/seller/update-profile}">Update Seller Profile</a>
-                        </li>
+
                     </ul>
                 </li>
                 <li class="nav-item user-spacer" th:unless="${#authentication.isAuthenticated()}">
