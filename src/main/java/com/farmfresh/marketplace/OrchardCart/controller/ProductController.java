@@ -3,8 +3,10 @@ package com.farmfresh.marketplace.OrchardCart.controller;
 import com.farmfresh.marketplace.OrchardCart.dto.request.ProductRequest;
 import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
 import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
+import com.farmfresh.marketplace.OrchardCart.model.Seller;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import com.farmfresh.marketplace.OrchardCart.service.ProductService;
+import com.farmfresh.marketplace.OrchardCart.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +27,12 @@ public class ProductController {
     private static final String REDIRECT_PRODUCTS_LIST = "redirect:/products/list";
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final UserService userService;
 
-    public ProductController(ProductService productService, CategoryService categoryService) {
+    public ProductController(ProductService productService, CategoryService categoryService, UserService userService) {
         this.productService = productService;
         this.categoryService = categoryService;
+        this.userService = userService;
     }
 
 
@@ -49,8 +53,10 @@ public class ProductController {
     @GetMapping("/create")
     public String createProductForm(Model model) {
         List<CategoryResponse> categories = categoryService.getCategoryList();
+        List<Seller> sellers = userService.getSellerList();
         model.addAttribute("productRequest", new ProductRequest());
         model.addAttribute("categories", categories);
+        model.addAttribute("sellers",sellers);
         return "products/product-create";
     }
 

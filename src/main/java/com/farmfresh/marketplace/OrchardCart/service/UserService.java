@@ -29,7 +29,11 @@ public class UserService {
     }
 
     public void updateUserInfo(UserInfo user) {
-        userInfoRepository.save(user);
+        UserInfo existingUser = getUserDetails();
+        existingUser.setFirstname(user.getFirstname());
+        existingUser.setLastname(user.getLastname());
+        existingUser.setEmail(user.getEmail());
+        userInfoRepository.save(existingUser);
     }
     public Seller getSellerDetails() {
         return sellerRepository.findByUserInfo(getUserDetails());
@@ -59,4 +63,7 @@ public class UserService {
     }
 
 
+    public List<Seller> getSellerList() {
+        return sellerRepository.findAll();
+    }
 }

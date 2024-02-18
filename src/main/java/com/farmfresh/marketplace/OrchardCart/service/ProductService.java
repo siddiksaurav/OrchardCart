@@ -130,4 +130,10 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public List<ProductResponse> getFeaturedProducts() {
+        List<Product> products = productRepository.findRandomProducts();
+        return products.stream()
+                .map(productMapper::mapToResponse)
+                .collect(Collectors.toList());
+    }
 }

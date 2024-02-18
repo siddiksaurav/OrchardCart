@@ -60,7 +60,7 @@ public class UserController {
     public String listSellerProducts(Model model) {
         List<Product> products = userService.getSellerProducts();
         model.addAttribute("products", products);
-        return "products/product-list";
+        return "seller/product-list";
     }
 
     @GetMapping("/update/seller-profile")

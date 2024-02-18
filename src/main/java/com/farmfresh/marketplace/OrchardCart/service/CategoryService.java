@@ -87,4 +87,14 @@ public class CategoryService {
         categoryRepository.save(newCategory);
         categoryRepository.save(previousCategory);
     }
+
+//    public List<CategoryResponse> getFeaturedCategories() {
+//        List<Category> categories = categoryRepository.findRandomCategories();
+//        return categories.stream()
+//                .map(categoryMapper::mapToResponse)
+//                .collect(Collectors.toList());
+//    }
+    public List<Category> getFeaturedCategories() {
+        return categoryRepository.findRandomCategories();
+    }
 }

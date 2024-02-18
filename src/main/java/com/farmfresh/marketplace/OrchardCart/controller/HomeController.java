@@ -2,6 +2,7 @@ package com.farmfresh.marketplace.OrchardCart.controller;
 
 import com.farmfresh.marketplace.OrchardCart.dto.response.CategoryResponse;
 import com.farmfresh.marketplace.OrchardCart.dto.response.ProductResponse;
+import com.farmfresh.marketplace.OrchardCart.model.Category;
 import com.farmfresh.marketplace.OrchardCart.service.CategoryService;
 import com.farmfresh.marketplace.OrchardCart.service.ProductService;
 import org.springframework.stereotype.Controller;
@@ -33,8 +34,8 @@ public class HomeController {
     public String home(Model model) throws FileNotFoundException {
         List<String> imagePaths = getImagePaths();
         model.addAttribute("imagePaths", imagePaths);
-        List<CategoryResponse> categories = categoryService.getCategoryList();
-        List<ProductResponse> products = productService.getProductList();
+        List<Category> categories = categoryService.getFeaturedCategories();
+        List<ProductResponse> products = productService.getFeaturedProducts();
         model.addAttribute("categories", categories);
         model.addAttribute("products", products);
         return "homepage";
